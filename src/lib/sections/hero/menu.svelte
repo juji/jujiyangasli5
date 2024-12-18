@@ -14,7 +14,7 @@
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <div class="menu-container" class:open onclick={() => {open = !open}} tabindex="0" role="button">
     <div class="menu-content">
-      <a style="--link-delay-in: 0ms" class="link" href="#projects">Projects</a>
+      <a style="--link-delay-in: 0ms" class="link" href="#works">Works</a>
       <a style="--link-delay-in: 100ms" class="link" href="#play">Play</a>
       <a style="--link-delay-in: 200ms" class="link" href="#techs">Techs</a>
       <a style="--link-delay-in: 300ms" class="link" href="#contact">Contact</a>
@@ -53,9 +53,6 @@
         padding-top: 80px;
         padding-bottom: 1rem;
         opacity: 0;
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 12px;
         border-top-left-radius: 3rem;
         border-top-right-radius: 3rem;
         border-bottom-left-radius: 3rem;
@@ -70,14 +67,22 @@
           padding-top 200ms,
           padding-bottom 200ms
         ;
-  
-        a{
-          display: block;
-  
-          &:first-child{
-            margin-top: 1rem;
+
+        .menu-content{
+
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 12px;
+          
+          a{
+            display: block;
+    
+            &:first-child{
+              margin-top: 1rem;
+            }
           }
         }
+  
       }
 
       &:has(button:hover), &:has(.menu-container:hover){

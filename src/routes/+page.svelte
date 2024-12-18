@@ -1,12 +1,21 @@
 <script>
-  import Main from '$lib/components/main/index.svelte'
   import GrainyThing from '$lib/components/grainy-thing/index.svelte'
+  import Hero from '$lib/sections/hero/index.svelte'
+  import Works from '$lib/sections/works/index.svelte'
+
+  let js = $state(false)
+  $effect(() => { if(!js) js = true })
 </script>
 
 <main>
   <GrainyThing />
   <div class="container">
-    <Main />
+    <Hero />
+  </div>
+  <div class="nojs-overlay" class:js>
+    <div class="container">
+      <Works />
+    </div>
   </div>
 </main>
 
@@ -15,6 +24,16 @@
   main{
 
     position: relative;
+
+    .nojs-overlay{
+      position: relative;
+      background-color: rgba(0,0,0,0.8);
+      z-index: 1;
+
+      &.js{
+        background-color: transparent;
+      }
+    }
     
     .container{
       position: relative;

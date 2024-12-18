@@ -9,9 +9,9 @@
     <Logo />
     <Menu />
   </header>
-  <p class="webdev">Web Developer</p>
+  <p class="webdev">I'm a web&nbsp;developer</p>
   <div class="menu-bottom">
-    <a class="link" style="--delay:0ms" href="#projects">Projects</a>
+    <a class="link" style="--delay:0ms" href="#works">Works</a>
     <a class="link" style="--delay:50ms" href="#play">Play</a>
     <a class="link" style="--delay:100ms" href="#techs">Techs</a>
     <a class="link" style="--delay:150ms" href="#contact">Contact</a>
@@ -52,7 +52,7 @@
       animation-timing-function: ease-out;
       animation-delay: 500ms;
       text-shadow: var(--text-shadow);
-      line-height: 2rem;
+      line-height: 2.3rem;
       margin-bottom: 1rem;
     }
 

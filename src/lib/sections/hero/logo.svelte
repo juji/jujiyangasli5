@@ -2,12 +2,12 @@
   import Smiley from './smiley.svelte'
 </script>
 
-<h1>
+<h1><a href="/">
   <span class="j0">j</span><span 
   class="u">u</span><span 
   class="j1">j</span><span 
   class="i">i</span><Smiley />
-</h1>
+</a></h1>
 
 <style>
 
@@ -39,9 +39,8 @@
   h1{
     font-family: 'Grandstander';
     font-size: 3rem;
-    display: flex;
-    justify-items: flex-start;
     margin-left: 13px;
+    position: relative;
 
     @media screen and (min-width: 380px) {
       font-size: 5rem;
@@ -49,6 +48,13 @@
 
     @media screen and (min-width: 500px) {
       font-size: 7rem;
+    }
+
+    a{
+      text-decoration: none;
+      color: var(--text-color);
+      display: flex;
+      justify-items: flex-start;
     }
 
 

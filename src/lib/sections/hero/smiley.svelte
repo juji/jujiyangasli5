@@ -1,12 +1,12 @@
-<b class="a">&nbsp;}</b><b class="s">;</b>
+<span class="a">&nbsp;}</span><span class="s">;</span>
 
 <style>
 
-  b{
+  span{
     text-shadow: var(--text-shadow);
   }
 
-  b.a{
+  span.a{
     animation-delay: 1300ms;
     animation-name: rubbery-y;
     animation-duration: 1000ms;
@@ -14,7 +14,7 @@
     animation-timing-function: linear;
   }
 
-  b.s{
+  span.s{
     animation-delay: 1400ms;
     animation-name: rubbery-y;
     animation-duration: 1000ms;
