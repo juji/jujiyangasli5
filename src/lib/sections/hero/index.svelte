@@ -1,10 +1,14 @@
-<script>
+<script lang="ts">
   import Logo from './logo.svelte'
   import Menu from './menu.svelte';
+  import MenuObserver from '$lib/components/menu-observer.svelte';
+
+  let intersectingElm: HTMLDivElement | null = $state(null);
+
 </script>
 
-
-<div class="main">
+<MenuObserver element={intersectingElm} id="home">
+<div class="hero" id="home" bind:this={intersectingElm}>
   <header>
     <Logo />
     <Menu />
@@ -18,6 +22,7 @@
     <a class="link outgoing" style="--delay:200ms" href="https://blog.jujiyangasli.com" target="_blank">Blog</a>
   </div>
 </div>
+</MenuObserver>
 
 <style>
   @keyframes webdev {
@@ -31,7 +36,7 @@
     }
   }
 
-  .main{
+  .hero{
 
     height: 100vh;
 

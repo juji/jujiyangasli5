@@ -1,5 +1,9 @@
 <script lang="ts">
   import { Ball } from "./ball";
+  import IntersectionObserver from "svelte-intersection-observer";
+
+  let intersectingElm: HTMLDivElement | null = $state(null);
+  let intersecting = $state(true);
 
   $effect(() => { 
 
@@ -20,6 +24,10 @@
   })
 </script>
 
+<IntersectionObserver element={intersectingElm} bind:intersecting>
+  <div bind:this={intersectingElm}></div>
+</IntersectionObserver>
+
 <svg xmlns="http://www.w3.org/2000/svg" class="hidden">
   <filter id="goo">
     <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="blur" />
@@ -39,7 +47,7 @@
     <feComposite in="blur" in2="goo" operator="in" result="composite" />
   </filter>
 </svg>
-<div class="wrapper">
+<div class="wrapper" class:hide={!intersecting}>
   <div class="grain">
     <div class="balls">
       <div class="ball" style="--delay:200ms;--pos-x:50%;--pos-y:50%;--color:6,82,221;--diameter:860px"></div>
@@ -59,7 +67,11 @@
     top: 0;
     left: 0;
     z-index: 0;
-    /* opacity: 0.05; */
+    transition: opacity 3000ms;
+
+    &.hide{
+      opacity: 0.1;
+    }
   }
 
   svg.hidden{

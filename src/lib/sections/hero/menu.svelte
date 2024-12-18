@@ -5,7 +5,7 @@
 </script>
 
 
-<div class="menu-top" class:js>
+<div class="menu-top" class:js id="menuTop">
   <button aria-label="menu" onclick={() => {open = !open}}>
     <span class="a"></span>
     <span class="b"></span>
@@ -13,13 +13,14 @@
   </button>
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <div class="menu-container" class:open onclick={() => {open = !open}} tabindex="0" role="button">
-    <div class="menu-content">
-      <a style="--link-delay-in: 0ms" class="link" href="#works">Works</a>
-      <a style="--link-delay-in: 100ms" class="link" href="#play">Play</a>
-      <a style="--link-delay-in: 200ms" class="link" href="#techs">Techs</a>
-      <a style="--link-delay-in: 300ms" class="link" href="#contact">Contact</a>
-      <a style="--link-delay-in: 400ms" class="link outgoing" href="https://blog.jujiyangasli.com" target="_blank">Blog</a>
-    </div>
+    <nav class="menu-content">
+      <a style="--link-delay-in: 0ms" class="link" href="#home">Home</a>
+      <a style="--link-delay-in: 100ms" class="link" href="#works">Works</a>
+      <a style="--link-delay-in: 200ms" class="link" href="#play">Play</a>
+      <a style="--link-delay-in: 300ms" class="link" href="#techs">Techs</a>
+      <a style="--link-delay-in: 400ms" class="link" href="#contact">Contact</a>
+      <a style="--link-delay-in: 500ms" class="link outgoing" href="https://blog.jujiyangasli.com" target="_blank">Blog</a>
+    </nav>
   </div>
 </div>
 
@@ -38,8 +39,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    z-index: 2;
+    position: fixed;
+    z-index: 1;
+    left: calc(50% + calc(min(100%, var(--page-width)) / 2) - 48px - var(--page-padding));
+    top: 27px;
+
+    @media screen and (min-width: 380px) {
+      left: calc(50% + calc(min(100%, var(--page-width)) / 2) - 64px - var(--page-padding));
+      top: 42px;
+    }
+
+    @media screen and (min-width: 500px) {
+      top: 64px;
+    }
 
     &:not(.js){
 
@@ -163,6 +175,12 @@
           }
         }
       }
+
+      :global(.menu-content a.active){
+        text-decoration: underline;
+        text-decoration-thickness: 5px;
+        text-decoration-color: var(--active-link-color);
+      }
     }
 
     button{
@@ -175,6 +193,7 @@
       height: 3rem;
       display: block;
 
+      
       animation-delay: 1700ms;
       animation-name: rubbery-xy;
       animation-duration: 1000ms;

@@ -6,10 +6,10 @@
 
 </script>
 
-<MenuObserver element={intersectingElm} id="works">
+<MenuObserver element={intersectingElm} id="play">
 <DummyPage>
-  <div id="works" bind:this={intersectingElm}>
-    this is works
+  <div id="play" bind:this={intersectingElm}>
+    this is play
   </div>
 </DummyPage>
 </MenuObserver>
