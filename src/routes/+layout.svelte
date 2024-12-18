@@ -1,7 +1,6 @@
 <script>
   import { page } from '$app/state';
   import '$lib/styles/main.css'
-  import '$lib/styles/rubbery.css'
   let { children } = $props();
 </script>
 

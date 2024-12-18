@@ -2,6 +2,7 @@
   import Logo from './logo.svelte'
   import Menu from './menu.svelte';
   import MenuObserver from '$lib/components/menu-observer.svelte';
+  import '$lib/styles/rubbery.css'
 
   let intersectingElm: HTMLDivElement | null = $state(null);
 
