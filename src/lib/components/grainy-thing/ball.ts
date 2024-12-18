@@ -1,6 +1,5 @@
 
 const colors = [
-  // [255, 195, 18], // '#FFC312',
   [196, 229, 56], // '#C4E538',
   [18, 203, 196], // '#12CBC4',
   [253, 167, 223], // '#FDA7DF',
@@ -47,17 +46,15 @@ export class Ball {
 
   constructor(
     elm: HTMLDivElement,
-    delay: number = 500
   ){
 
     this.elm = elm
 
     const smaller = Math.min(window.innerHeight, window.innerWidth)
     this.radius = Math.round((smaller * 0.5) + (-50 + (Math.random() * 150)))
-    // this.blur = 45 + Math.round(Math.random() * 50)
 
-    this.x = Math.random() * window.innerWidth // / 2
-    this.y = Math.random() * window.innerHeight // / 2
+    this.x = Math.random() * window.innerWidth
+    this.y = Math.random() * window.innerHeight
     this.color = randomColor()
 
     this.speedX = this.baseSpeed + Math.random() * (Math.random() < .5 ? 1 : -1)
@@ -68,13 +65,10 @@ export class Ball {
     this.rightBorder = window.innerWidth - (this.radius * Math.random())
     this.bottomBorder = window.innerHeight - (this.radius * Math.random())
 
-    this.elm.style.setProperty('--width', (this.radius * 2) + 'px')
-    this.elm.style.setProperty('--height', (this.radius * 2) + 'px')
+    this.elm.style.setProperty('--diameter', (this.radius * 2) + 'px')
     this.elm.style.setProperty('--color', this.color)
     this.elm.style.setProperty('--pos-x', this.x + 'px')
     this.elm.style.setProperty('--pos-y', this.y + 'px')
-    this.elm.style.setProperty('--delay', delay + 'ms')
-    // this.elm.style.setProperty('--blur', this.blur + 'px')
 
     // do i want to save the state?
     // this.state = JSON.parse(JSON.stringify(this))

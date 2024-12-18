@@ -1,28 +1,20 @@
 <script lang="ts">
   import { Ball } from "./ball";
-  let { startDelay = 300 } = $props();
 
   $effect(() => { 
 
     const jsBalls: Ball[] = []
     const balls = document.querySelectorAll('.ball')
-    let delay = startDelay;
     
     balls.forEach(ball => {
       jsBalls.push(new Ball(
         ball as HTMLDivElement,
-        delay
       ))
-      delay += 300
     })
 
     requestAnimationFrame(function anim(){
       jsBalls.forEach(ball => ball.animate())
       requestAnimationFrame(anim)
-    })
-
-    window.addEventListener('resize',() => {
-      jsBalls.forEach(ball => ball.onResize())
     })
     
   })
@@ -50,11 +42,11 @@
 <div class="wrapper">
   <div class="grain">
     <div class="balls">
-      <div class="ball"></div>
-      <div class="ball"></div>
-      <div class="ball"></div>
-      <div class="ball"></div>
-      <div class="ball"></div>
+      <div class="ball" style="--delay:200ms;--pos-x:50%;--pos-y:50%;--color:6,82,221;--diameter:860px"></div>
+      <div class="ball" style="--delay:500ms;--pos-x:56%;--pos-y:6%;--color:234,32,39;--diameter:676px"></div>
+      <div class="ball" style="--delay:700ms;--pos-x:18%;--pos-y:40%;--color:153,128,250;--diameter:698px"></div>
+      <div class="ball" style="--delay:1200ms;--pos-x:67%;--pos-y:34%;--color:163,203,56;--diameter:676px"></div>
+      <div class="ball" style="--delay:1500ms;--pos-x:43%;--pos-y:23%;--color:253,167,223;--diameter:646px"></div>
     </div>
   </div>
 </div>
@@ -102,12 +94,10 @@
 
     .ball{
 
-      --width: 0px;
-      --height: 0px;
+      --diameter: 0px;
       --color: '0,0,0';
-      --pos-x: '#000000';
-      --pos-y: '#000000';
-      --blur: 0px;
+      --pos-x: 0%;
+      --pos-y: 0%;
       --delay: 0ms;
 
       animation-name: popout;
@@ -122,9 +112,8 @@
       filter: blur(75px);
       display: block;
       position: fixed;
-      /* transform: translate3d(-50%, -50%, 0); */
-      width: var(--width);
-      height: var(--height);
+      width: var(--diameter);
+      height: var(--diameter);
 
       background: radial-gradient(circle at center, rgba(var(--color), 0.9) 0%, rgba(var(--color), 0) 100%) no-repeat;
 
