@@ -1,6 +1,7 @@
 <script>
   import { page } from '$app/state';
-  import Rubbery from '$lib/components/styles/rubbery.svelte'
+  import '$lib/styles/main.css'
+  import '$lib/styles/rubbery.css'
   let { children } = $props();
 </script>
 
@@ -35,6 +36,4 @@
 
 </svelte:head>
 
-
-<Rubbery />
 {@render children()}
