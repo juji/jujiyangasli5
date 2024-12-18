@@ -1,0 +1,84 @@
+<script>
+  import Smiley from './smiley.svelte'
+</script>
+
+<h1>
+  <span class="j0">j</span><span 
+  class="u">u</span><span 
+  class="j1">j</span><span 
+  class="i">i</span><Smiley />
+</h1>
+
+<style>
+
+  @keyframes logo {
+    0%{
+      opacity: 0;
+      translate: 34px 0;
+      transform: skew(0);
+    }
+
+    33%{
+      opacity: 0.5;
+      translate: 2px 0;
+      transform: skew(-21deg);
+    }
+
+    75%{
+      opacity: 1;
+      translate: -5px 0;
+    }
+
+    100%{
+      opacity: 1;
+      translate: 0px 0;
+      transform: skew(0);
+    }
+  }
+
+  h1{
+    font-family: 'Grandstander';
+    font-size: 5rem;
+    display: flex;
+    justify-items: flex-start;
+    margin-left: 13px;
+
+    @media screen and (min-width: 371px) {
+      font-size: 7rem;
+    }
+
+
+
+    span{
+      --anim-gap: 120ms;
+      animation-name: logo;
+      animation-duration: 300ms;
+      animation-fill-mode: both;
+      animation-timing-function: ease-out;
+
+      
+      &.j0{
+        animation-delay: calc(0 * var(--anim-gap));
+      }
+
+      &.u{
+        animation-delay: calc(1.2 * var(--anim-gap));
+      }
+
+      &.j1{
+        animation-delay: calc(2.4 * var(--anim-gap));
+      }
+
+      &.i{
+        animation-delay: calc(3.5 * var(--anim-gap));
+      }
+
+      text-shadow: var(--text-shadow);
+
+    }
+    
+    
+
+
+  }
+</style>

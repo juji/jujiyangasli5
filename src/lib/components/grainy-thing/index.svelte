@@ -1,25 +1,30 @@
 <script lang="ts">
   import { Ball } from "./ball";
+  let { startDelay = 300 } = $props();
 
   $effect(() => { 
 
-    // @ts-ignore
-    const jsBalls = []
+    const jsBalls: Ball[] = []
     const balls = document.querySelectorAll('.ball')
+    let delay = startDelay;
+    
     balls.forEach(ball => {
-      jsBalls.push(new Ball(ball as HTMLDivElement))
+      jsBalls.push(new Ball(
+        ball as HTMLDivElement,
+        delay
+      ))
+      delay += 300
     })
 
     requestAnimationFrame(function anim(){
-      // @ts-ignore
       jsBalls.forEach(ball => ball.animate())
       requestAnimationFrame(anim)
     })
 
     window.addEventListener('resize',() => {
-      // @ts-ignore
       jsBalls.forEach(ball => ball.onResize())
     })
+    
   })
 </script>
 
@@ -86,6 +91,15 @@
       filter: url(#goo) blur(5px);
     }
 
+    @keyframes popout{
+      from {
+        transform: scale(0) translate3d(-10%, -10%, 0);
+      }
+      to{
+        transform: scale(1) translate3d(-10%, -10%, 0);
+      }
+    }
+
     .ball{
 
       --width: 0px;
@@ -94,14 +108,21 @@
       --pos-x: '#000000';
       --pos-y: '#000000';
       --blur: 0px;
+      --delay: 0ms;
 
+      animation-name: popout;
+      animation-duration: 2000ms;
+      animation-fill-mode: both;
+      animation-timing-function: cubic-bezier(.25,.08,.4,.87);
+      animation-delay: var(--delay);
 
+      
       border-radius: 50%;
       mix-blend-mode: screen;
       filter: blur(75px);
       display: block;
       position: fixed;
-      transform: translate3d(-50%, -50%, 0);
+      /* transform: translate3d(-50%, -50%, 0); */
       width: var(--width);
       height: var(--height);
 

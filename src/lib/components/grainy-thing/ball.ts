@@ -45,7 +45,10 @@ export class Ball {
 
   baseSpeed = 1
 
-  constructor(elm: HTMLDivElement){
+  constructor(
+    elm: HTMLDivElement,
+    delay: number = 500
+  ){
 
     this.elm = elm
 
@@ -70,6 +73,7 @@ export class Ball {
     this.elm.style.setProperty('--color', this.color)
     this.elm.style.setProperty('--pos-x', this.x + 'px')
     this.elm.style.setProperty('--pos-y', this.y + 'px')
+    this.elm.style.setProperty('--delay', delay + 'ms')
     // this.elm.style.setProperty('--blur', this.blur + 'px')
 
     // do i want to save the state?

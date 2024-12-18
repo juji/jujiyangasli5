@@ -1,12 +1,11 @@
 <script>
 	import { page } from '$app/state';
   import GrainyThing from '$lib/components/grainy-thing/index.svelte'
-  import PageWrapper from '$lib/components/page-wrapper.svelte';
 </script>
 
 
 <GrainyThing />
-<PageWrapper blend={true}>
+<div class="wrapper">
 {#if page.status === 404}
 <svg style="visibility: hidden; position: absolute;" width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1">
   <defs>
@@ -32,9 +31,20 @@
   <br />
   <br />
   <a href="/">Go To Main Page</a>
-</PageWrapper>
+  </div>
 
 <style>
+
+  .wrapper{
+    position: relative;
+    max-width: var(--page-width);
+    padding: var(--page-padding);
+    margin: 0 auto;
+    z-index: 1;
+    mix-blend-mode: exclusion;
+  }
+
+
   h1{
     font-size: 64px;
     font-weight: 600;
