@@ -1,13 +1,13 @@
 <script>
   import Logo from './logo.svelte'
+  import Menu from './menu.svelte';
 </script>
 
 
 <div class="main">
   <header>
     <Logo />
-    <div class="menu-top">
-    </div>
+    <Menu />
   </header>
   <p class="webdev">Web Developer</p>
   <div class="menu-bottom">
@@ -15,7 +15,7 @@
     <a class="link" style="--delay:50ms" href="#play">Play</a>
     <a class="link" style="--delay:100ms" href="#techs">Techs</a>
     <a class="link" style="--delay:150ms" href="#contact">Contact</a>
-    <a class="link" style="--delay:200ms" href="https://blog.jujiyangasli.com" target="_blank">Blog</a>
+    <a class="link outgoing" style="--delay:200ms" href="https://blog.jujiyangasli.com" target="_blank">Blog</a>
   </div>
 </div>
 
@@ -41,9 +41,6 @@
       display: flex;
       justify-content: space-between;
 
-      /* .menu-top{
-
-      } */
     }
 
     p.webdev{
@@ -63,8 +60,8 @@
       display: inline-grid;
       gap: 1rem;
 
-      grid-template-columns: auto auto auto;
-      grid-template-rows: auto auto;
+      grid-template-columns: auto auto;
+      grid-template-rows: auto auto auto;
       margin-top: 1rem;
       
       @media screen and (min-width: 382px) {

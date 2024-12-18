@@ -38,12 +38,16 @@
 
   h1{
     font-family: 'Grandstander';
-    font-size: 5rem;
+    font-size: 3rem;
     display: flex;
     justify-items: flex-start;
     margin-left: 13px;
 
-    @media screen and (min-width: 371px) {
+    @media screen and (min-width: 380px) {
+      font-size: 5rem;
+    }
+
+    @media screen and (min-width: 500px) {
       font-size: 7rem;
     }
 

@@ -19,6 +19,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  interpolate-size: allow-keywords;
+
 }
 
 /* latin-ext */
@@ -76,11 +78,23 @@ html, body{
 
 a{
   color: var(--link-color);
-  text-decoration: dotted underline;
+  text-decoration: underline dotted;
   text-underline-offset: 8px;
 
   &:hover{
     text-decoration: underline;
     text-decoration-thickness: 5px;
+  }
+}
+
+a.outgoing{
+  position: relative;
+  &:after{
+    position: absolute;
+    display: inline-block;
+    rotate: -45deg;
+    margin-left: 2px;
+    scale: 0.8;
+    content: '➔';
   }
 }
