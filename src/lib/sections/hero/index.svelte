@@ -83,6 +83,7 @@
         animation-timing-function: ease-out;
         animation-delay: calc(700ms + var(--delay));
         text-shadow: var(--text-shadow);
+        font-weight: 600;
       }
     }
 

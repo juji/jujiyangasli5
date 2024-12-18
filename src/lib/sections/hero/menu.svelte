@@ -176,11 +176,18 @@
         }
       }
 
-      :global(.menu-content a.active){
-        text-decoration: underline;
-        text-decoration-thickness: 5px;
-        text-decoration-color: var(--active-link-color);
+      .menu-content{
+        a{
+          font-weight: 600;
+        }
+
+        :global(a.active){
+          text-decoration: underline;
+          text-decoration-thickness: 5px;
+          text-decoration-color: var(--active-link-color);
+        }
       }
+
     }
 
     button{
