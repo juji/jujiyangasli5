@@ -131,12 +131,4 @@ export class Ball {
     this.elm.style.setProperty('--pos-y', this.y + 'px')
   }
 
-
-  animate(){
-    
-    
-    
-    
-  }
-
 }
