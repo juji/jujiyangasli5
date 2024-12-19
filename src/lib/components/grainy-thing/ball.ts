@@ -1,3 +1,4 @@
+import { frame, cancelFrame } from "motion"
 
 const colors = [
   [196, 229, 56], // '#C4E538',
@@ -44,6 +45,11 @@ export class Ball {
 
   baseSpeed = 1
 
+  runFunc = {
+    update: () => {},
+    render: () => {}
+  }
+
   constructor(
     elm: HTMLDivElement,
   ){
@@ -80,8 +86,19 @@ export class Ball {
     this.bottomBorder = window.innerHeight - (this.radius * Math.random())
   }
 
+  start(){
+    this.runFunc.render = () => { this.render() }
+    this.runFunc.update = () => { this.update() }
+    frame.update(this.runFunc.update, true)
+    frame.render(this.runFunc.render, true)
+  }
 
-  animate(){
+  stop(){
+    cancelFrame(this.runFunc.update)
+    cancelFrame(this.runFunc.render)
+  }
+
+  update(){
     if(this.x > this.rightBorder){
       this.accelX -= this.accelDelta
     }
@@ -107,9 +124,18 @@ export class Ball {
       Math.min(this.speedY + this.accelY, this.maxSpeed), 
       -this.maxSpeed
     )
-    
+  }
+
+  render(){
     this.elm.style.setProperty('--pos-x', this.x + 'px')
     this.elm.style.setProperty('--pos-y', this.y + 'px')
+  }
+
+
+  animate(){
+    
+    
+    
     
   }
 

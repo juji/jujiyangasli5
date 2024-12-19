@@ -1,41 +1,53 @@
 <script lang="ts">
   import { Ball } from "./ball";
-  import IntersectionObserver from "svelte-intersection-observer";
-
-  let intersectingElm: HTMLDivElement | null = $state(null);
-  let intersecting = $state(true);
+  import { elmInView } from "$lib/funtions/elm-in-view";
+  
   let dBalls: Ball[] = $state([]);
+  let intersecting = $state(true)
 
-  $effect(() => { 
+  $effect(() => {
 
+    // set initial intersecting
+    const elm = document.querySelector('#grainy-thing-scroll-detect')
+    const top = elm?.getBoundingClientRect().top
+    if(top && top < 0 && intersecting){
+      intersecting = false
+    }
+
+    // set dBalls
     if(!dBalls.length){
       const jsBalls: Ball[] = []
       const balls = document.querySelectorAll('.ball')
       balls.forEach(ball => {
-        jsBalls.push(new Ball(
+        const dball = new Ball(
           ball as HTMLDivElement,
-        ))
+        )
+        jsBalls.push(dball)
       })
       dBalls = jsBalls
-      requestAnimationFrame(function anim(){
-        dBalls.forEach(ball => ball.animate())
-        if(intersecting) requestAnimationFrame(anim)
-      })
     }
-
-    else if(intersecting){
-      requestAnimationFrame(function anim(){
-        dBalls.forEach(ball => ball.animate())
-        if(intersecting) requestAnimationFrame(anim)
-      })
-    }
-    
   })
+
+  $effect(() => {
+    elmInView({
+      selector: '#grainy-thing-scroll-detect',
+      onIn(){
+        console.log('in')
+        dBalls.forEach(v => v.start())
+        intersecting = true
+      },
+      onOut(){
+        console.log('out')
+        dBalls.forEach(v => v.stop())
+        intersecting = false
+      },
+      margin: "50% 0px 0px 0px",
+    })
+  })
+
 </script>
 
-<IntersectionObserver element={intersectingElm} bind:intersecting>
-  <div bind:this={intersectingElm}></div>
-</IntersectionObserver>
+<div id="grainy-thing-scroll-detect"></div>
 
 <svg xmlns="http://www.w3.org/2000/svg" class="hidden">
   <filter id="goo">
@@ -81,6 +93,7 @@
     opacity: 0;
     transition: opacity 500ms;
     background: rgba(0,0,0,0.8);
+    /* background: rgba(0,0,0,0.3); */
     
     &.shown{
       opacity: 1;

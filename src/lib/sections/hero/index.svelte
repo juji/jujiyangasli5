@@ -1,15 +1,16 @@
 <script lang="ts">
   import Logo from './logo.svelte'
   import Menu from './menu.svelte';
-  import MenuObserver from '$lib/components/menu-observer.svelte';
+  import { sectionInView } from '$lib/funtions/section-in-view';
   import '$lib/styles/rubbery.css'
 
-  let intersectingElm: HTMLDivElement | null = $state(null);
+  let elm: HTMLElement
+  $effect(() => { sectionInView( elm ) })
 
 </script>
 
-<MenuObserver element={intersectingElm} id="home">
-<div class="hero" id="home" bind:this={intersectingElm}>
+
+<div class="hero" id="home" bind:this={elm}>
   <header>
     <Logo />
     <Menu />
@@ -23,7 +24,6 @@
     <a class="link outgoing" style="--delay:200ms" href="https://blog.jujiyangasli.com" target="_blank">Blog</a>
   </div>
 </div>
-</MenuObserver>
 
 <style>
   @keyframes webdev {

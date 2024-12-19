@@ -1,25 +1,20 @@
 <script lang="ts">
-  import MenuObserver from '$lib/components/menu-observer.svelte';
-  let intersectingElm: HTMLElement | null = $state(null);
-  let intersecting = $state(false)
+  import { sectionInView } from '$lib/funtions/section-in-view';
+
+  let elm: HTMLElement;
 
   let { works } = $props();
   
-  $effect(() => {
-    console.log('intersecting', intersecting)
-    console.log(works)
-  })
+  $effect(() => { sectionInView( elm ) })
 
 </script>
 
-<MenuObserver element={intersectingElm} id="works" bind:intersecting>
-  <section id="works" bind:this={intersectingElm}>
-    <h2 class="section-title">Works</h2>
-    <div class="works">
-      
-    </div>
-  </section>
-</MenuObserver>
+<section id="works" bind:this={elm}>
+  <h2 class="section-title">Works</h2>
+  <div class="works">
+    
+  </div>
+</section>
 
 <style>
   .works{

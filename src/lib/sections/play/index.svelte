@@ -1,15 +1,15 @@
 <script lang="ts">
   import DummyPage from "$lib/components/dummy-page.svelte";
-  import MenuObserver from '$lib/components/menu-observer.svelte';
+  import { sectionInView } from '$lib/funtions/section-in-view';
 
-  let intersectingElm: HTMLDivElement | null = $state(null);
+  let elm: HTMLElement
+  $effect(() => { sectionInView( elm ) })
 
 </script>
 
-<MenuObserver element={intersectingElm} id="play">
+
 <DummyPage>
-  <div id="play" bind:this={intersectingElm}>
+  <div id="play" bind:this={elm}>
     this is play
   </div>
 </DummyPage>
-</MenuObserver>
