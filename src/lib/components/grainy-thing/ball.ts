@@ -39,7 +39,7 @@ export class Ball {
   bottomBorder = 0
 
   // blur = 0
-  maxSpeed = 1.5
+  maxSpeed = 2
   accelDelta = 0.05
   // state = {}
 

@@ -32,16 +32,14 @@
     elmInView({
       selector: '#grainy-thing-scroll-detect',
       onIn(){
-        console.log('in')
         dBalls.forEach(v => v.start())
         intersecting = true
       },
       onOut(){
-        console.log('out')
         dBalls.forEach(v => v.stop())
         intersecting = false
       },
-      margin: "50% 0px 0px 0px",
+      margin: "0px 0px 0px 0px",
     })
   })
 
