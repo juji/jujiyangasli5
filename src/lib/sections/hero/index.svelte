@@ -50,7 +50,7 @@
     }
 
     p.webdev{
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: 600;
       animation-name: webdev;
       animation-duration: 200ms;

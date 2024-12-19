@@ -4,22 +4,31 @@
 
   let intersectingElm: HTMLDivElement | null = $state(null);
   let intersecting = $state(true);
+  let dBalls: Ball[] = $state([]);
 
   $effect(() => { 
 
-    const jsBalls: Ball[] = []
-    const balls = document.querySelectorAll('.ball')
-    
-    balls.forEach(ball => {
-      jsBalls.push(new Ball(
-        ball as HTMLDivElement,
-      ))
-    })
+    if(!dBalls.length){
+      const jsBalls: Ball[] = []
+      const balls = document.querySelectorAll('.ball')
+      balls.forEach(ball => {
+        jsBalls.push(new Ball(
+          ball as HTMLDivElement,
+        ))
+      })
+      dBalls = jsBalls
+      requestAnimationFrame(function anim(){
+        dBalls.forEach(ball => ball.animate())
+        if(intersecting) requestAnimationFrame(anim)
+      })
+    }
 
-    requestAnimationFrame(function anim(){
-      jsBalls.forEach(ball => ball.animate())
-      requestAnimationFrame(anim)
-    })
+    else if(intersecting){
+      requestAnimationFrame(function anim(){
+        dBalls.forEach(ball => ball.animate())
+        if(intersecting) requestAnimationFrame(anim)
+      })
+    }
     
   })
 </script>
@@ -47,31 +56,45 @@
     <feComposite in="blur" in2="goo" operator="in" result="composite" />
   </filter>
 </svg>
-<div class="wrapper" class:hide={!intersecting}>
+<div class="wrapper">
   <div class="grain">
     <div class="balls">
-      <div class="ball" style="--delay:200ms;--pos-x:50%;--pos-y:50%;--color:6,82,221;--diameter:860px"></div>
-      <div class="ball" style="--delay:500ms;--pos-x:56%;--pos-y:6%;--color:234,32,39;--diameter:676px"></div>
-      <div class="ball" style="--delay:700ms;--pos-x:18%;--pos-y:40%;--color:153,128,250;--diameter:698px"></div>
-      <div class="ball" style="--delay:1200ms;--pos-x:67%;--pos-y:34%;--color:163,203,56;--diameter:676px"></div>
-      <div class="ball" style="--delay:1500ms;--pos-x:43%;--pos-y:23%;--color:253,167,223;--diameter:646px"></div>
+      <div class="ball" style="--delay:1000ms;--pos-x:50%;--pos-y:50%;--color:6,82,221;--diameter:860px"></div>
+      <div class="ball" style="--delay:1300ms;--pos-x:56%;--pos-y:6%;--color:234,32,39;--diameter:676px"></div>
+      <div class="ball" style="--delay:1600ms;--pos-x:18%;--pos-y:40%;--color:153,128,250;--diameter:698px"></div>
+      <div class="ball" style="--delay:1900ms;--pos-x:67%;--pos-y:34%;--color:163,203,56;--diameter:676px"></div>
+      <div class="ball" style="--delay:2100ms;--pos-x:43%;--pos-y:23%;--color:253,167,223;--diameter:646px"></div>
     </div>
   </div>
 </div>
+<div class="overlay" class:shown={!intersecting}></div>
 
 <style>
-  .wrapper{
+
+  .overlay{
     position: fixed;
     width: 100%;
-    height: 100svh;
+    height: 100vh;
     top: 0;
     left: 0;
     z-index: 0;
+    opacity: 0;
     transition: opacity 3000ms;
-
-    &.hide{
-      opacity: 0.1;
+    background: rgba(0,0,0,0.8);
+    
+    &.shown{
+      opacity: 1;
     }
+  }
+
+  .wrapper{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    
   }
 
   svg.hidden{
