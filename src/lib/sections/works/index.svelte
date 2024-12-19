@@ -1,15 +1,28 @@
 <script lang="ts">
-  import DummyPage from "$lib/components/dummy-page.svelte";
   import MenuObserver from '$lib/components/menu-observer.svelte';
+  let intersectingElm: HTMLElement | null = $state(null);
+  let intersecting = $state(false)
 
-  let intersectingElm: HTMLDivElement | null = $state(null);
+  let { works } = $props();
+  
+  $effect(() => {
+    console.log('intersecting', intersecting)
+    console.log(works)
+  })
 
 </script>
 
-<MenuObserver element={intersectingElm} id="works">
-<DummyPage>
-  <div id="works" bind:this={intersectingElm}>
-    this is works
-  </div>
-</DummyPage>
+<MenuObserver element={intersectingElm} id="works" bind:intersecting>
+  <section id="works" bind:this={intersectingElm}>
+    <h2 class="section-title">Works</h2>
+    <div class="works">
+      
+    </div>
+  </section>
 </MenuObserver>
+
+<style>
+  .works{
+
+  }
+</style>

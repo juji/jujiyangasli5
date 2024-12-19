@@ -6,6 +6,10 @@
 
   let js = $state(false)
   $effect(() => { if(!js) js = true })
+
+  /** @type {{ data: import('./$types').PageData }} */
+	let { data } = $props();
+
 </script>
 
 <main>
@@ -15,7 +19,7 @@
   </div>
   <div class="nojs-overlay" class:js>
     <div class="container">
-      <Works />
+      <Works works={data.works} />
       <Play />
     </div>
   </div>

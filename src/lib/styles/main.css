@@ -6,7 +6,7 @@
   --text-color: rgba(255, 255, 255, 0.87);
   --link-color: #ffae00;
   --active-link-color: #00ff00;
-  --page-width: 900px;
+  --page-width: 1024px;
   --page-padding: 2rem;
   --text-shadow: 1px 1px 1px rgb(36, 36, 36);
 
@@ -22,7 +22,11 @@
 
   interpolate-size: allow-keywords;
 
+  @media screen and (min-width: 500px){
+    --page-padding: 3rem;
+  }
 }
+
 
 html, body{
   width: 100%;
@@ -51,5 +55,15 @@ a.outgoing{
     margin-left: 2px;
     scale: 0.8;
     content: '➔';
+  }
+}
+
+h2.section-title{
+  font-family: 'Grandstander';
+  font-size: 3rem;
+  padding-bottom: 2rem;
+  padding-top: 2rem;
+  @media screen and (min-width: 500px){
+    padding-top: 4rem;
   }
 }
