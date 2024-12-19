@@ -7,7 +7,7 @@
   }
 
   span.a{
-    animation-delay: 1300ms;
+    animation-delay: 1000ms;
     animation-name: rubbery-y;
     animation-duration: 1000ms;
     animation-fill-mode: both;
@@ -15,7 +15,7 @@
   }
 
   span.s{
-    animation-delay: 1400ms;
+    animation-delay: 1100ms;
     animation-name: rubbery-y;
     animation-duration: 1000ms;
     animation-fill-mode: both;

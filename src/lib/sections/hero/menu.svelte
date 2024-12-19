@@ -130,7 +130,12 @@
         width: 100vw;
         height: 100vh;
         backdrop-filter: blur(10px);
-        background: linear-gradient(240deg, rgba(0,0,0,1) 100px, rgba(0,0,0,0) 100%);
+        background: linear-gradient(
+          240deg, 
+          rgba(0,0,0,1) calc(100% - var(--page-width) - calc(100% - var(--page-width)) + 100px), 
+          rgba(0,0,0,0) 100%
+        );
+
         opacity: 0;
         transition: opacity 300ms 100ms, left 0ms 400ms;
 
@@ -202,7 +207,7 @@
       display: block;
 
       
-      animation-delay: 1700ms;
+      animation-delay: 2000ms;
       animation-name: rubbery-xy;
       animation-duration: 1000ms;
       animation-fill-mode: both;
