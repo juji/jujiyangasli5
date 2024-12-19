@@ -194,6 +194,7 @@
       cursor: pointer;
       background-color: transparent;
       outline: 2px solid var(--text-color);
+      background-color: rgb(from var(--text-color) r g b / 0.2);
       border: 0px;
       border-radius: 50%;
       width: 3rem;
@@ -241,7 +242,7 @@
 
       &:hover{
         background-color: var(--text-color);
-        outline: 1px solid var(--background-color);
+        outline: 1px solid rgb(from var(--background-color) r g b / 0.2);
         span{
           background-color: var(--background-color);
         }
