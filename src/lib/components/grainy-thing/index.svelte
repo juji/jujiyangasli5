@@ -79,7 +79,7 @@
     left: 0;
     z-index: 0;
     opacity: 0;
-    transition: opacity 3000ms;
+    transition: opacity 500ms;
     background: rgba(0,0,0,0.8);
     
     &.shown{
