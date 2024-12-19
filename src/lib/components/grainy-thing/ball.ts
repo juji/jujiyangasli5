@@ -52,12 +52,15 @@ export class Ball {
 
   constructor(
     elm: HTMLDivElement,
+    smallScreen: boolean
   ){
 
     this.elm = elm
 
     const smaller = Math.min(window.innerHeight, window.innerWidth)
-    this.radius = Math.round((smaller * 0.5) + (-50 + (Math.random() * 150)))
+    this.radius = smallScreen ? 
+      Math.round((smaller * 0.5) + (Math.random() * 100)) :
+      Math.round((smaller * 0.5) + (-50 + (Math.random() * 150)))
 
     this.x = Math.random() * window.innerWidth
     this.y = Math.random() * window.innerHeight
@@ -66,10 +69,10 @@ export class Ball {
     this.speedX = this.baseSpeed + Math.random() * (Math.random() < .5 ? 1 : -1)
     this.speedY = this.baseSpeed + Math.random() * (Math.random() < .5 ? 1 : -1)
 
-    this.leftBorder = this.radius * Math.random()
-    this.topBorder = this.radius * Math.random()
-    this.rightBorder = window.innerWidth - (this.radius * Math.random())
-    this.bottomBorder = window.innerHeight - (this.radius * Math.random())
+    this.leftBorder = smallScreen ? window.innerWidth * 0.1 : this.radius * Math.random()
+    this.topBorder = smallScreen ? window.innerHeight * 0.5 : this.radius * Math.random()
+    this.rightBorder = smallScreen ? window.innerWidth - (window.innerWidth * 0.1) : window.innerWidth - (this.radius * Math.random())
+    this.bottomBorder = smallScreen ? window.innerHeight - (window.innerHeight * 0.4) : window.innerHeight - (this.radius * Math.random())
 
     this.elm.style.setProperty('--diameter', (this.radius * 2) + 'px')
     this.elm.style.setProperty('--color', this.color)
