@@ -14,7 +14,7 @@
     <Logo />
     <Menu />
   </header>
-  <p class="webdev">I'm a web&nbsp;developer</p>
+  <p class="webdev">Hi, I'm a web&nbsp;developer</p>
   <div class="menu-bottom">
     <a class="link" style="--delay:0ms" href="#works">Works</a>
     <a class="link" style="--delay:50ms" href="#play">Play</a>
@@ -50,7 +50,7 @@
     }
 
     p.webdev{
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 600;
       animation-name: webdev;
       animation-duration: 200ms;

@@ -59,11 +59,11 @@
 <div class="wrapper">
   <div class="grain">
     <div class="balls">
-      <div class="ball" style="--delay:1000ms;--pos-x:50%;--pos-y:50%;--color:6,82,221;--diameter:860px"></div>
-      <div class="ball" style="--delay:1300ms;--pos-x:56%;--pos-y:6%;--color:234,32,39;--diameter:676px"></div>
-      <div class="ball" style="--delay:1600ms;--pos-x:18%;--pos-y:40%;--color:153,128,250;--diameter:698px"></div>
-      <div class="ball" style="--delay:1900ms;--pos-x:67%;--pos-y:34%;--color:163,203,56;--diameter:676px"></div>
-      <div class="ball" style="--delay:2100ms;--pos-x:43%;--pos-y:23%;--color:253,167,223;--diameter:646px"></div>
+      <div class="ball" style="--delay:2000ms;--pos-x:50%;--pos-y:50%;--color:6,82,221;--diameter:860px"></div>
+      <div class="ball" style="--delay:2300ms;--pos-x:56%;--pos-y:6%;--color:234,32,39;--diameter:676px"></div>
+      <div class="ball" style="--delay:2600ms;--pos-x:18%;--pos-y:40%;--color:153,128,250;--diameter:698px"></div>
+      <div class="ball" style="--delay:2900ms;--pos-x:67%;--pos-y:34%;--color:163,203,56;--diameter:676px"></div>
+      <div class="ball" style="--delay:3100ms;--pos-x:43%;--pos-y:23%;--color:253,167,223;--diameter:646px"></div>
     </div>
   </div>
 </div>
