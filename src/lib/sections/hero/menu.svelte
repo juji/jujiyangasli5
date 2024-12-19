@@ -207,7 +207,7 @@
       display: block;
 
       
-      animation-delay: 2000ms;
+      animation-delay: 1500ms;
       animation-name: rubbery-xy;
       animation-duration: 1000ms;
       animation-fill-mode: both;
