@@ -1,5 +1,6 @@
 import { works } from '$lib/data/works/data.server.js';
 import { play } from '$lib/data/play/data.server.js';
+import { techs } from '$lib/data/techs/data.server.js';
 import type { WorkSingle } from '$lib/data/works/types.js';
 
 const workSingles: WorkSingle[] = works.map(v => {
@@ -14,6 +15,7 @@ const workSingles: WorkSingle[] = works.map(v => {
 export async function load({ params }) {
 	return {
 		works: workSingles,
-		play
+		play,
+		techs
 	};
 }

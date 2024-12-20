@@ -3,6 +3,7 @@
   import Hero from '$lib/sections/hero/index.svelte'
   import Works from '$lib/sections/works/index.svelte'
   import Play from '$lib/sections/play/index.svelte'
+  import Techs from '$lib/sections/techs/index.svelte'
 
   let js = $state(false)
   $effect(() => { if(!js) js = true })
@@ -21,6 +22,7 @@
     <div class="container">
       <Works works={data.works} />
       <Play play={data.play} />
+      <Techs techs={data.techs} />
     </div>
   </div>
 </main>

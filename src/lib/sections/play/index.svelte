@@ -11,21 +11,21 @@
 </script>
 
 
-<div class="container" id="play" bind:this={elm}>
+<section class="container" id="play" bind:this={elm}>
   <h2 class="section-title">Play</h2>
-  <h3>
+  <p>
     Things learned, 
     or just playing around: 
     <a target="_blank" 
       rel="noreferrer nofollower"
       class="outgoing" 
       href="https://jujiplay.com">https://jujiplay.com</a>
-  </h3>
+  </p>
   <br /><br />
   <div class="grid">
     {#each play as item}
       <div class="item">
-        <img src={item.image} alt={item.title} />
+        <img src={item.image} alt={item.title} loading="lazy" />
         <p>{item.title}</p>
         <a 
           aria-label={item.title}
@@ -35,7 +35,7 @@
       </div>
     {/each}
   </div>
-</div>
+</section>
 
 <style>
   .container{
@@ -44,7 +44,7 @@
     .grid{
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
-      gap: 5px;
+      gap: 3px;
 
       .item{
 
@@ -52,7 +52,6 @@
         overflow: hidden;
         background-color: black;
         position: relative;
-        border-radius: 5px;
 
         p{
           position: absolute;
