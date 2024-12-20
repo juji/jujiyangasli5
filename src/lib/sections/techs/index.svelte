@@ -37,7 +37,7 @@
     Techs
   </h2>
   <p>Things i've worked with</p><br /><br />
-  <div class="grid" onmouseenter={setColor}>
+  <div class="grid" onmouseenter={setColor} role="table">
     {#each techs as techrow}
     {#each techrow as item}
       <div class="item">
@@ -53,12 +53,12 @@
   .container{
 
     --tech-color: 196 229 56;
+    margin-bottom: 8rem;
 
     .grid{
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
       gap: 3px;
-      margin-bottom: 4rem;
 
       .item{
         aspect-ratio: 1;

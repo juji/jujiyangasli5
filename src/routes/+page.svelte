@@ -4,6 +4,7 @@
   import Works from '$lib/sections/works/index.svelte'
   import Play from '$lib/sections/play/index.svelte'
   import Techs from '$lib/sections/techs/index.svelte'
+  import Contact from '$lib/sections/contact/index.svelte'
 
   let js = $state(false)
   $effect(() => { if(!js) js = true })
@@ -26,9 +27,21 @@
     </div>
   </div>
 </main>
-
+<footer>
+  <div class="container">
+    <Contact />
+  </div>
+</footer>
 
 <style>
+
+  footer{
+    position: relative;
+    padding: 2rem 0;
+    border-top: 1px solid #4e4e4e;
+    background: #272727;
+  }
+
   main{
 
     position: relative;
@@ -43,13 +56,14 @@
       }
     }
     
-    .container{
-      position: relative;
-      max-width: var(--page-width);
-      padding: 0 var(--page-padding);
-      margin: 0 auto;
-      z-index: 2;
-    }
+    
+  }
 
+  .container{
+    position: relative;
+    max-width: var(--page-width);
+    padding: 0 var(--page-padding);
+    margin: 0 auto;
+    z-index: 2;
   }
 </style>
