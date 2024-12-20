@@ -1,6 +1,6 @@
 <script lang="ts">
   import DummyPage from "$lib/components/dummy-page.svelte";
-  import { sectionInView } from '$lib/funtions/section-in-view';
+  import { sectionInView } from '$lib/functions/section-in-view';
 
   let elm: HTMLElement
   $effect(() => { sectionInView( elm ) })

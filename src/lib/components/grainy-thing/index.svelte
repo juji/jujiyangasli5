@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Ball } from "./ball";
-  import { elmInView } from "$lib/funtions/elm-in-view";
+  import { elmInView } from "$lib/functions/elm-in-view";
 
   // lower performance
   // import { frame, cancelFrame } from "motion"

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { WorkSingle } from "$lib/data/works/types";
 	import { animate } from "motion/mini";
+  import { noHover } from "$lib/functions/no-hover";
 
   let { work, inView, index }: {
     work: WorkSingle
@@ -13,7 +14,7 @@
   let rect: any = null;
   function onMouseMove(ev: MouseEvent){
 
-    if(window.matchMedia("(hover: none)")) return;
+    if(noHover()) return;
 
     if(!rect) rect = elm.getBoundingClientRect()
 
@@ -50,8 +51,7 @@
   }
 
   function onMouseLeave(){
-
-    if(window.matchMedia("(hover: none)")) return;
+    if(noHover()) return;
 
     animate(
       elm, 

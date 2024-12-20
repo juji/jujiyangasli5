@@ -1,7 +1,7 @@
 <script lang="ts">
   import Logo from './logo.svelte'
   import Menu from './menu.svelte';
-  import { sectionInView } from '$lib/funtions/section-in-view';
+  import { sectionInView } from '$lib/functions/section-in-view';
   import '$lib/styles/rubbery.css'
 
   let elm: HTMLElement

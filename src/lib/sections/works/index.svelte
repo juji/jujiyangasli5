@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { sectionInView } from '$lib/funtions/section-in-view';
+  import { sectionInView } from '$lib/functions/section-in-view';
   import Thumbnail from './thumbnail.svelte';
 
   let elm: HTMLElement;
