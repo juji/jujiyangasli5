@@ -107,7 +107,7 @@
     z-index: 0;
     opacity: 0;
     transition: opacity 500ms;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,1);
     /* background: rgba(0,0,0,0.3); */
     
     &.shown{

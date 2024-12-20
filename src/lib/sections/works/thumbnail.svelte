@@ -92,7 +92,9 @@
       bind:this={anchor}
       onmousemove={onMouseMove}
       onmouseleave={onMouseLeave}
-      href={`/work/${work.id}`} 
+      href={work.url}
+      target="_blank"
+      rel="noreferrer noopenner"
       aria-label={`see ${work.title} page`}></a>
   </div>
 </div>
