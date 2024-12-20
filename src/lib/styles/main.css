@@ -9,6 +9,7 @@
   --page-width: 1024px;
   --page-padding: 2rem;
   --text-shadow: 1px 1px 1px rgb(36, 36, 36);
+  --drop-shadow: drop-shadow(1px 1px 1px rgb(36, 36, 36));
 
   font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.6;
