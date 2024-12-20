@@ -1,16 +1,17 @@
 <script>
+
+  import MenuButton from "./menu-button.svelte";
+
   let js = $state(false)
   let open = $state(false)
   $effect(() => {if(!js) js = true})
+  
 </script>
 
 
 <div class="menu-top" class:js id="menuTop">
-  <button aria-label="menu" onclick={() => {open = !open}}>
-    <span class="a"></span>
-    <span class="b"></span>
-    <span class="c"></span>
-  </button>
+  <MenuButton onClick={() => {open = !open}} />
+  
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <div class="menu-container" class:open onclick={() => {open = !open}} tabindex="0" role="button">
     <nav class="menu-content">
@@ -25,15 +26,6 @@
 </div>
 
 <style>
-
-  @keyframes menuSpan {
-    from {
-      width: 0%;
-    }
-    to {
-      width: 50%;
-    }
-  }
 
   .menu-top{
     display: flex;
@@ -184,83 +176,16 @@
       .menu-content{
         a{
           font-weight: 600;
+          :global(&.active){
+            text-decoration: underline;
+            text-decoration-thickness: 5px;
+            text-decoration-color: var(--active-link-color);
+          }
         }
 
-        :global(a.active){
-          text-decoration: underline;
-          text-decoration-thickness: 5px;
-          text-decoration-color: var(--active-link-color);
-        }
       }
 
-    }
-
-    button{
-      cursor: pointer;
-      background-color: transparent;
-      outline: 2px solid var(--text-color);
-      background-color: rgb(from var(--text-color) r g b / 0.2);
-      border: 0px;
-      border-radius: 50%;
-      width: 3rem;
-      height: 3rem;
-      display: block;
-
-      
-      animation-delay: 1500ms;
-      animation-name: rubbery-xy;
-      animation-duration: 1000ms;
-      animation-fill-mode: both;
-      animation-timing-function: linear;
-      position: relative;
-
-      span{
-        background-color: var(--text-color);
-        position: absolute;
-        display: block;
-        left: 50%;
-        top: 50%;
-        transform: translate3d(-50%, -50%, 0);
-        width: 50%;
-        height: 3px;
-        border-radius: 5px;
-
-        animation-name: menuSpan;
-        animation-duration: 300ms;
-        animation-fill-mode: both;
-        animation-timing-function: cubic-bezier(.3,.08,.54,1.49);
-
-        &.a{
-          transform: translate3d(-50%, calc(-50% - 8px), 0);
-          animation-delay: 2200ms;
-        }
-
-        &.b{
-          animation-delay: 2300ms;
-        }
-
-        &.c{
-          transform: translate3d(-50%, calc(-50% + 8px), 0);
-          animation-delay: 2400ms;
-        }
-      }
-
-      &:hover{
-        background-color: var(--text-color);
-        outline: 1px solid rgb(from var(--background-color) r g b / 0.2);
-        span{
-          background-color: var(--background-color);
-        }
-      }
-
-      &:active{
-        opacity: 0.8;
-      }
-
-      @media screen and (min-width: 380px) {
-        width: 4rem;
-        height: 4rem;
-      }
     }
   }
+    
 </style>

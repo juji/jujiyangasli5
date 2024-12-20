@@ -5,11 +5,13 @@ export function elmInView({
   onIn,
   onOut,
   margin = "0px 0px 0px 0px",
+  amount = 0
 }:{
   selector: string, 
   onIn: (entry: IntersectionObserverEntry) => void,
   onOut: (entry: IntersectionObserverEntry) => void,
-  margin?: string
+  margin?: string,
+  amount?: number
 }){
 
   inView(selector, (info) => {
@@ -21,6 +23,6 @@ export function elmInView({
     return (leaveInfo) => { onOut(leaveInfo) }
     
   // @ts-expect-error
-  },{ margin })
+  },{ margin, amount })
 
 }
