@@ -147,7 +147,6 @@
 
             padding: 0.5rem 0;
             padding-right: 2rem;
-            font-size: 21px;
             opacity: 0;
             transform: translateY(21px);
             transition: 
@@ -175,7 +174,6 @@
 
       .menu-content{
         a{
-          font-weight: 600;
           :global(&.active){
             text-decoration: underline;
             text-decoration-thickness: 5px;
