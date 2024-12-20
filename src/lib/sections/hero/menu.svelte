@@ -89,7 +89,7 @@
   
       }
 
-      &:has(button:hover), &:has(.menu-container:hover){
+      :global(&:has(button:hover)), &:has(.menu-container:hover){
         .menu-container{
           height: auto;
           opacity: 1;
