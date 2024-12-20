@@ -10,7 +10,7 @@
 
   $effect(() => {
 
-    // if screen width < 500, just use 3 balls
+    // if screen width < 768, just use 3 balls
     let smaller = false
     if(Math.min(window.innerWidth,window.innerHeight) <= 768){
       document.querySelectorAll('.ball').forEach(v => {
