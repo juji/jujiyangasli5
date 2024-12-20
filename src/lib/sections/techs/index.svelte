@@ -37,10 +37,10 @@
     Techs
   </h2>
   <p>Things i've worked with</p><br /><br />
-  <div class="grid" onmouseenter={setColor} role="table">
+  <div class="grid" onmouseenter={setColor} role="complementary">
     {#each techs as techrow}
     {#each techrow as item}
-      <div class="item" role="cell">
+      <div class="item">
         <img src={item.image} alt={item.title} loading="lazy" />
         <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.title}></a>
       </div>
