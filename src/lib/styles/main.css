@@ -58,6 +58,7 @@ a.outgoing{
     margin-left: 2px;
     scale: 0.8;
     content: '➔';
+    text-decoration: none;
   }
 }
 
