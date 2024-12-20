@@ -20,7 +20,7 @@
   <div class="nojs-overlay" class:js>
     <div class="container">
       <Works works={data.works} />
-      <Play />
+      <Play play={data.play} />
     </div>
   </div>
 </main>
