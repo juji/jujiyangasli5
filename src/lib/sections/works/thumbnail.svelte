@@ -12,6 +12,9 @@
   let anchor:HTMLAnchorElement;
   let rect: any = null;
   function onMouseMove(ev: MouseEvent){
+
+    if(window.matchMedia("(hover: none)")) return;
+
     if(!rect) rect = elm.getBoundingClientRect()
 
     // ratios [-1,1]
@@ -47,6 +50,9 @@
   }
 
   function onMouseLeave(){
+
+    if(window.matchMedia("(hover: none)")) return;
+
     animate(
       elm, 
       { transform: `rotateX(0rad) rotateY(0rad)` }
@@ -155,8 +161,16 @@
       &:hover{
         background: radial-gradient(
           circle at 50% 50%, 
-          hsl(0 0% 0% / .1) 50%, 
-          hsl(0 0% 0% / .2) 80%
+          hsl(0 0% 0% / .0) 50%, 
+          hsl(0 0% 0% / .1) 80%
+        )
+      }
+
+      @media (hover: none) {
+        background: radial-gradient(
+          circle at 50% 50%, 
+          hsl(0 0% 0% / .0) 50%, 
+          hsl(0 0% 0% / .1) 80%
         )
       }
     }
@@ -172,6 +186,9 @@
 
     &:active{
       translate: 0 0 50px;
+      @media (hover: none) {
+        translate: 0 0 -50px;
+      } 
     }
   }
 </style>
