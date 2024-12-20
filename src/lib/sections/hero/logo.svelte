@@ -41,6 +41,8 @@
     font-size: 3rem;
     margin-left: 13px;
     position: relative;
+    text-rendering: geometricPrecision;
+    font-synthesis: none;
 
     @media screen and (min-width: 380px) {
       font-size: 5rem;

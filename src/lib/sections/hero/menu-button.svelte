@@ -116,7 +116,7 @@
     animation-timing-function: linear;
     position: relative;
 
-    filter: drop-shadow(1px 1px 1px rgb(36, 36, 36)); /* var(--drop-shadow); */
+    filter: var(--drop-shadow);
 
     /* border-top: 5px solid red;
     border-left: 5px solid orange;
