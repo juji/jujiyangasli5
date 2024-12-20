@@ -40,7 +40,7 @@
   <div class="grid" onmouseenter={setColor} role="table">
     {#each techs as techrow}
     {#each techrow as item}
-      <div class="item">
+      <div class="item" role="cell">
         <img src={item.image} alt={item.title} loading="lazy" />
         <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.title}></a>
       </div>
