@@ -38,8 +38,7 @@
   footer{
     position: relative;
     padding: 2rem 0;
-    border-top: 1px solid #4e4e4e;
-    background: #272727;
+    border-top: 1px solid var(--border-color);
   }
 
   main{

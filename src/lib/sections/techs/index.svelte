@@ -62,7 +62,7 @@
 
       .item{
         aspect-ratio: 1;
-        border: 1px solid #353535;
+        border: 1px solid var(--border-color);
         position: relative;
         background: rgb(var(--tech-color) / 0);
         border-radius: 3px;
