@@ -1,25 +1,16 @@
-import Predator from './predator'
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import BoidBox from './boidBox';
 
 export default class Boids {
-
-  predator : Predator
-
-  // predatorBall: THREE.Mesh
-  predatorColor = 0x9b0000
 
   boidColor = 0xFFD700
   boidSize = 21
 
   renderer: THREE.WebGLRenderer
   camera: THREE.PerspectiveCamera
+  scene: THREE.Scene
   geometry: THREE.BufferGeometry
   position: THREE.Float32BufferAttribute
-  scene: THREE.Scene
-  // controls: OrbitControls
-  boidPoints: THREE.Points
 
   counterIndex = 0
   boidBox: BoidBox
@@ -31,7 +22,6 @@ export default class Boids {
     canvas: HTMLCanvasElement | OffscreenCanvas,
     boundingBox: { width:number, height: number },
     boidBox: BoidBox,
-    predator: Predator,
     initialPos: number[],
     devicePixelRatio: number,
     customShaderMaterial?: THREE.ShaderMaterial
@@ -40,7 +30,6 @@ export default class Boids {
   }){
 
     this.boidBox = obj.boidBox
-    this.predator = obj.predator
     this.offscreen = !!obj.offscreen
 
     // scene
@@ -56,17 +45,6 @@ export default class Boids {
     camera.position.x = 4000;
     camera.position.y = 1000;
 
-    // predator
-    // const sphere = new THREE.SphereGeometry( this.predator.size ); 
-    // const sphereMaterial = new THREE.MeshPhysicalMaterial({ 
-    //   color: this.predatorColor,
-    //   roughness: 0.5
-    // }); 
-    // const predatorBall = new THREE.Mesh( sphere, sphereMaterial ); 
-    // predatorBall.position.x = this.predator.x
-    // predatorBall.position.y = this.predator.y
-    // predatorBall.position.z = this.predator.z
-
     // lights
     const light = new THREE.AmbientLight( 0xffffff );
     const dLight = new THREE.DirectionalLight( 0xffffff, 1 );
@@ -79,17 +57,6 @@ export default class Boids {
     renderer.setPixelRatio(Math.min(obj.devicePixelRatio, 2))
     renderer.setSize( obj.boundingBox.width, obj.boundingBox.height, !this.offscreen );
     renderer.setClearColor( 0x000000, 0 )
-
-    // Controls
-    let controls = new OrbitControls( 
-      camera, 
-      obj.canvas as HTMLElement 
-    )
-    controls.enableDamping = true
-    controls.enablePan = false
-    controls.minDistance = 3000
-    controls.maxDistance = 20000
-    controls.enabled = false
 
     // boid
     const geometry = new THREE.BufferGeometry();
@@ -111,39 +78,20 @@ export default class Boids {
     });
     const boidPoints = new THREE.Points( geometry, material );
 
-    // helpers
-    // const axesHelper = new THREE.AxesHelper( 100 );
-    // const box = new THREE.Box3();
-    // box.setFromCenterAndSize( 
-    //   new THREE.Vector3( 0, 0, 0 ),
-    //   new THREE.Vector3( 
-    //     this.boidBox.right - this.boidBox.left,
-    //     this.boidBox.bottom - this.boidBox.top, 
-    //     this.boidBox.front - this.boidBox.back, 
-    //   ),
-    // );
-    // const boxHelper = new THREE.Box3Helper( box, 0x980000 );
-    
-    // adding to scene
-    // scene.add( predatorBall );
+
     scene.add( boidPoints );
     scene.add( light );
     scene.add( dLight );
     scene.add( dLight2 );
-    // scene.add( axesHelper )
-    // scene.add( boxHelper );
-    
-    // this.clock = new THREE.Clock()
 
-    this.geometry = geometry
-    this.position = position
     this.renderer = renderer
-    this.boidPoints = boidPoints
     this.camera = camera
     this.scene = scene
-    // this.predatorBall = predatorBall
-    // this.controls = controls
-    this.renderer.render( this.scene, this.camera );
+    this.position = position
+    this.geometry = geometry
+
+    camera.lookAt(scene.position)
+    this.renderer.render( scene, camera );
 
   }
 
@@ -159,7 +107,6 @@ export default class Boids {
   }
 
   draw(){
-    // this.controls.update()
     this.renderer.render( this.scene, this.camera );
   }
 

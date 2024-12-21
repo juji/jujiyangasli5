@@ -1,11 +1,12 @@
 <script>
-  
+
   import HeroAnimation from '$lib/components/hero-animation.svelte'
   import Hero from '$lib/components/sections/hero/index.svelte'
   import Works from '$lib/components/sections/works/index.svelte'
   import Play from '$lib/components/sections/play/index.svelte'
   import Techs from '$lib/components/sections/techs/index.svelte'
   import Contact from '$lib/components/sections/contact/index.svelte'
+  import Container from '$lib/components/container.svelte'
 
   let js = $state(false)
   $effect(() => { if(!js) js = true })
@@ -17,21 +18,21 @@
 
 <main>
   <HeroAnimation />
-  <div class="container">
+  <Container>
     <Hero />
-  </div>
+  </Container>
   <div class="nojs-overlay" class:js>
-    <div class="container">
+    <Container>
       <Works works={data.works} />
       <Play play={data.play} />
       <Techs techs={data.techs} />
-    </div>
+    </Container>
   </div>
 </main>
 <footer>
-  <div class="container">
+  <Container>
     <Contact />
-  </div>
+  </Container>
 </footer>
 
 <style>
@@ -57,13 +58,5 @@
     }
     
     
-  }
-
-  .container{
-    position: relative;
-    max-width: var(--page-width);
-    padding: 0 var(--page-padding);
-    margin: 0 auto;
-    z-index: 2;
   }
 </style>

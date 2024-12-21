@@ -52,6 +52,7 @@
   $effect(() => {
     scroll((_, info) => {
 
+      // console.log(info)
       if(!info.y.current){
         overlay && overlay.style.setProperty('opacity', '0')
         if(offscreen) offscreen = false

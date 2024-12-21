@@ -77,7 +77,7 @@
 </script>
 
 <div class="container">
-  <div class="work-thumb" class:inView 
+  <div class="work-thumb" id={work.id} class:inView 
     bind:this={elm} 
     style={`--index:${index}`}
   >
@@ -92,9 +92,7 @@
       bind:this={anchor}
       onmousemove={onMouseMove}
       onmouseleave={onMouseLeave}
-      href={work.url}
-      target="_blank"
-      rel="noreferrer noopenner"
+      href={`/work/${work.id}`}
       aria-label={`see ${work.title} page`}></a>
   </div>
 </div>

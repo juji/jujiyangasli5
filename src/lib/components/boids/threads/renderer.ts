@@ -1,7 +1,6 @@
 import Predator from '../items/predator'
 import Boids from '../items/boids'
 import BoidBox from '../items/boidBox'
-// import Calculator from './calculator?worker'
 
 export class Renderer {
 
@@ -10,7 +9,6 @@ export class Renderer {
 
   boids: Boids
   boidBox: BoidBox
-
   predator: Predator
   
   calculators: Worker[] = []
@@ -139,7 +137,6 @@ export class Renderer {
       devicePixelRatio: window.devicePixelRatio,
       boundingBox: screen,
       boidBox: this.boidBox,
-      predator: this.predator,
       initialPos: sharedArray.reduce((a,b,i)=> {
         if(
           !(i % this.arrLen) ||
