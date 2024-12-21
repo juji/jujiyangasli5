@@ -8,7 +8,7 @@ export const minVelocity: number = 2
 export const turnFactor: number = 0.1
 
 // Separation
-export const avoidFactor = 0.1
+export const avoidFactor = 0.05
 export const protectedRange = 30
 
 // Alignment

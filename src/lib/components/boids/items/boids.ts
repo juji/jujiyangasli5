@@ -52,9 +52,9 @@ export default class Boids {
       100000
     );
 
-    camera.position.z = 5000;
+    camera.position.z = 6000;
     camera.position.x = 4000;
-    camera.position.y = 2000;
+    camera.position.y = 1000;
 
     // predator
     // const sphere = new THREE.SphereGeometry( this.predator.size ); 

@@ -29,7 +29,7 @@ export class Renderer {
   boidsLength: number
 
   //
-  reportFps: (fps: number) => void
+  reportFps: ((fps: number) => void) | null;
   prevTime: number = performance.now()
   frames = 0
 
@@ -41,12 +41,18 @@ export class Renderer {
 
   paused = false
 
+  // event listener, after drawing
+  // n = current loop count
+  onAfterDraw: ((n: number) => void) | null = null
+  numDraw = 0
+
   constructor(par: {
     canvas: HTMLCanvasElement,
     boidNum: number,
     screen: { width:number, height: number },
     reportFps?: (fps: number) => void,
     reportStats?: (obj: { remaining: number, eaten: number }) => void
+    onAfterDraw?: (n:number) => void
   }){
 
     const {
@@ -54,16 +60,19 @@ export class Renderer {
       boidNum,
       screen,
       reportFps,
-      reportStats
+      reportStats,
+      onAfterDraw
     } = par
 
     if(!boidNum) throw new Error('boidNum is falsy')
 
     this.canvas = canvas
-    this.reportFps = reportFps || ((fps: number) => {})
     this.predator = new Predator()
     this.boidNum = boidNum
+
+    this.reportFps = reportFps || null
     this.reportStats = reportStats || null
+    this.onAfterDraw = onAfterDraw || null
 
     this.calculatorNum = this.calcPerThread ? Math.max(Math.ceil(boidNum / this.calcPerThread), 1) : 0
 
@@ -220,16 +229,23 @@ export class Renderer {
     if(this.hasChanged.findIndex(v => !v) === -1){
       this.posCounter.fill(0)
       this.hasChanged.fill(0)
-      
-      // fps counter
-      const time = performance.now();
-      this.frames++;
-      if (time > this.prevTime + 1000) {
-        let fps = Math.round( ( this.frames * 1000 ) / ( time - this.prevTime ) );
-        this.prevTime = time;
-        this.frames = 0;
-        this.reportFps(fps)
+
+      if(this.onAfterDraw) {
+        this.onAfterDraw(++this.numDraw)
       }
+
+      if(this.reportFps){
+        // fps counter
+        const time = performance.now();
+        this.frames++;
+        if (time > this.prevTime + 1000) {
+          let fps = Math.round( ( this.frames * 1000 ) / ( time - this.prevTime ) );
+          this.prevTime = time;
+          this.frames = 0;
+          this.reportFps(fps)
+        }
+      }
+      
     }
 
     if(this.reportStats)

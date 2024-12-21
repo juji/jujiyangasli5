@@ -6,6 +6,18 @@
   let canvas: HTMLCanvasElement
   let overlay: HTMLDivElement
   let renderer: Renderer | null = $state(null)
+
+  // when do we want to start showing the boids
+  let maxAfterDraw = 100
+  let shown = $state(false)
+
+  function onAfterDraw(n : number){
+    if(n >= maxAfterDraw && !shown){
+      console.log(n, 'showing')
+      shown = true
+    }
+  }
+
   $effect(() => {
 
     renderer = new Renderer({
@@ -14,7 +26,8 @@
       screen: {
         width: window.innerWidth,
         height: window.innerHeight
-      }
+      },
+      onAfterDraw
     })
 
     window.addEventListener('resize', () => {
@@ -39,7 +52,9 @@
 
   $effect(() => {
     scroll((_, info) => {
-  
+      
+      if(!overlay.classList.contains('shown')) return;
+
       if(!info.y.current){
         overlay && overlay.style.setProperty('opacity', '0')
         if(offscreen) offscreen = false
@@ -62,7 +77,7 @@
 </script>
 
 <canvas class="boidcanvas" bind:this={canvas}></canvas>
-<div class="overlay" id="boids-overlay" bind:this={overlay}></div>
+<div class="overlay" class:shown bind:this={overlay}></div>
 
 <style>
 
@@ -82,9 +97,13 @@
     top: 0;
     left: 0;
     z-index: 1;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 500ms;
     background: rgba(0,0,0,1);
+
+    &.shown{
+      opacity: 0;
+    }
   }
 
 </style>

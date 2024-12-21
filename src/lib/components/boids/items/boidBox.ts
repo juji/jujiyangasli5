@@ -26,7 +26,7 @@ export default class BoidBox {
 
   // the box
   width = 800
-  depth = 500
+  depth = 800
   height = 500
 
   // grids
