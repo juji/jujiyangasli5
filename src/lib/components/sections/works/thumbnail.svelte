@@ -127,6 +127,7 @@
     outline: 1px solid black;
     opacity: 0;
     
+    scroll-margin-top: 2rem;
     translate: 0 0 0px;
     transition: 
       translate 500ms var(--easeOutBounce),

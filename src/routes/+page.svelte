@@ -5,8 +5,9 @@
   import Works from '$lib/components/sections/works/index.svelte'
   import Play from '$lib/components/sections/play/index.svelte'
   import Techs from '$lib/components/sections/techs/index.svelte'
-  import Contact from '$lib/components/sections/contact/index.svelte'
   import Container from '$lib/components/container.svelte'
+
+  import Footer from '$lib/components/footer.svelte'
 
   let js = $state(false)
   $effect(() => { if(!js) js = true })
@@ -29,19 +30,9 @@
     </Container>
   </div>
 </main>
-<footer>
-  <Container>
-    <Contact />
-  </Container>
-</footer>
+<Footer />
 
 <style>
-
-  footer{
-    position: relative;
-    padding: 2rem 0;
-    border-top: 1px solid var(--border-color);
-  }
 
   main{
 

@@ -50,19 +50,19 @@
     scroll((_, info) => {
 
       if(!info.y.current){
-        overlay.style.setProperty('opacity', '0')
+        overlay && overlay.style.setProperty('opacity', '0')
         if(offscreen) offscreen = false
       }
 
       else if(info.y.current >= window.innerHeight){
         if(offscreen) return;
         offscreen = true
-        overlay.style.setProperty('opacity', '1')
+        overlay && overlay.style.setProperty('opacity', '1')
       }
       
       else {
         if(offscreen) offscreen = false 
-        overlay.style.setProperty('opacity', `${1 - ((window.innerHeight - info.y.current) / window.innerHeight)}`) 
+        overlay && overlay.style.setProperty('opacity', `${1 - ((window.innerHeight - info.y.current) / window.innerHeight)}`) 
       }
     })
 

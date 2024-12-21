@@ -1,8 +1,11 @@
 <script>
-  let { children } = $props();
+  let { 
+    children, 
+    className = '' 
+  } = $props();
 </script>
 
-<div class="container">
+<div class={`container${className?` ${className}`:''}`} >
   {@render children()}
 </div>
 
