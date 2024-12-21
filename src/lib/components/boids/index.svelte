@@ -51,8 +51,6 @@
 
   $effect(() => {
     scroll((_, info) => {
-      
-      if(!overlay.classList.contains('shown')) return;
 
       if(!info.y.current){
         overlay && overlay.style.setProperty('opacity', '0')
@@ -67,7 +65,9 @@
   
       else {
         if(offscreen) offscreen = false 
-        overlay && overlay.style.setProperty('opacity', `${1 - ((window.innerHeight - info.y.current) / window.innerHeight)}`) 
+        overlay && overlay.style.setProperty(
+          'opacity', `${1 - ((window.innerHeight - info.y.current) / window.innerHeight)}`
+        ) 
       }
     })
   })
