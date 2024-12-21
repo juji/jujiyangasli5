@@ -12,8 +12,7 @@
   let shown = $state(false)
 
   function onAfterDraw(n : number){
-    if(n >= maxAfterDraw && !shown){
-      console.log(n, 'showing')
+    if(!shown && n >= maxAfterDraw){
       shown = true
     }
   }
