@@ -12,12 +12,7 @@ const workSingles: WorkSingle[] = works.map(v => {
 })
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ params, setHeaders }) {
-
-	setHeaders({
-		"Cross-Origin-Opener-Policy": "same-origin",
-		"Cross-Origin-Embedder-Policy": "require-corp"
-	});
+export async function load({ params }) {
 
 	return {
 		works: workSingles,
