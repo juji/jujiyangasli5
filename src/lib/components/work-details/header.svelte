@@ -9,21 +9,8 @@
   } } = $props();
 
   function onBackButton(ev: MouseEvent){
-    
-    const lastDomain = document.referrer.replace(/https?\:\/\//,'').split('/')[0]
-    const hasReferrer = !!lastDomain
-    const sameDomain = page.url.host === lastDomain
-    
-    console.log({
-      referrer: document.referrer,
-      lastDomain, hasReferrer, sameDomain
-    })
-
-    if(hasReferrer && sameDomain){
-      ev.preventDefault()
-      history.back()
-    }
-    
+    ev.preventDefault()
+    history.back()
   }
 
 </script>
@@ -31,12 +18,12 @@
 <header>
   <Container>
     <div class="header-container">
-      <h1>
-        <span class="logo"><a href="/">juji };</a></span>
-        <span class="work-title">{data.work.title}</span>
-      </h1>
+      <div class="heading">
+        <a href="/">juji&nbsp;};</a>
+        <h1 class="work-title">{data.work.title}</h1>
+      </div>
       <div class="back-button">
-        <a onclick={onBackButton} href={`/#${data.work.id}`}>◀ Home</a>
+        <a onclick={onBackButton} href={`/#${data.work.id}`}>◀ Back</a>
       </div>
     </div>
   </Container>
@@ -57,16 +44,16 @@
       display: flex;
       justify-content: space-between;
 
-      h1{
-        .logo{
+      .heading{
+        display: flex;
+        align-items: center;
+        a {
+          color: var(--text-color);
+          text-decoration: none;
           font-family: 'Grandstander';
           font-size: 21px;
           margin-right: 1rem;
-          a {
-            color: var(--text-color);
-            text-decoration: none;
-          }  
-        }
+        } 
       }
     }
 

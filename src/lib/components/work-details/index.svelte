@@ -4,8 +4,9 @@
   import Footer from "$lib/components/footer.svelte";
   import Container from "$lib/components/container.svelte";
   import Header from "./header.svelte";
+	import Slider from "./slider.svelte";
+  import Text from './text/index.svelte'
 
-  /** @type {{ data: import('./$types').PageData }} */
 	let { data }: { data: { 
     work: Work
     content: string 
@@ -16,17 +17,25 @@
 <Header data={data} />
 <main>
   <Container>
-    <p>
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-    </p>
-    <p>
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-    </p>
-    <p>
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-    </p>
+    <div class="container">
+      <Slider images={data.work.images} />
+      <Text data={data} />
+    </div>
   </Container>
 </main>
 <Footer />
 
-<style></style>
+<style>
+
+  main{
+    .container{
+      @media screen and (min-width: 1024px) {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    margin-bottom: 4rem;
+  }
+</style>
