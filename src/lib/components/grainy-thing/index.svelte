@@ -1,13 +1,11 @@
 <script lang="ts">
   import { Ball } from "./ball";
-  import { elmInView } from "$lib/functions/elm-in-view";
   import { scroll } from "motion";
 
   // lower performance
   // import { frame, cancelFrame } from "motion"
   
   let dBalls: Ball[] = $state([]);
-  // let intersecting = $state(true)
 
   $effect(() => {
 
@@ -20,13 +18,6 @@
       })
       smaller = true
     }
-
-    // set initial intersecting
-    // const elm = document.querySelector('#grainy-thing-scroll-detect')
-    // const top = elm?.getBoundingClientRect().top
-    // if(top && top < -5 && intersecting){
-    //   intersecting = false
-    // }
 
     // set dBalls
     if(!dBalls.length){
@@ -62,41 +53,24 @@
         o.style.setProperty('opacity', '0')
         if(offscreen) offscreen = false
       }
+
       else if(info.y.current >= window.innerHeight){
-        if(!offscreen){
-          offscreen = true
-          const o = document.querySelector('#grainy-thing-overlay') as HTMLElement
-          o.style.setProperty('opacity', '1')
-        }
+        if(offscreen) return;
+        offscreen = true
+        const o = document.querySelector('#grainy-thing-overlay') as HTMLElement
+        o.style.setProperty('opacity', '1')
       }
       
-      else if(info.y.current < window.innerHeight){
+      else {
         if(offscreen) offscreen = false 
         const o = document.querySelector('#grainy-thing-overlay') as HTMLElement
         o.style.setProperty('opacity', `${1 - ((window.innerHeight - info.y.current) / window.innerHeight)}`) 
       }
     })
 
-    // elmInView({
-    //   selector: '#grainy-thing-scroll-detect',
-    //   onIn(entry){
-    //     intersecting = true
-    //     requestAnimationFrame(function draw(){
-    //       dBalls.forEach(v => v.update())
-    //       dBalls.forEach(v => v.render())
-    //       if(intersecting) requestAnimationFrame(draw)
-    //     })
-    //   },
-    //   onOut(){
-    //     intersecting = false
-    //   },
-    //   margin: "5px 0px 0px 0px",
-    // })
   })
 
 </script>
-
-<!-- <div id="grainy-thing-scroll-detect"></div> -->
 
 <svg xmlns="http://www.w3.org/2000/svg" class="hidden">
   <filter id="goo">
