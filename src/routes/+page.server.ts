@@ -25,3 +25,6 @@ export async function load({ params, setHeaders }) {
 		techs
 	};
 }
+
+
+// disable vercel tollbar
