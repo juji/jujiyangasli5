@@ -1,11 +1,11 @@
 <script>
-  // import GrainyThing from '$lib/components/grainy-thing/index.svelte'
+  
   import HeroAnimation from '$lib/components/hero-animation.svelte'
-  import Hero from '$lib/sections/hero/index.svelte'
-  import Works from '$lib/sections/works/index.svelte'
-  import Play from '$lib/sections/play/index.svelte'
-  import Techs from '$lib/sections/techs/index.svelte'
-  import Contact from '$lib/sections/contact/index.svelte'
+  import Hero from '$lib/components/sections/hero/index.svelte'
+  import Works from '$lib/components/sections/works/index.svelte'
+  import Play from '$lib/components/sections/play/index.svelte'
+  import Techs from '$lib/components/sections/techs/index.svelte'
+  import Contact from '$lib/components/sections/contact/index.svelte'
 
   let js = $state(false)
   $effect(() => { if(!js) js = true })
