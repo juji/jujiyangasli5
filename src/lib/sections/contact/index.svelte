@@ -14,6 +14,7 @@
   <h2>About Me:</h2>
 
   <address class="left">
+    <p>my name is</p>
     <p class="name">Tri Rahmat Gunadi</p>
     <p class="nick">But people call me juji..</p><br />
     <p class="mail"><a href="mailto:him@jujiyangasli.com">him@jujiyangasli.com</a></p>

@@ -4,8 +4,10 @@ import { defineConfig } from 'vite';
 /** @type {import('vite').Plugin} */
 const viteServerConfig = () => ({
 	name: 'add-headers',
+	// @ts-expect-error
 	configureServer: (server) => {
-		server.middlewares.use((req, res, next) => {
+		// @ts-expect-error
+		server.middlewares.use((_, res, next) => {
 			res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
 			res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
 			next();
