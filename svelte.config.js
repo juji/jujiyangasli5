@@ -19,6 +19,7 @@ const config = {
 				domains: ['jujiyangasli.com'],
 			}
 		})
+
 	}
 };
 
