@@ -1,12 +1,13 @@
 <script lang="ts">
   import { Ball } from "./ball";
   import { elmInView } from "$lib/functions/elm-in-view";
+  import { scroll } from "motion";
 
   // lower performance
   // import { frame, cancelFrame } from "motion"
   
   let dBalls: Ball[] = $state([]);
-  let intersecting = $state(true)
+  // let intersecting = $state(true)
 
   $effect(() => {
 
@@ -21,11 +22,11 @@
     }
 
     // set initial intersecting
-    const elm = document.querySelector('#grainy-thing-scroll-detect')
-    const top = elm?.getBoundingClientRect().top
-    if(top && top < -5 && intersecting){
-      intersecting = false
-    }
+    // const elm = document.querySelector('#grainy-thing-scroll-detect')
+    // const top = elm?.getBoundingClientRect().top
+    // if(top && top < -5 && intersecting){
+    //   intersecting = false
+    // }
 
     // set dBalls
     if(!dBalls.length){
@@ -42,27 +43,60 @@
     }
   })
 
+  let offscreen = $state(false)
+
   $effect(() => {
-    elmInView({
-      selector: '#grainy-thing-scroll-detect',
-      onIn(){
-        intersecting = true
-        requestAnimationFrame(function draw(){
-          dBalls.forEach(v => v.update())
-          dBalls.forEach(v => v.render())
-          if(intersecting) requestAnimationFrame(draw)
-        })
-      },
-      onOut(){
-        intersecting = false
-      },
-      margin: "5px 0px 0px 0px",
+    if(!offscreen) requestAnimationFrame(function draw(){
+      dBalls.forEach(v => v.update())
+      dBalls.forEach(v => v.render())
+      if(!offscreen) requestAnimationFrame(draw)
     })
+  })
+
+  $effect(() => {
+
+    scroll((progress, info) => {
+
+      if(!info.y.current){
+        const o = document.querySelector('#grainy-thing-overlay') as HTMLElement
+        o.style.setProperty('opacity', '0')
+        if(offscreen) offscreen = false
+      }
+      else if(info.y.current >= window.innerHeight){
+        if(!offscreen){
+          offscreen = true
+          const o = document.querySelector('#grainy-thing-overlay') as HTMLElement
+          o.style.setProperty('opacity', '1')
+        }
+      }
+      
+      else if(info.y.current < window.innerHeight){
+        if(offscreen) offscreen = false 
+        const o = document.querySelector('#grainy-thing-overlay') as HTMLElement
+        o.style.setProperty('opacity', `${1 - ((window.innerHeight - info.y.current) / window.innerHeight)}`) 
+      }
+    })
+
+    // elmInView({
+    //   selector: '#grainy-thing-scroll-detect',
+    //   onIn(entry){
+    //     intersecting = true
+    //     requestAnimationFrame(function draw(){
+    //       dBalls.forEach(v => v.update())
+    //       dBalls.forEach(v => v.render())
+    //       if(intersecting) requestAnimationFrame(draw)
+    //     })
+    //   },
+    //   onOut(){
+    //     intersecting = false
+    //   },
+    //   margin: "5px 0px 0px 0px",
+    // })
   })
 
 </script>
 
-<div id="grainy-thing-scroll-detect"></div>
+<!-- <div id="grainy-thing-scroll-detect"></div> -->
 
 <svg xmlns="http://www.w3.org/2000/svg" class="hidden">
   <filter id="goo">
@@ -83,7 +117,7 @@
     <feComposite in="blur" in2="goo" operator="in" result="composite" />
   </filter>
 </svg>
-<div class="wrapper">
+<div class="wrapper" class:shown={!offscreen}>
   <div class="grain">
     <div class="balls">
       <div style="--delay:2000ms;--pos-x:50%;--pos-y:50%;--color:6,82,221;--diameter:860px" class="ball" ></div>
@@ -94,7 +128,7 @@
     </div>
   </div>
 </div>
-<div class="overlay" class:shown={!intersecting}></div>
+<div class="overlay" id="grainy-thing-overlay"></div>
 
 <style>
 
@@ -108,11 +142,6 @@
     opacity: 0;
     transition: opacity 500ms;
     background: rgba(0,0,0,1);
-    /* background: rgba(0,0,0,0.3); */
-    
-    &.shown{
-      opacity: 1;
-    }
   }
 
   .wrapper{
@@ -123,6 +152,10 @@
     left: 0;
     z-index: 0;
     transform: translate3d(1,1,1);
+
+    :global(&.shown){
+      display: block;
+    }
   }
 
   svg.hidden{

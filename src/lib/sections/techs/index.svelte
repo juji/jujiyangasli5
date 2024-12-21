@@ -22,7 +22,6 @@
 
   function setColor(){
     const index = Math.floor(Math.random() * colors.length)
-    console.log(colors[ index ])
     elm.style.setProperty(
       '--tech-color', 
       colors[ index ].join(' ')

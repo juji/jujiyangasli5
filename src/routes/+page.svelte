@@ -1,5 +1,5 @@
 <script>
-  import GrainyThing from '$lib/components/grainy-thing/index.svelte'
+  // import GrainyThing from '$lib/components/grainy-thing/index.svelte'
   import Hero from '$lib/sections/hero/index.svelte'
   import Works from '$lib/sections/works/index.svelte'
   import Play from '$lib/sections/play/index.svelte'
@@ -15,7 +15,7 @@
 </script>
 
 <main>
-  <GrainyThing />
+  <!-- <GrainyThing /> -->
   <div class="container">
     <Hero />
   </div>
