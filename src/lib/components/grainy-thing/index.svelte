@@ -6,6 +6,7 @@
   // import { frame, cancelFrame } from "motion"
   
   let dBalls: Ball[] = $state([]);
+  let overlay: HTMLDivElement
 
   $effect(() => {
 
@@ -46,25 +47,22 @@
 
   $effect(() => {
 
-    scroll((progress, info) => {
+    scroll((_, info) => {
 
       if(!info.y.current){
-        const o = document.querySelector('#grainy-thing-overlay') as HTMLElement
-        o.style.setProperty('opacity', '0')
+        overlay.style.setProperty('opacity', '0')
         if(offscreen) offscreen = false
       }
 
       else if(info.y.current >= window.innerHeight){
         if(offscreen) return;
         offscreen = true
-        const o = document.querySelector('#grainy-thing-overlay') as HTMLElement
-        o.style.setProperty('opacity', '1')
+        overlay.style.setProperty('opacity', '1')
       }
       
       else {
         if(offscreen) offscreen = false 
-        const o = document.querySelector('#grainy-thing-overlay') as HTMLElement
-        o.style.setProperty('opacity', `${1 - ((window.innerHeight - info.y.current) / window.innerHeight)}`) 
+        overlay.style.setProperty('opacity', `${1 - ((window.innerHeight - info.y.current) / window.innerHeight)}`) 
       }
     })
 
@@ -102,7 +100,7 @@
     </div>
   </div>
 </div>
-<div class="overlay" id="grainy-thing-overlay"></div>
+<div class="overlay" bind:this={overlay}></div>
 
 <style>
 
