@@ -127,7 +127,7 @@
         <img 
           src={image.url} 
           alt={image.title} 
-          loading="lazy"
+          loading={index === 0 ? null : "lazy"}
           data-index={index}
         />
       </picture>
