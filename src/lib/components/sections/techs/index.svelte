@@ -10,21 +10,22 @@
     js = true
   })
 
-  const colors = [
-    [119, 0, 117],
-    [0, 49, 184],
-    [0, 76, 37],
-    [39, 82, 0],
-    [39, 82, 0],
-    [42, 42, 42],
-    [55, 55, 55],
+  let colors = [
+    [119, 0, 117], // purple
+    [0, 49, 184], // blue
+    [39, 82, 0], // green
+    [120, 0, 0], // red
+    [116, 74, 7] // orange
   ]
+  // so random will actualy get edges value
+  colors = [ ...colors, ...colors, ...colors ] 
 
   function setColor(){
     const index = Math.floor(Math.random() * colors.length)
+    console.log(colors[ index ])
     elm.style.setProperty(
       '--tech-color', 
-      colors[ index ].join(' ')
+      `rgb(${colors[ index ].join(' ')})`
     )
   }
 
@@ -51,7 +52,7 @@
 <style>
   .container{
 
-    --tech-color: 196 229 56;
+    --tech-color: rgb(119, 0, 117); /* i currently like this purple */
     margin-bottom: 8rem;
 
     .grid{
@@ -63,7 +64,7 @@
         aspect-ratio: 1;
         border: 1px solid var(--border-color);
         position: relative;
-        background: rgb(var(--tech-color) / 0);
+        background: rgb( from var(--tech-color) r g b / 0);
         border-radius: 3px;
         transition: 
           background 1000ms 500ms,
@@ -94,8 +95,8 @@
             background 0ms,
             border 0ms
           ;
-          border: 1px solid hsl(from rgb(var(--tech-color)) h s calc(l * 2));
-          background: rgb(var(--tech-color));
+          border: 1px solid hsl(from var(--tech-color) h s calc(l * 2));
+          background: var(--tech-color);
           img{
             scale: 1.1;
           }
