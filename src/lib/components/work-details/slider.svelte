@@ -2,55 +2,66 @@
 
 <script lang="ts">
   import type { WorkImage } from "$lib/data/works/types";
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import 'photoswipe/style.css';
+
+  let js = $state(false)
+  $effect(() => { js = true })
 
   const { images }: {
     images: WorkImage[]
   } = $props()
 
   let currentImage = $state(0)
-  let stopInterval = $state(false)
   let timeout = 5000
   let container: HTMLElement
-  let startSlider = $state(new Date())
+  let sliderStart = $state(new Date())
+  let stopSlider = $state(false)
 
   $effect(() => {
+
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: '#my-gallery',
+      children: 'a',
+      pswpModule: () => import('photoswipe')
+    });
+    lightbox.init();
+
+  })
+  
+  $effect(() => {
+
     // to make svelte understand 
-    // that we are using startSlider
-    startSlider;
+    // that we are using sliderStart
+    sliderStart;
+    let ss = sliderStart.toISOString()
 
     setTimeout(() => {
-      if(stopInterval) return;
+      if(stopSlider) return;
+      if(sliderStart.toISOString() !== ss) return;
 
       if(currentImage === (images.length-1)) currentImage = 0
       else currentImage += 1
       
       container && container.scrollTo( window.innerWidth * currentImage ,0)
       
-      startSlider = new Date()
+      sliderStart = new Date()
     },timeout)
   })
 
 
   // touch handlers
   let touchEndInt = 0;
-  function cancelTimer(){
+  function onTouchStart(){
     if(touchEndInt) clearTimeout(touchEndInt)
-    stopInterval = true
+    stopSlider = true
   }
 
   function onTouchEnd(){
     if(touchEndInt) clearTimeout(touchEndInt)
     touchEndInt = setTimeout(() => {
-      stopInterval = false
-      startSlider = new Date()
-    },5000)
-  }
-
-  function onTouchCancel(){
-    if(touchEndInt) clearTimeout(touchEndInt)
-    touchEndInt = setTimeout(() => {
-      stopInterval = false
-      startSlider = new Date()
+      stopSlider = false
+      sliderStart = new Date()
     },5000)
   }
 
@@ -77,25 +88,34 @@
     }
   })
 
-  // check if not touch input
+  // update stopSlider based on browser size
+  let innerWidth = $state(0)
   $effect(() => {
-    const mm = window.matchMedia('(hover: none)')
-    if(!mm || !mm.matches){
-      stopInterval = true
+    
+    if(innerWidth >= 1024 && !stopSlider){
+      stopSlider = true
+    }else if(innerWidth < 1024 && stopSlider){
+      stopSlider = false
+      sliderStart = new Date()
     }
+
   })
 
 
 </script>
 
+<svelte:window bind:innerWidth={innerWidth} />
 
-<div class="container" bind:this={container}>
-
+<div class="container" id="my-gallery" data-fancybox={1} bind:this={container}>
   {#each images as image, index }
-    <button
-      ontouchstart={cancelTimer}
+    <a
+      href={image.url}
+      data-pswp-width={image.dimension.image.width}
+      data-pswp-height={image.dimension.image.height}
+      target="_blank"
+      ontouchstart={onTouchStart}
+      ontouchcancel={onTouchEnd}
       ontouchend={onTouchEnd}
-      ontouchcancel={onTouchCancel}
     >
       <img src={image.thumbnail} 
         alt={image.title} 
@@ -104,13 +124,30 @@
         loading="lazy"
         data-index={index}
       />
-    </button>
+    </a>
   {/each}
-
 </div>
 
 <style>
+
+  :global(.pswp__icn-shadow){
+    /* stroke: #8c8c8c; */
+    stroke: transparent;
+  }
+
+  :global(.pswp__icn){
+    fill: #adadad;
+  }
+
+  :global(.pswp__container){
+    transition: transform 300ms ease-out;
+    @media screen and (hover: none){
+      transition: initial;
+    }
+  }
+
   .container{
+
     position: relative;
     left: calc(-1 * var(--page-padding));
     width: calc(100% + var(--page-padding) + var(--page-padding));
@@ -130,7 +167,7 @@
     -webkit-user-select: none; 
     -webkit-touch-callout: none; 
 
-    button{
+    a{
       margin: 0;
       padding: 0;
       border: none;
@@ -158,11 +195,11 @@
       left: 0;
       width: 100%;
 
-      button{
+      a{
         margin-bottom: 1rem;
       }
 
-      button, img{
+      a, img{
         height: auto;
         aspect-ratio: unset;
       }
