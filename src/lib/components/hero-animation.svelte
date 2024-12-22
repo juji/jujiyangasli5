@@ -6,7 +6,8 @@
   load the module
   */
 
-
+  let js = false
+  $effect(() => { js = true })
 
   let importPromise: Promise<any> | null = $state(null)
   $effect(() => {

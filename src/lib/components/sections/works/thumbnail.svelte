@@ -100,9 +100,9 @@
     style={`--index:${index}`}
   >
     <img 
-      src={work.image.url} 
-      width={work.image.dimension.image.width}
-      height={work.image.dimension.image.height}
+      src={work.image.thumbnail} 
+      width={work.image.dimension.thumb.width}
+      height={work.image.dimension.thumb.height}
       alt={work.image.title}
       loading="lazy"
       class="work-image"

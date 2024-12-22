@@ -25,7 +25,11 @@
   <div class="grid">
     {#each play as item}
       <div class="item">
-        <img src={item.image} alt={item.title} loading="lazy" />
+        <img src={item.image} 
+          alt={item.title} 
+          width={item.width} 
+          height={item.height} 
+          loading="lazy" />
         <p>{item.title}</p>
         <a 
           aria-label={item.title}
