@@ -18,6 +18,7 @@
 
     if(!rect) rect = elm.getBoundingClientRect()
 
+    // mouse pos 
     // ratios [-1,1]
     const x = ( ev.x - (rect.left + (rect.width / 2)) ) / (rect.width / 2)
     const y = ( ev.y - (rect.top + (rect.height / 2)) ) / (rect.height / 2)
@@ -27,26 +28,47 @@
     const rotY = - 0.05 * Math.PI * x
     elm.style.setProperty(
       'transform', 
-      `rotateX(${rotX}rad) rotateY(${rotY}rad)`
+      `rotateX(${rotX}rad) rotateY(${rotY}rad) translate3d(0,0,0)`
     )
-
-    // light
+    
+    // light source is the mouse
+    // transform from [-1,1] into [0,100]
     const lightX = (x + 1) / 2 * 100
     const lightY = (y + 1) / 2 * 100
+    
+    // it can be simple
+    // let shadowOpacity = 0.2
 
-    const shadow = 1 - (.2 + (.8 * lightY / 100))
-    const lightness = shadow - 0.7
+    // but why...?
 
-    // let it be ellipse
+    // use y to set shadows
+    // less y = more shadow; 
+    // it's like we get more light from a different source when we tilt the card
+
+    // first we have our y value: lightY
+    // which we will convert into [0,1]
+
+    // we need the shadow opacity, not the shadow
+    // let shadowOpacity = 1 - (lightY / 100)
+
+    // but the range is too big
+    // shadow appear when the mouse is on the very top 
+    // and the dissapear on the very bottom
+    // so we setup range [0.2,0.8] 
+    // and result * .5 for less intensity
+    let shadowOpacity = (1 - (.2 + (.8 * lightY / 100))) * 0.5
+
     anchor.style.setProperty(
       'background',
       `radial-gradient(
-        ellipse at ${lightX}% ${lightY}%, 
-        hsl(0 0% 0% / ${lightness}) 50%, 
-        hsl(0 0% 0% / ${shadow}) 100%
+        circle at ${lightX}% ${lightY}%, 
+        hsl(0 0% 0% / 0) 50%, 
+        hsl(0 0% 0% / ${shadowOpacity}) 100%
       )`
     )
 
+    // yeah, this is a playground
+    // test it on the amber card
 
   }
 
@@ -62,17 +84,13 @@
       anchor, 
       { background: `radial-gradient(
         circle at 50% 50%, 
-        hsl(0 0% 0% / .4) 50%, 
-        hsl(0 0% 0% / .4) 80%
+        hsl(0 0% 0% / .0) 50%, 
+        hsl(0 0% 0% / .1) 80%
       )` }
     )
     
     rect = null
   }
-
-  // $effect(() => {
-  //   console.log('inView', inView)
-  // })
 
 </script>
 
@@ -87,7 +105,19 @@
       height={work.image.dimension.image.height}
       alt={work.image.title}
       loading="lazy"
+      class="work-image"
     />
+    <div 
+      class="work-logo"
+      data-bg={work.logo.url}
+    >
+      <img 
+        src={work.logo.url}
+        width={work.logo.width}
+        height={work.logo.height}
+        alt={work.image.title + ' logo'}
+      />
+    </div>
     <a 
       bind:this={anchor}
       onmousemove={onMouseMove}
@@ -103,6 +133,7 @@
     perspective: 1000px;
     z-index: 2;
     transition: z-index 0ms 200ms;
+    position: relative;
     &:hover{ 
       transition: z-index 0ms 0ms;
       z-index: 20;
@@ -120,31 +151,55 @@
         0.973, 1, 0.988, 0.984, 0.988, 1
       );
 
-    aspect-ratio: 16 / 8; /* wait, what? yes, we do with what we got */
     position: relative;
-    overflow: hidden;
+    transform-style: preserve-3d;
+    /* overflow: hidden; with overflow hidden, the 3d effect will not work */
     background: black;
     outline: 1px solid black;
     opacity: 0;
+
+    will-change: transform;
     
     scroll-margin-top: 2rem;
     translate: 0 0 0px;
+    
     transition: 
       translate 500ms var(--easeOutBounce),
-      opacity 300ms var(--animInDelay) ease-out,
-      transform 100ms ease-out
+      opacity 300ms var(--animInDelay) ease-out
     ;
 
     &.inView{
       opacity: 1;
     }
 
-    img{
-      object-position: center center;
-      object-fit: contain;
+    img.work-image{
+      aspect-ratio: 16 / 9;
+      object-position: center top;
+      object-fit: cover;
       opacity: .8;
       opacity: 1;
       transition: opacity 200ms 200ms;
+      transform: translateZ(0px);
+    }
+
+    .work-logo{
+      position: absolute;
+      bottom: 16px;
+      left: 21px;
+      height: 34px;
+      background: white;
+      border: 1px solid #b9b9b9;
+      padding: 8px;
+
+      transform: translateZ(30px);
+      pointer-events: none;
+      z-index: 1;
+
+      img{
+        display: block;
+        height: 100%;
+        width: auto;
+      }
     }
 
     a{
@@ -153,33 +208,19 @@
       left:0;
       width: 100%;
       height: 100%;
+      z-index: 10;
+      
       background: radial-gradient(
         circle at 50% 50%, 
-        hsl(0 0% 0% / .4) 50%, 
-        hsl(0 0% 0% / .4) 80%
+        hsl(0 0% 0% / .0) 50%, 
+        hsl(0 0% 0% / .1) 80%
       );
-
-      &:hover{
-        background: radial-gradient(
-          circle at 50% 50%, 
-          hsl(0 0% 0% / .0) 50%, 
-          hsl(0 0% 0% / .1) 80%
-        )
-      }
-
-      @media (hover: none) {
-        background: radial-gradient(
-          circle at 50% 50%, 
-          hsl(0 0% 0% / .0) 50%, 
-          hsl(0 0% 0% / .1) 80%
-        )
-      }
     }
 
     &:hover{
       translate: 0 0 100px;
 
-      img{
+      img.work-image{
         transition: opacity 0ms;
         opacity: 1;
       }

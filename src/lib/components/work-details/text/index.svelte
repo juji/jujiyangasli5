@@ -24,7 +24,7 @@
 
 <style>
   .container{
-    line-height: 1.9rem;
+    line-height: 1.8rem;
     margin-top: 3rem;
 
     :global(ul),:global(ol){ 
@@ -36,7 +36,7 @@
     }
 
     :global(blockquote) {
-      background-color: rgb(64 64 64 / 34%);
+      background-color: rgb(54, 54, 54);
       padding: 1.6rem 2rem;
       position: relative;
       overflow: hidden;
@@ -51,7 +51,7 @@
         top: 34px;
         left: 0;
         font-size: 144px;
-        color: #333;
+        color: #505050;
         z-index: -1;
       }
     }

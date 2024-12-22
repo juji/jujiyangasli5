@@ -32,7 +32,7 @@
       @media screen and (min-width: 1024px) {
         display: grid;
         gap: 1rem;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 60% 40%;
       }
     }
 
