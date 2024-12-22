@@ -156,21 +156,21 @@
     /* overflow: hidden; with overflow hidden, the 3d effect will not work */
     background: black;
     outline: 1px solid black;
-    opacity: 0;
-
+    
     will-change: transform;
     
-    scroll-margin-top: 2rem;
+    scroll-margin-top: 4rem;
     translate: 0 0 0px;
     
     transition: 
-      translate 500ms var(--easeOutBounce),
-      opacity 300ms var(--animInDelay) ease-out
+    translate 500ms var(--easeOutBounce),
+    opacity 300ms var(--animInDelay) ease-out
     ;
-
-    &.inView{
+    
+    /* opacity: 0; */
+    /* &.inView{
       opacity: 1;
-    }
+    } */
 
     img.work-image{
       aspect-ratio: 16 / 9;
@@ -218,7 +218,7 @@
     }
 
     &:hover{
-      translate: 0 0 100px;
+      translate: 0 0 50px;
 
       img.work-image{
         transition: opacity 0ms;
@@ -227,9 +227,9 @@
     }
 
     &:active{
-      translate: 0 0 50px;
+      translate: 0 0 10px;
       @media (hover: none) {
-        translate: 0 0 -50px;
+        translate: 0 0 -10px;
       } 
     }
   }
