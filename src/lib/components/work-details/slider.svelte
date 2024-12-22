@@ -114,8 +114,16 @@
       ontouchend={onTouchEnd}
     >
       <picture>
-        <source media="(max-width: 767px)" srcset={image.thumbnail} />
-        <source media="(min-width: 768px)" srcset={image.url} />
+        <source media="(max-width: 767px)" 
+          srcset={image.thumbnail} 
+          width={image.dimension.thumb.width}
+          height={image.dimension.thumb.height}
+        />
+        <source media="(min-width: 768px)" 
+          srcset={image.url} 
+          width={image.dimension.image.width}
+          height={image.dimension.image.height}
+        />
         <img 
           src={image.url} 
           alt={image.title} 
