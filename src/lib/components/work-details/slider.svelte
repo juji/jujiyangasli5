@@ -115,7 +115,7 @@
     >
       <picture>
         <source media="(max-width: 768px)" srcset={image.thumbnail} />
-        <source media="(min-width: 769px)" srcset={image.url} />
+        <source media="(min-width: 768px)" srcset={image.url} />
         <img 
           src={image.url} 
           alt={image.title} 
