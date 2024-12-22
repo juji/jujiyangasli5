@@ -5,9 +5,6 @@
   import PhotoSwipeLightbox from 'photoswipe/lightbox';
   import 'photoswipe/style.css';
 
-  let js = $state(false)
-  $effect(() => { js = true })
-
   const { images }: {
     images: WorkImage[]
   } = $props()
@@ -30,10 +27,9 @@
   })
   
   $effect(() => {
-
     // to make svelte understand 
     // that we are using sliderStart
-    sliderStart;
+    // also to prevent double invocation
     let ss = sliderStart.toISOString()
 
     setTimeout(() => {

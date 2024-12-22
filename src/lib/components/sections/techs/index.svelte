@@ -15,14 +15,15 @@
     [0, 49, 184], // blue
     [39, 82, 0], // green
     [120, 0, 0], // red
-    [116, 74, 7] // orange
+    [116, 74, 7], // orange
   ]
+
   // so random will actualy get edges value
+  // not so keen of having to write a big array
   colors = [ ...colors, ...colors, ...colors ] 
 
   function setColor(){
     const index = Math.floor(Math.random() * colors.length)
-    console.log(colors[ index ])
     elm.style.setProperty(
       '--tech-color', 
       `rgb(${colors[ index ].join(' ')})`
