@@ -1,6 +1,7 @@
 <script lang="ts">
   import { spring } from "motion"
   import { animate } from "motion/mini"
+  import '$lib/styles/rubbery.css'
 
   let { onClick } = $props();
   let button: HTMLButtonElement;
@@ -101,6 +102,15 @@
     }
   }
 
+  @keyframes buttonAnim {
+    0%{
+      scale: 0 0 1;
+    }
+    100%{
+      scale: 1 1 1;
+    }
+  }
+
   button{
     cursor: pointer;
     background-color: transparent;
@@ -110,10 +120,10 @@
     display: block;
     
     animation-delay: 1500ms;
-    animation-name: rubbery-xy;
+    animation-name: buttonAnim;
     animation-duration: 1000ms;
     animation-fill-mode: both;
-    animation-timing-function: linear;
+    animation-timing-function: var(--rubbery);
     position: relative;
 
     filter: var(--drop-shadow);
