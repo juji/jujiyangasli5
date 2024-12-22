@@ -113,13 +113,16 @@
       ontouchcancel={onTouchEnd}
       ontouchend={onTouchEnd}
     >
-      <img src={image.thumbnail} 
-        alt={image.title} 
-        width={image.dimension.thumb.width} 
-        height={image.dimension.thumb.height} 
-        loading="lazy"
-        data-index={index}
-      />
+      <picture>
+        <source media="(max-width: 768px)" srcset={image.thumbnail} />
+        <source media="(min-width: 769px)" srcset={image.url} />
+        <img 
+          src={image.url} 
+          alt={image.title} 
+          loading="lazy"
+          data-index={index}
+        />
+      </picture>
     </a>
   {/each}
 </div>
