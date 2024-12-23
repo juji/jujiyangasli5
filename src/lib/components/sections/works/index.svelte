@@ -27,10 +27,15 @@
   .works{
     display: grid;
     /* https://css-tricks.com/a-responsive-grid-layout-with-no-media-queries/ */
-    grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
-    grid-gap: 0.1rem;
+    /* grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr)); */
 
+    grid-template-columns: 1fr;
+    grid-gap: 0.1rem;
     margin-bottom: 4rem;
+
+    @media screen and (min-width: 800px) {
+      grid-template-columns: 1fr 1fr;
+    }
 
   }
 </style>

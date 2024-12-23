@@ -163,9 +163,11 @@
     translate: 0 0 0px;
     
     transition: 
-    translate 500ms var(--easeOutBounce),
-    opacity 300ms var(--animInDelay) ease-out
+      translate 500ms var(--easeOutBounce),
+      opacity 300ms var(--animInDelay) ease-out
     ;
+
+    min-width: 0px;
     
     /* opacity: 0; */
     /* &.inView{
@@ -180,6 +182,7 @@
       opacity: 1;
       transition: opacity 200ms 200ms;
       transform: translateZ(0px);
+      min-width: 0px;
     }
 
     .work-logo{
