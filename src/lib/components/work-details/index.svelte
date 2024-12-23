@@ -17,7 +17,7 @@
 <main>
   <Container>
     <div class="container">
-      <Slider images={data.work.images} />
+      <Slider id={data.work.id} images={data.work.images} />
       <Text data={data} />
     </div>
   </Container>

@@ -74,7 +74,7 @@
           { scale: '1 1' },
           { type: spring, duration: 0.7, bounce: 0.5 }
         ).then(() => {
-          circle.style.setProperty('rotate', `0rad`)
+          circle && circle.style.setProperty('rotate', `0rad`)
         })
       }
     })

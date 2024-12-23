@@ -5,8 +5,9 @@
   import PhotoSwipeLightbox from 'photoswipe/lightbox';
   import 'photoswipe/style.css';
 
-  const { images }: {
+  const { images, id }: {
     images: WorkImage[]
+    id: string
   } = $props()
 
   let currentImage = $state(0)
@@ -32,7 +33,7 @@
     // also to prevent double invocation
     let ss = sliderStart.toISOString()
 
-    setTimeout(() => {
+    const to = setTimeout(() => {
       if(stopSlider) return;
       if(sliderStart.toISOString() !== ss) return;
 
@@ -43,6 +44,10 @@
       
       sliderStart = new Date()
     },timeout)
+
+    return () => {
+      clearTimeout(to)
+    }
   })
 
 
@@ -129,6 +134,7 @@
           alt={image.title} 
           loading={index === 0 ? null : "lazy"}
           data-index={index}
+          style={index === 0 ? `view-transition-name: ${id}` : ''}
         />
       </picture>
     </a>

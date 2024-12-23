@@ -7,11 +7,13 @@
   --border-color: #353535;
   --active-link-color: #ffe700;
   --muted-color: #898989;
+  --text-shadow-color: rgb(36 36 36 / 0.8);
+  --drop-shadow-color: rgb(36 36 36 / 0.8);
 
   --page-width: 1024px;
   --page-padding: 2rem;
-  --text-shadow: 1px 1px 1px rgb(36 36 36 / 0.8);
-  --drop-shadow: drop-shadow(1px 1px 1px rgb(36 36 36 / 0.8));
+  --text-shadow: 1px 1px 1px var(--text-shadow-color);
+  --drop-shadow: drop-shadow(1px 1px 1px var(--drop-shadow-color));
 
   font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.6;
@@ -30,15 +32,56 @@
   }
 }
 
+/* Prevent samsung and xiaomi browser from changing color */
+@media (prefers-color-scheme: dark) {
+  :root{
+    --background-color: rgb(0, 0, 0);
+    --text-color: rgba(255, 255, 255, 0.87);
+    --link-color: #aaff00;
+    --border-color: #353535;
+    --active-link-color: #ffe700;
+    --muted-color: #898989;
+    --text-shadow-color: rgb(36 36 36 / 0.8);
+    --drop-shadow-color: rgb(36 36 36 / 0.8);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root{
+    --background-color: rgb(0, 0, 0);
+    --text-color: rgba(255, 255, 255, 0.87);
+    --link-color: #aaff00;
+    --border-color: #353535;
+    --active-link-color: #ffe700;
+    --muted-color: #898989;
+    --text-shadow-color: rgb(36 36 36 / 0.8);
+    --drop-shadow-color: rgb(36 36 36 / 0.8);
+  }
+}
+
 * {
   -webkit-tap-highlight-color: transparent;
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
+html.no-smooth{
+  scroll-behavior: auto;
+}
+
 html, body{
   width: 100%;
-  /* min-height: 100lvh; */
   position:relative;
-  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion) {
+	::view-transition-group(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
+	}
 }
 
 a{

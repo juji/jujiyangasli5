@@ -106,6 +106,7 @@
       alt={work.image.title}
       loading="lazy"
       class="work-image"
+      style={`view-transition-name: ${work.id}`}
     />
     <div 
       class="work-logo"
@@ -168,11 +169,6 @@
     ;
 
     min-width: 0px;
-    
-    /* opacity: 0; */
-    /* &.inView{
-      opacity: 1;
-    } */
 
     img.work-image{
       aspect-ratio: 16 / 9;
@@ -197,6 +193,12 @@
       transform: translateZ(30px);
       pointer-events: none;
       z-index: 1;
+      opacity: 0;
+      translate: 0 21px 0;
+      transition: 
+        opacity 300ms calc(100ms * var(--index) + var(--view-transition-delay)),
+        translate 300ms calc(100ms * var(--index) + var(--view-transition-delay))
+      ;
 
       img{
         display: block;
@@ -212,12 +214,25 @@
       width: 100%;
       height: 100%;
       z-index: 10;
+      opacity: 0;
       
       background: radial-gradient(
         circle at 50% 50%, 
         hsl(0 0% 0% / .0) 50%, 
         hsl(0 0% 0% / .1) 80%
       );
+
+      transition: opacity 500ms calc(100ms * var(--index) + var(--view-transition-delay));
+    }
+
+    &.inView{
+      .work-logo{
+        opacity: 1;
+        translate: 0 0px 0;
+      }
+      a{
+        opacity: 1;
+      }
     }
 
     &:hover{

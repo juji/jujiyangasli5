@@ -3,17 +3,22 @@
 
   import 'sanitize.css';
   import 'sanitize.css/typography.css';
-  import 'sanitize.css/reduce-motion.css';
   import 'sanitize.css/assets.css';
   import 'sanitize.css/forms.css';
   import 'minireset.css';
-
+  
   import '$lib/styles/fonts.css';
   import '$lib/styles/main.css';
+  import 'sanitize.css/reduce-motion.css';
+  import '$lib/styles/view-transition.css';
 
+  import { viewTransition } from '$lib/functions/view-transition';
   import Footer from '$lib/components/footer.svelte'
 
   let { children } = $props();
+
+  viewTransition();
+
 </script>
 
 <svelte:head>
