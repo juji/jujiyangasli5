@@ -5,10 +5,10 @@
 
 
   let canvas:HTMLCanvasElement
-  let circles: Circles
+  let circles: Circles | null = $state(null)
 
   let overlay: HTMLDivElement
-  let activateScroll = false
+  let activateScroll = $state(false)
 
   function onReady(){
     if(!window.scrollY){
@@ -34,7 +34,7 @@
       }
   
       else if(info.y.current >= window.innerHeight){
-        if(circles.paused) return;
+        if(circles && circles.paused) return;
         overlay && overlay.style.setProperty('opacity', '1')
         circles && !circles.paused && circles.pause()
       }

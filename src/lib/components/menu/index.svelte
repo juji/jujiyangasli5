@@ -23,7 +23,7 @@
     </nav>
   </div>
 
-  <MenuButton onClick={() => {open = !open}} />
+  <MenuButton isOpen={open} onClick={() => {open = !open}} />
 </div>
 
 <style>

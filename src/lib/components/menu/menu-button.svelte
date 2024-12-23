@@ -3,7 +3,7 @@
   import { animate } from "motion/mini"
   import '$lib/styles/rubbery.css'
 
-  let { onClick } = $props();
+  let { onClick, isOpen } = $props();
   let button: HTMLButtonElement;
   let circle: HTMLElement;
   let mouseListener: ((event: MouseEvent) => void) | null = null
@@ -35,6 +35,7 @@
   function onClickLocal(){
     normalizeStyle()
     onClick()
+    console.log('open', open)
   }
 
   function onMouseLeave(e: MouseEvent){
@@ -83,6 +84,7 @@
 
 <button aria-label="menu" 
   bind:this={button}
+  class:isOpen
   onmouseenter={normalizeStyle}
   onmouseleave={onMouseLeave}
   onclick={onClickLocal}>
@@ -104,10 +106,10 @@
 
   @keyframes buttonAnim {
     0%{
-      scale: 0 0 1;
+      transform: scale(0);
     }
     100%{
-      scale: 1 1 1;
+      transform: scale(1);
     }
   }
 
@@ -128,6 +130,8 @@
     z-index: 2;
 
     filter: var(--drop-shadow);
+    scale: 1;
+    transition: scale 1000ms var(--rubbery);
 
     span.circle{
       position: absolute;
@@ -147,7 +151,7 @@
       display: block;
       left: 50%;
       top: 50%;
-      transform: translate3d(-50%, -50%, 0);
+      translate: -50% -50% 0;
       width: 50%;
       height: 3px;
       border-radius: 5px;
@@ -156,9 +160,11 @@
       animation-duration: 300ms;
       animation-fill-mode: both;
       animation-timing-function: cubic-bezier(.3,.08,.54,1.49);
+      transform-origin: center center;
+      transition: transform 300ms ease-out;
 
       &.a{
-        transform: translate3d(-50%, calc(-50% - 8px), 0);
+        translate: -50% calc(-50% - 8px) 0;
         animation-delay: 2200ms;
       }
 
@@ -167,8 +173,26 @@
       }
 
       &.c{
-        transform: translate3d(-50%, calc(-50% + 8px), 0);
+        translate: -50% calc(-50% + 8px) 0;
         animation-delay: 2400ms;
+      }
+    }
+
+    &.isOpen{
+
+      span.lines{
+        &.a{
+          transform: translateY(8px) rotate(45deg);
+          opacity: 0.5;
+        }
+        &.b{
+          transform: scaleX(0);
+          opacity: 0.5;
+        }
+        &.c{
+          transform: translateY(-8px) rotate(-45deg);
+          opacity: 0.5;
+        }
       }
     }
 
@@ -179,7 +203,9 @@
     }
 
     &:active{
+      transition: scale 50ms;
       opacity: 0.8;
+      scale: 0.9;
     }
 
     @media screen and (min-width: 380px) {
