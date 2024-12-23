@@ -11,6 +11,8 @@
   import '$lib/styles/fonts.css';
   import '$lib/styles/main.css';
 
+  import Footer from '$lib/components/footer.svelte'
+
   let { children } = $props();
 </script>
 
@@ -46,3 +48,4 @@
 </svelte:head>
 
 {@render children()}
+<Footer />

@@ -1,7 +1,6 @@
 <script lang="ts">
 
   import type { Work } from "$lib/data/works/types";
-  import Footer from "$lib/components/footer.svelte";
   import Container from "$lib/components/container.svelte";
   import Header from "./header.svelte";
 	import Slider from "./slider.svelte";
@@ -23,7 +22,6 @@
     </div>
   </Container>
 </main>
-<Footer />
 
 <style>
 

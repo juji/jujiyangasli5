@@ -1,5 +1,5 @@
 <script>
-  import Contact from '$lib/components/sections/contact/index.svelte'
+  import Contact from '$lib/components/contact/index.svelte'
   import Container from '$lib/components/container.svelte'
 </script>
 

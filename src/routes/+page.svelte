@@ -7,8 +7,6 @@
   import Techs from '$lib/components/sections/techs/index.svelte'
   import Container from '$lib/components/container.svelte'
 
-  import Footer from '$lib/components/footer.svelte'
-
   let js = $state(false)
   $effect(() => { if(!js) js = true })
 
@@ -30,7 +28,7 @@
     </Container>
   </div>
 </main>
-<Footer />
+
 
 <style>
 
