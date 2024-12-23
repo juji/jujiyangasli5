@@ -147,7 +147,7 @@
   }
 
   :global(.pswp__container){
-    transition: transform 300ms ease-out;
+    transition: transform 700ms ease-out;
     @media screen and (hover: none){
       transition: initial;
     }
