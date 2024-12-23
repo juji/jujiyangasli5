@@ -37,7 +37,7 @@
   <h2 class="section-title">
     Techs
   </h2>
-  <p>Things i've worked with,</p><p>Yet still learning to this day</p><br />
+  <p>Things i've used in my work,</p><p>Yet still learning to this day</p><br />
   <div class="grid" onmouseenter={setColor} role="complementary">
     {#each techs as techrow}
     {#each techrow as item}
