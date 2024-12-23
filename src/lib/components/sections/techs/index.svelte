@@ -11,11 +11,12 @@
   })
 
   let colors = [
-    [119, 0, 117], // purple
-    [0, 49, 184], // blue
-    [39, 82, 0], // green
-    [120, 0, 0], // red
-    [116, 74, 7], // orange
+    [119, 0, 117],
+    [0, 49, 184],
+    [39, 82, 0],
+    [120, 0, 0],
+    [116, 74, 7],
+    [106, 97, 0]
   ]
 
   // so random will actualy get edges value
@@ -52,6 +53,13 @@
 
 <style>
   .container{
+
+    --c: rgb(119, 0, 117);
+    --c: rgb(0, 49, 184);
+    --c: rgb(39, 82, 0);
+    --c: rgb(120, 0, 0);
+    --c: rgb(116, 74, 7);
+    --c: rgb(106, 97, 0);
 
     --tech-color: rgb(119, 0, 117); /* i currently like this purple */
     margin-bottom: 8rem;
