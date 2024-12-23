@@ -6,7 +6,6 @@
 
 <GrainyThing />
 <div class="wrapper">
-{#if page.status === 404}
 <svg style="visibility: hidden; position: absolute;" width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1">
   <defs>
     <filter id="roundcorner"><feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />    
@@ -15,6 +14,7 @@
     </filter>
   </defs>
 </svg>
+{#if page.status === 404}
     <h1>Nope..</h1>
     <p>
       We don't have that page..<br />
@@ -51,12 +51,12 @@
     margin-bottom: 2rem;
     color: var(--text-color);
 
-    @media screen and (min-width: 560px) {
+    @media screen and (min-width: 614px) {
       font-size: 120px;
       margin-bottom: 1rem;
     }
 
-    @media screen and (min-width: 900px) {
+    @media screen and (min-width: 945px) {
       font-size: 200px;
     }
   }
@@ -72,7 +72,7 @@
     padding: 0.3rem 1rem;
     filter: url('#roundcorner');
 
-    @media screen and (min-width: 500px) {
+    @media screen and (min-width: 614px) {
       font-size: xx-large;
     }
   }
@@ -80,7 +80,7 @@
   a{
     font-size:larger;
     font-weight: bold;
-    @media screen and (min-width: 500px) {
+    @media screen and (min-width: 614px) {
       font-size:xx-large;
     }
   }
