@@ -25,10 +25,13 @@ let dpr: number
 function setupCanvas(){
   if(!canvas) throw new Error('no canvas')
   
-  canvas.getContext('2d')?.translate( 
+  const ctx = canvas.getContext('2d')
+
+  ctx?.translate( 
     canvas.width / 2, 
     canvas.height / 2 
   )
+  ctx?.rotate(-0.2)
 }
 
 function start(){
@@ -43,10 +46,10 @@ function start(){
     if(paused) return;
     
     context.clearRect(
-      -1 * canvas.width / 2,
-      -1 * canvas.height / 2, 
-      canvas.width, 
-      canvas.height
+      -1 * canvas.width,
+      -1 * canvas.height, 
+      canvas.width * 2, 
+      canvas.height * 2
     )
 
     let num = colors.length
