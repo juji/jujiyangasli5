@@ -2,6 +2,7 @@
 	import type { WorkSingle } from "$lib/data/works/types";
 	import { animate } from "motion/mini";
   import { noHover } from "$lib/functions/no-hover";
+  import { globalState } from "$lib/functions/global.svelte";
 
   let { work, inView, index }: {
     work: WorkSingle
@@ -121,6 +122,9 @@
     </div>
     <a 
       bind:this={anchor}
+      onclick={() => {
+        globalState.viewTransitionDelay = 300
+      }}
       onmousemove={onMouseMove}
       onmouseleave={onMouseLeave}
       href={`/work/${work.id}`}
@@ -231,6 +235,21 @@
         translate: 0 0px 0;
       }
       a{
+        opacity: 1;
+      }
+    }
+
+    :global(html.no-smooth) &.inView {
+      .work-logo{
+        transition: 
+          opacity 300ms 0ms,
+          translate 300ms 0ms
+        ;
+        opacity: 0;
+        translate: 0 21px 0;
+      }
+      a{
+        transition: opacity 300ms 0ms;
         opacity: 1;
       }
     }

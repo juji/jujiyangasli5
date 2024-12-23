@@ -1,8 +1,11 @@
 import { onNavigate, beforeNavigate, afterNavigate } from '$app/navigation';
+import { globalState } from './global.svelte';
+
+const wait = (timeout: number) => new Promise(r => setTimeout(r,timeout))
 
 export function viewTransition(){
 
-  beforeNavigate(() => {
+  beforeNavigate(async () => {
     document.querySelector('html')?.classList.add('no-smooth')
   })
 
@@ -10,14 +13,16 @@ export function viewTransition(){
     document.querySelector('html')?.classList.remove('no-smooth')
   })
 
-  onNavigate((navigation) => {
+  onNavigate(async (navigation) => {
     
     if (!document.startViewTransition) return;
 
+    await wait(globalState.viewTransitionDelay)
+    globalState.viewTransitionDelay = 0
     return new Promise((resolve) => {
       document.startViewTransition(async () => {
-        resolve();
-        await navigation.complete;
+        resolve()
+        await navigation.complete
       });
     });
 
