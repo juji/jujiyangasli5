@@ -13,9 +13,11 @@
   let elm:HTMLDivElement;
   let anchor:HTMLAnchorElement;
   let rect: any = null;
+  let clicked = $state(false)
   function onMouseMove(ev: MouseEvent){
 
     if(noHover()) return;
+    if(clicked) return;
 
     if(!rect) rect = elm.getBoundingClientRect()
 
@@ -75,10 +77,11 @@
 
   function onMouseLeave(){
     if(noHover()) return;
+    if(clicked) return;
 
     animate(
       elm, 
-      { transform: `rotateX(0rad) rotateY(0rad)` }
+      { transform: `rotateX(0rad) rotateY(0rad) translate3d(0,0,0)` }
     )
 
     animate(
@@ -91,6 +94,11 @@
     )
     
     rect = null
+  }
+
+  function onClick(){
+    clicked = true
+    globalState.viewTransitionDelay = 300
   }
 
 </script>
@@ -122,9 +130,7 @@
     </div>
     <a 
       bind:this={anchor}
-      onclick={() => {
-        globalState.viewTransitionDelay = 300
-      }}
+      onclick={onClick}
       onmousemove={onMouseMove}
       onmouseleave={onMouseLeave}
       href={`/work/${work.id}`}
@@ -240,6 +246,9 @@
     }
 
     :global(html.no-smooth) &.inView {
+
+      transform: rotateX(0rad) rotateY(0rad) !important;
+
       .work-logo{
         transition: 
           opacity 300ms 0ms,
@@ -250,7 +259,7 @@
       }
       a{
         transition: opacity 300ms 0ms;
-        opacity: 1;
+        opacity: 0;
       }
     }
 
