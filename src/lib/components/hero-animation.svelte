@@ -11,8 +11,10 @@
 
   let importPromise: Promise<any> | null = $state(null)
   $effect(() => {
+    let module;
     if(window.innerWidth <= 1024){
-      importPromise = import('./boids/index.svelte')
+      // importPromise = import('./boids/index.svelte')
+      importPromise = import('./circular/index.svelte')
     }else{
       importPromise = import('./grainy-thing/index.svelte')
     }
