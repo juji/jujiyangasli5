@@ -11,25 +11,16 @@
   let activateScroll = false
 
   function onReady(){
-    animate(overlay, { opacity: 0 }, { duration: 1 })
-    .then(() => {
+    if(!window.scrollY){
+      animate(overlay, { opacity: 0 }, { duration: 1 })
+      .then(() => { activateScroll = true })
+    }else{
       activateScroll = true
-    })
+    }
   }
 
   $effect(() => {
     circles = new Circles(canvas, onReady)
-  })
-
-  let offscreen = $state(false)
-  $effect(() => {
-    if(!offscreen && circles && circles.paused){
-      circles.play()
-    }
-
-    if(offscreen && circles && !circles.paused){
-      circles.pause()
-    }
   })
 
   $effect(() => {
@@ -39,20 +30,20 @@
 
       if(!info.y.current){
         overlay && overlay.style.setProperty('opacity', '0')
-        if(offscreen) offscreen = false
+        circles && circles.paused && circles.play()
       }
   
       else if(info.y.current >= window.innerHeight){
-        if(offscreen) return;
-        offscreen = true
+        if(circles.paused) return;
         overlay && overlay.style.setProperty('opacity', '1')
+        circles && !circles.paused && circles.pause()
       }
   
       else {
-        if(offscreen) offscreen = false 
         overlay && overlay.style.setProperty(
           'opacity', `${1 - ((window.innerHeight - info.y.current) / window.innerHeight)}`
-        ) 
+        )
+        circles && circles.paused && circles.play()
       }
     })
   })
