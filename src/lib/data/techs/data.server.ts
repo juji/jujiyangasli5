@@ -41,7 +41,7 @@ export const techs: TechItem[][] = [
       width: 380,
       height: 181,
       title: 'Next.js',
-      image: '/images/tech/nextjs.avif',
+      image: '/images/tech/nextjs.svg',
       url: 'https://nextjs.org/'
     },
     {
@@ -49,7 +49,7 @@ export const techs: TechItem[][] = [
       width: 512,
       height: 512,
       title: 'Svelte',
-      image: '/images/tech/svelte.avif',
+      image: '/images/tech/svelte.svg',
       url: 'https://kit.svelte.dev/'
     },
     {
@@ -67,7 +67,7 @@ export const techs: TechItem[][] = [
       width: 2400,
       height: 2643,
       title: 'NodeJs',
-      image: '/images/tech/nodejs.avif',
+      image: '/images/tech/nodejs.svg',
       url: 'https://nodejs.org'
     },
     // {
@@ -83,7 +83,7 @@ export const techs: TechItem[][] = [
       width: 500,
       height: 500,
       title: 'Firebase',
-      image: '/images/tech/firebase.avif',
+      image: '/images/tech/firebase.svg',
       url: 'https://firebase.google.com/?hl=id'
     },
     {
@@ -99,7 +99,7 @@ export const techs: TechItem[][] = [
       width: 720,
       height: 240,
       title: 'CloudFlare',
-      image: '/images/tech/cloudflare.avif',
+      image: '/images/tech/cloudflare.svg',
       url: 'https://www.cloudflare.com'
     } as TechItem
   ],
@@ -109,7 +109,7 @@ export const techs: TechItem[][] = [
       width: 380,
       height: 84,
       title: 'Express.js',
-      image: '/images/tech/expressjs.avif',
+      image: '/images/tech/expressjs.webp',
       url: 'https://expressjs.com/'
     },
     {
@@ -117,7 +117,7 @@ export const techs: TechItem[][] = [
       width: 500,
       height: 500,
       title: 'React',
-      image: '/images/tech/react.avif',
+      image: '/images/tech/react.webp',
       url: 'https://react.dev/'
     },
     {
@@ -125,7 +125,7 @@ export const techs: TechItem[][] = [
       width: 201,
       height: 195,
       title: 'Socket.io',
-      image: '/images/tech/socketio.avif',
+      image: '/images/tech/socketio.webp',
       url: 'https://socket.io/'
     },
   ],
@@ -135,7 +135,7 @@ export const techs: TechItem[][] = [
       width: 400,
       height: 277,
       title: 'Mongo DB',
-      image: '/images/tech/mongo.avif',
+      image: '/images/tech/mongo.webp',
       url: 'https://www.mongodb.com/'
     },
     {
@@ -143,7 +143,7 @@ export const techs: TechItem[][] = [
       width: 500,
       height: 500,
       title: 'PostgreSQL',
-      image: '/images/tech/postgre.avif',
+      image: '/images/tech/postgre.webp',
       url: 'https://www.postgresql.org/'
     },
     {
@@ -151,7 +151,7 @@ export const techs: TechItem[][] = [
       width: 300,
       height: 300,
       title: 'MySQL',
-      image: '/images/tech/mysql.avif',
+      image: '/images/tech/mysql.webp',
       url: 'https://www.mysql.com/'
     },
     {
@@ -159,7 +159,7 @@ export const techs: TechItem[][] = [
       width: 500,
       height: 500,
       title: 'Redis',
-      image: '/images/tech/redis.avif',
+      image: '/images/tech/redis.webp',
       url: 'https://redis.io/'
     },
     // {
@@ -179,7 +179,7 @@ export const techs: TechItem[][] = [
       width: 500,
       height: 500,
       title: 'RabbitMQ',
-      image: '/images/tech/rabbitmq.avif',
+      image: '/images/tech/rabbitmq.webp',
       url: 'https://www.rabbitmq.com/'
     } as TechItem
   ],
@@ -189,7 +189,7 @@ export const techs: TechItem[][] = [
       width: 500,
       height: 500,
       title: 'Digital Ocean',
-      image: '/images/tech/digitalocean.avif',
+      image: '/images/tech/digitalocean.webp',
       url: 'https://www.digitalocean.com/'
     },
     {
@@ -197,7 +197,7 @@ export const techs: TechItem[][] = [
       width: 500,
       height: 500,
       title: 'AWS EC2',
-      image: '/images/tech/ec2.avif',
+      image: '/images/tech/ec2.webp',
       url: 'https://aws.amazon.com/ec2/'
     },
     {
@@ -205,7 +205,7 @@ export const techs: TechItem[][] = [
       width: 500,
       height: 500,
       title: 'AWS S3',
-      image: '/images/tech/s3.avif',
+      image: '/images/tech/s3.webp',
       url: 'https://aws.amazon.com/s3/'
     },
     {
@@ -213,7 +213,7 @@ export const techs: TechItem[][] = [
       width: 402,
       height: 564,
       title: 'AWS Elastic Beanstalk',
-      image: '/images/tech/beanstalk.avif',
+      image: '/images/tech/beanstalk.webp',
       url: 'https://aws.amazon.com/elasticbeanstalk/'
     } as TechItem
   ],
@@ -223,7 +223,7 @@ export const techs: TechItem[][] = [
       width: 500,
       height: 500,
       title: 'Stripe',
-      image: '/images/tech/stripe.avif',
+      image: '/images/tech/stripe.webp',
       url: 'https://stripe.com/'
     },
     {
@@ -231,7 +231,7 @@ export const techs: TechItem[][] = [
       width: 1332,
       height: 331,
       title: 'Algolia',
-      image: '/images/tech/algolia.avif',
+      image: '/images/tech/algolia.webp',
       url: 'https://www.algolia.com/'
     },
     {
@@ -239,7 +239,7 @@ export const techs: TechItem[][] = [
       width: 400,
       height: 185,
       title: 'Twilio',
-      image: '/images/tech/twilio.avif',
+      image: '/images/tech/twilio.webp',
       url: 'https://www.twilio.com/'
     },
   ],
@@ -249,7 +249,7 @@ export const techs: TechItem[][] = [
       width: 500,
       height: 500,
       title: 'Mailchimp',
-      image: '/images/tech/mailchimp.avif',
+      image: '/images/tech/mailchimp.webp',
       url: 'https://mailchimp.com/'
     },
     {
@@ -257,7 +257,7 @@ export const techs: TechItem[][] = [
       width: 1793,
       height: 494,
       title: 'Mailgun',
-      image: '/images/tech/mailgun.avif',
+      image: '/images/tech/mailgun.webp',
       url: 'https://www.mailgun.com/'
     },
     {
@@ -265,7 +265,7 @@ export const techs: TechItem[][] = [
       width: 3300,
       height: 724,
       title: 'Sendgrid',
-      image: '/images/tech/sendgrid.avif',
+      image: '/images/tech/sendgrid.webp',
       url: 'https://sendgrid.com/'
     },
   ],
@@ -275,7 +275,7 @@ export const techs: TechItem[][] = [
       width: 120,
       height: 120,
       title: 'Github',
-      image: '/images/tech/github.avif',
+      image: '/images/tech/github.webp',
       url: 'https://github.com'
     },
     {
@@ -283,7 +283,7 @@ export const techs: TechItem[][] = [
       width: 500,
       height: 500,
       title: 'Gitlab',
-      image: '/images/tech/gitlab.avif',
+      image: '/images/tech/gitlab.webp',
       url: 'https://gitlab.com'
     },
     {
@@ -291,7 +291,7 @@ export const techs: TechItem[][] = [
       width: 400,
       height: 400,
       title: 'Bitbucket',
-      image: '/images/tech/bitbucket.avif',
+      image: '/images/tech/bitbucket.webp',
       url: 'https://bitbucket.org/'
     } as TechItem
   ]
