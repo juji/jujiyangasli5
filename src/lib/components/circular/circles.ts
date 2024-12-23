@@ -40,9 +40,9 @@ export class Circles extends Anim {
       // y
       sharedArray[ n * this.sal + 1 ] = 0
       // radiusX
-      sharedArray[ n * this.sal + 2 ] = (window.innerWidth * 0.2) + Math.random() * (window.innerWidth * 0.8)
+      sharedArray[ n * this.sal + 2 ] = Math.random() * (window.innerWidth * 0.8)
       // radiusY
-      sharedArray[ n * this.sal + 3 ] = 0.3 * sharedArray[ n * this.sal + 2 ]
+      sharedArray[ n * this.sal + 3 ] = 0.6 * sharedArray[ n * this.sal + 2 ]
       // radians
       sharedArray[ n * this.sal + 4 ] = Math.random() * Math.PI * 2
       // translateY

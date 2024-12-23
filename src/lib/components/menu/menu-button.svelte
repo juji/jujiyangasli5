@@ -124,14 +124,10 @@
     animation-duration: 1000ms;
     animation-fill-mode: both;
     animation-timing-function: var(--rubbery);
-    position: relative;
+    position: absolute;
+    z-index: 2;
 
     filter: var(--drop-shadow);
-
-    /* border-top: 5px solid red;
-    border-left: 5px solid orange;
-    border-bottom: 5px solid yellow;
-    border-right: 5px solid white; */
 
     span.circle{
       position: absolute;
@@ -141,7 +137,6 @@
       outline: 2px solid var(--text-color);
       background-color: rgb(from var(--text-color) r g b / 0.2);
       border-radius: 50%;
-      /* border-radius: 15%; */
       top: 0;
       left: 0;
     }

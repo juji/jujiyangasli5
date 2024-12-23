@@ -6,6 +6,7 @@
   import Play from '$lib/components/sections/play/index.svelte'
   import Techs from '$lib/components/sections/techs/index.svelte'
   import Container from '$lib/components/container.svelte'
+  import Menu from '$lib/components/menu/index.svelte'
 
   let js = $state(false)
   $effect(() => { if(!js) js = true })
@@ -15,6 +16,7 @@
 
 </script>
 
+<Menu />
 <main>
   <HeroAnimation />
   <Container>

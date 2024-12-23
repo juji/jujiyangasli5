@@ -10,7 +10,6 @@
 
 
 <div class="menu-top" class:js id="menuTop">
-  <MenuButton onClick={() => {open = !open}} />
   
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <div class="menu-container" class:open onclick={() => {open = !open}} tabindex="0" role="button">
@@ -23,6 +22,8 @@
       <a style="--link-delay-in: 500ms" class="link outgoing" href="https://blog.jujiyangasli.com" target="_blank">Blog</a>
     </nav>
   </div>
+
+  <MenuButton onClick={() => {open = !open}} />
 </div>
 
 <style>
@@ -32,25 +33,30 @@
     align-items: center;
     justify-content: center;
     position: fixed;
-    z-index: 1;
-    left: calc(50% + calc(min(100%, var(--page-width)) / 2) - 48px - var(--page-padding));
-    top: 27px;
+    z-index: 500;
+    /* right: calc(calc(100% - var(--page-width)) / 2) + 48px; */
+    left: calc(50% + calc(min(100%, var(--page-width)) / 2) - 18px - var(--page-padding));
+    top: 49px;
 
     @media screen and (min-width: 380px) {
-      left: calc(50% + calc(min(100%, var(--page-width)) / 2) - 64px - var(--page-padding));
-      top: 42px;
+      left: calc(50% + calc(min(100%, var(--page-width)) / 2) - 21px - var(--page-padding));
+      top: 72px;
     }
 
     @media screen and (min-width: 500px) {
-      top: 64px;
+      top: 94px;
     }
 
     &:not(.js){
 
       .menu-container{
+        rotate: -50deg;
         position: absolute;
+        z-index: 0;
         top: calc(50% + 3rem - 95px);
         background-color: hsl(from var(--background-color) h s l / 0.6);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
         overflow: hidden;
         height: 0;
         padding: 1rem;
@@ -61,7 +67,7 @@
         border-top-right-radius: 3rem;
         border-bottom-left-radius: 3rem;
         border-bottom-right-radius: 3rem;
-        outline: 1px solid hsl(from var(--text-color) h s l / 0.6);
+        outline: 2px solid hsl(from var(--text-color) h s l / 0.6);
         overflow: hidden;
         transition: 
           opacity 300ms, 
@@ -69,8 +75,11 @@
           border-bottom-left-radius 200ms,
           border-bottom-right-radius 200ms,
           padding-top 200ms,
-          padding-bottom 200ms
+          padding-bottom 200ms,
+          rotate 2000ms var(--rubbery)
         ;
+
+        transform-origin: 50% 47px;
 
         .menu-content{
 
@@ -98,14 +107,16 @@
           padding-bottom: 21px;
           border-bottom-left-radius: 1rem;
           border-bottom-right-radius: 1rem;
+          rotate: 0deg;
   
           transition: 
-            opacity 200ms,
-            height 300ms 100ms,
+            opacity 100ms,
+            height 200ms 100ms,
             border-bottom-left-radius 200ms 100ms,
             border-bottom-right-radius 200ms 100ms,
             padding-top 200ms 100ms,
-            padding-bottom 200ms 100ms
+            padding-bottom 200ms 100ms,
+            rotate 2000ms 100ms var(--rubbery)
           ; 
           
         }
@@ -115,8 +126,8 @@
 
     &.js{
       .menu-container{
-        /* display: none; */
         position: fixed;
+        rotate: 0deg;
         top: 0;
         left: 100vw;
         width: 100vw;
@@ -140,15 +151,15 @@
           justify-content: flex-start;
           align-items: flex-end;
           height: 100vh;
-          padding-top: 5rem;
+          padding-top: 9rem;
           a{
 
             --link-delay-in: 0ms;
 
             padding: 0.5rem 0;
-            padding-right: 2rem;
+            padding-right: 1rem;
             opacity: 0;
-            transform: translateY(21px);
+            transform: translateX(-21px);
             transition: 
               opacity 100ms, 
               transform 100ms
@@ -167,7 +178,7 @@
               transform 200ms var(--link-delay-in)
             ;
             opacity: 1;
-            transform: translateY(0px);
+            transform: translateX(0px);
           }
         }
       }

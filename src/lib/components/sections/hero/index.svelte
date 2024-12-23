@@ -1,6 +1,5 @@
 <script lang="ts">
   import Logo from './logo.svelte'
-  import Menu from './menu.svelte';
   import { sectionInView } from '$lib/functions/section-in-view';
 
   let elm: HTMLElement
@@ -12,7 +11,6 @@
 <div class="hero" id="home" bind:this={elm}>
   <header>
     <Logo />
-    <Menu />
   </header>
   <p class="webdev">Hi, I'm a web&nbsp;developer</p>
   <div class="menu-bottom">
