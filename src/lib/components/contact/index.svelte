@@ -33,14 +33,14 @@
       >https://blog.jujiyangasli.com</a>
     </div>
     <div class="icons">
-      <div class="github">
+      <div class="github icon">
         <img src="/images/contact-logo/github.svg" alt="github" />
         <a href="https://github.com/juji" 
           target="_blank" 
           rel="noreferrer noopener"
           aria-label="github link"></a>
       </div>
-      <div class="npm">
+      <div class="npm icon">
         <img src="/images/contact-logo/npm.svg" alt="npm" />
         <a href="https://www.npmjs.com/~juji_" 
           target="_blank" 
@@ -88,6 +88,17 @@
         align-items: center;
         gap: 21px;
         padding: 2rem 0;
+
+        .icon{
+          position: relative;
+          a{
+            position: absolute;
+            top:0;
+            left:0;
+            width: 100%;
+            height: 100%;
+          }
+        }
       }
 
       img{
