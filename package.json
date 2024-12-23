@@ -16,7 +16,7 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
-		"tunnel": "ngrok http --url=touched-quail-trusting.ngrok-free.app 5173"
+		"tunnel": "lite-http-tunnel start 5173"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.3",
