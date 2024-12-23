@@ -58,7 +58,7 @@
 
     .grid{
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
       gap: 3px;
 
       .item{
@@ -78,7 +78,7 @@
           height: 100%;
           object-position: center center;
           object-fit: contain;
-          padding: 2rem;
+          padding: 1.2rem;
           scale: 1;
           transition: scale 300ms;
         }
