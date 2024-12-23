@@ -21,7 +21,6 @@ let paused = false
 let bufferData:Float32Array
 let sal: number;
 let dpr: number
-let context: OffscreenCanvasRenderingContext2D | null
 
 function setupCanvas(){
   if(!canvas) throw new Error('no canvas')
