@@ -47,6 +47,25 @@
       .heading{
         display: flex;
         align-items: center;
+        text-shadow: var(--text-shadow);
+
+        .work-title{
+          background-color: rgba(0,0,0,0.8);
+          border-radius: 21px;
+          padding: 0.2rem 0.8rem;
+          box-shadow: 
+          rgba(50, 50, 93, 0.25) -3px -6px 13px 5px inset, 
+          rgba(0, 0, 0, 0.3) -1px 7px 6px 1px inset, 
+          rgb(237 237 237 / 40%) 0px 1px 2px 0px
+          ;
+          border: 1px solid #424242;
+          display: none;
+
+          @media screen and (min-width: 390px) {
+            display: block;
+          }
+        }
+        
         a {
           color: var(--text-color);
           text-decoration: none;
