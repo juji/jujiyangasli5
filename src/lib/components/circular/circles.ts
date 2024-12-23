@@ -29,7 +29,29 @@ export class Circles extends Anim {
     this.renderer = new Worker(new URL('./renderer', import.meta.url), { type: 'module' })
     this.calculator = new Worker(new URL('./calculator', import.meta.url), { type: 'module' })
 
-    const sab = this.getInitialData()
+    const sab = new SharedArrayBuffer(Float32Array.BYTES_PER_ELEMENT * this.num * this.sal);
+    const sharedArray = new Float32Array(sab)
+    
+    let n = this.num
+    while(n--){
+
+      // x
+      sharedArray[ n * this.sal + 0 ] = 0
+      // y
+      sharedArray[ n * this.sal + 1 ] = 0
+      // radiusX
+      sharedArray[ n * this.sal + 2 ] = Math.random() * (window.innerWidth * 0.8 )
+      // radiusY
+      sharedArray[ n * this.sal + 3 ] = 0.3 * sharedArray[ n * this.sal + 2 ]
+      // radians
+      sharedArray[ n * this.sal + 4 ] = Math.random() * Math.PI * 2
+      // translateY
+      sharedArray[ n * this.sal + 5 ] = Math.random() * (Math.random() ? -1 : 1)
+      // speed
+      sharedArray[ n * this.sal + 6 ] = Math.random() * 0.008
+
+    }
+
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
     const offscreen = canvas.transferControlToOffscreen()
@@ -128,34 +150,6 @@ export class Circles extends Anim {
 
     })
 
-  }
-
-  getInitialData(){
-
-    const sab = new SharedArrayBuffer(Float32Array.BYTES_PER_ELEMENT * this.num * this.sal);
-    const sharedArray = new Float32Array(sab)
-    
-    let n = this.num
-    while(n--){
-
-      // x
-      sharedArray[ n * this.sal + 0 ] = 0
-      // y
-      sharedArray[ n * this.sal + 1 ] = 0
-      // radiusX
-      sharedArray[ n * this.sal + 2 ] = Math.random() * (window.innerWidth * 0.8 )
-      // radiusY
-      sharedArray[ n * this.sal + 3 ] = 0.3 * sharedArray[ n * this.sal + 2 ]
-      // radians
-      sharedArray[ n * this.sal + 4 ] = Math.random() * Math.PI * 2
-      // translateY
-      sharedArray[ n * this.sal + 5 ] = Math.random() * (Math.random() ? -1 : 1)
-      // speed
-      sharedArray[ n * this.sal + 6 ] = Math.random() * 0.008
-
-    }
-
-    return sab
   }
 
   pause(){
