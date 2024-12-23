@@ -10,7 +10,7 @@ function randomColor(){
 }
 
 function randomSize(){
-  return 2 + ( Math.random() * 2 )
+  return 1.5 + ( Math.random() * 2 )
 }
 
 let colors: string[] = []
