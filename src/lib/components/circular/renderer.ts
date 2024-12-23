@@ -154,8 +154,6 @@ self.onmessage = (e: MessageEvent) => {
   setupCanvas()
   start()
 
-  setTimeout(() => {
-    self.postMessage({ ready: true })
-  },500)
+  self.postMessage({ ready: true })
 
 }

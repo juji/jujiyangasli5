@@ -121,8 +121,6 @@ self.onmessage = (e: MessageEvent) => {
   sharedBuffer = new Float32Array(sab)
   start()
 
-  setTimeout(() => {
-    self.postMessage({ ready: true })
-  },500)
+  self.postMessage({ ready: true })
 
 }
