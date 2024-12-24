@@ -71,12 +71,13 @@
       )`
     )
 
+    // checkout 150 -150 on the default
     logo.style.setProperty(
       'background',
       `radial-gradient(
-        circle at ${x * 150 + 150}% ${- 150 + (y * -150) }%, 
+        circle at ${x * 150 + 150}% ${y * -150 - 150}%, 
         hsl(0 0% 0% / 0) 55%, 
-        hsl(0 0% 0% / ${shadowOpacity}) 110%
+        hsl(0 0% 0% / ${shadowOpacity * 0.5}) 110%
       )`
     )
 
