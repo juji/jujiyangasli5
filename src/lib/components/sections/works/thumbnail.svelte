@@ -12,6 +12,7 @@
 
   let elm:HTMLDivElement;
   let anchor:HTMLAnchorElement;
+  let logo:HTMLElement;
   let rect: any = null;
   let clicked = $state(false)
   function onMouseMove(ev: MouseEvent){
@@ -70,6 +71,15 @@
       )`
     )
 
+    logo.style.setProperty(
+      'background',
+      `radial-gradient(
+        circle at ${x * 150 + 150}% ${- 150 + (y * -150) }%, 
+        hsl(0 0% 0% / 0) 50%, 
+        hsl(0 0% 0% / ${shadowOpacity * 0.4}) 80%
+      )`
+    )
+
     // yeah, this is a playground
     // test it on the amber card
 
@@ -88,6 +98,15 @@
       anchor, 
       { background: `radial-gradient(
         circle at 50% 50%, 
+        hsl(0 0% 0% / .0) 50%, 
+        hsl(0 0% 0% / .1) 80%
+      )` }
+    )
+
+    animate(
+      logo, 
+      { background: `radial-gradient(
+        circle at 150% -150%, 
         hsl(0 0% 0% / .0) 50%, 
         hsl(0 0% 0% / .1) 80%
       )` }
@@ -127,15 +146,16 @@
         height={work.logo.height}
         alt={work.image.title + ' logo'}
       />
+      <div class="gradient" bind:this={logo}></div>
     </div>
     <!--  last site uses "works" so... -->
     <a 
-      bind:this={anchor}
+      href={`/works/${work.id}`} 
       onclick={onClick}
       onmousemove={onMouseMove}
       onmouseleave={onMouseLeave}
-      href={`/works/${work.id}`} 
-      aria-label={`see ${work.title} page`}></a>
+      aria-label={`see ${work.title} page`}
+      bind:this={anchor}></a>
   </div>
 </div>
 
@@ -215,6 +235,19 @@
         display: block;
         height: 100%;
         width: auto;
+      }
+
+      div{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 150% -150%, 
+          hsl(0 0% 0% / .0) 50%, 
+          hsl(0 0% 0% / .1) 80%
+        );
       }
     }
 
