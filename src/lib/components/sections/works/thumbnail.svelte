@@ -128,12 +128,13 @@
         alt={work.image.title + ' logo'}
       />
     </div>
+    <!--  last site uses "works" so... -->
     <a 
       bind:this={anchor}
       onclick={onClick}
       onmousemove={onMouseMove}
       onmouseleave={onMouseLeave}
-      href={`/work/${work.id}`}
+      href={`/works/${work.id}`} 
       aria-label={`see ${work.title} page`}></a>
   </div>
 </div>
