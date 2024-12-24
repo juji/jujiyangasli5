@@ -14,6 +14,7 @@
 </script>
 
 <Header data={data} />
+<div style={`--gradient:${data.work.gradientColor}`} class="gradient"></div>
 <main>
   <Container>
     <div class="container">
@@ -25,7 +26,25 @@
 
 <style>
 
+  .gradient{
+    --gradient: hsl(0 0% 0% / 1);
+    position: fixed;
+    top: -0%;
+    left: -0%;
+    width: 100%;
+    height: 100svh;
+    background: radial-gradient(
+      ellipse at 0% 0%, 
+      var(--gradient) 10%, 
+      hsl(0 0% 0% / 1) 30%
+    );
+  }
+
   main{
+
+
+    
+
     .container{
       @media screen and (min-width: 1024px) {
         display: grid;
