@@ -17,7 +17,7 @@ export class Circles extends Anim {
   rendererReady = false
   ready = false
 
-  radiusXMultiplier = 0.4
+  radiusXMultiplier = 0.6
   radiusYMultiplier = 0.6
   positionYMultiplier = 0.2
   speedMultiplier = 0.005
