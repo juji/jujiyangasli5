@@ -33,11 +33,14 @@
     left: -0%;
     width: 100%;
     height: 100svh;
-    background: radial-gradient(
-      ellipse at 0% 0%, 
-      var(--gradient) 10%, 
-      hsl(0 0% 0% / 1) 30%
-    );
+
+    @media screen and (min-width: 1024px){
+      background: radial-gradient(
+        ellipse at 0% 0%, 
+        var(--gradient) 10%, 
+        hsl(0 0% 0% / 1) 30%
+      );
+    }
   }
 
   main{

@@ -1,7 +1,6 @@
 <script lang="ts">
   import Container from "../container.svelte";
   import type { Work } from "$lib/data/works/types";
-  import { page } from '$app/state';
 
   let { data }: { data: { 
     work: Work
@@ -15,7 +14,7 @@
 
 </script>
 
-<header>
+<header style={`--gradient:${data.work.gradientColor}`}>
   <Container>
     <div class="header-container">
       <div class="heading">
@@ -32,12 +31,22 @@
 <style>
   header{
 
+    --gradient: rgb(0 0 0 / 1);
+
     position: sticky;
     top: 0;
     z-index: 20;
     background: rgb(from var(--background-color) r g b / 0.2);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
+
+    @media screen and (max-width: 1023px){
+      background: radial-gradient(
+        circle at 0% 0%, 
+        var(--gradient) 5%, 
+        hsl(0 0% 0% / 0.7) 80%
+      );
+    }
     
     .header-container{
       padding: 1rem 0;
