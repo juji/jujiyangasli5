@@ -66,12 +66,14 @@
       else if(info.y.current >= window.innerHeight){
         if(offscreen) return;
         offscreen = true
-        overlay && overlay.style.setProperty('opacity', '1')
+        overlay && overlay.style.setProperty('opacity', '0.8')
       }
       
       else {
         if(offscreen) offscreen = false 
-        overlay && overlay.style.setProperty('opacity', `${1 - ((window.innerHeight - info.y.current) / window.innerHeight)}`) 
+        overlay && overlay.style.setProperty('opacity', `${0.8 - (
+          (window.innerHeight - info.y.current) / window.innerHeight
+        )}`) 
       }
     })
 
