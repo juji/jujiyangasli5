@@ -9,7 +9,8 @@
 
     // if screen width < 768, just use 3 balls
     let smaller = false
-    if(Math.min(window.innerWidth,window.innerHeight) <= 768){
+    if(Math.max(window.innerWidth,window.innerHeight) <= 1536){
+      console.log('smaller')
       document.querySelectorAll('.ball').forEach(v => {
         if(v.classList.contains('remove')) v.remove()
         else v.classList.add('small')
@@ -33,22 +34,12 @@
   })
 
   let offscreen = $state(false)
-  let perf: number[] = []
-  let perfAvg = $state(0)
 
   $effect(() => {
     if(!offscreen) requestAnimationFrame(function draw(){
       
-      if(!perf.length) perf[0] = performance.now()
-      
       dBalls.forEach(v => v.update())
       dBalls.forEach(v => v.render())
-
-      if(perf.length >= 30 && !perfAvg){
-        perfAvg = perf.reduce((a,b) => a+b,0) / perf.length
-      }else if(perf.length < 30){
-        perf.push(performance.now() - perf[perf.length-1])
-      }
 
       if(!offscreen) requestAnimationFrame(draw)
     })
@@ -204,10 +195,10 @@
     top: var(--pos-y);
     left: var(--pos-x);
 
-    transform: translate3d(-20%, -20%, 0);
+    transform: translate3d(-30%, -30%, 0);
 
     :global(&.small){
-      transform: translate3d(-40%, -20%, 0);
+      transform: translate3d(-40%, -30%, 0);
     }
   }
 
