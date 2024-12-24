@@ -179,7 +179,7 @@
   .ball{
 
     --diameter: 0px;
-    --color: '0,0,0';
+    --color: 0,0,0;
     --pos-x: 0%;
     --pos-y: 0%;
     --delay: 0ms;
