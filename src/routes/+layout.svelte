@@ -14,6 +14,7 @@
 
   import { viewTransition } from '$lib/functions/view-transition';
   import Footer from '$lib/components/footer.svelte'
+  import LoadingIndicator from '$lib/components/loading-indicator.svelte';
 
   let { children } = $props();
 
@@ -54,3 +55,4 @@
 
 {@render children()}
 <Footer />
+<LoadingIndicator />

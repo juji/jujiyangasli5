@@ -119,6 +119,7 @@
   function onClick(){
     clicked = true
     globalState.viewTransitionDelay = 300
+    globalState.waitForAssets = 500
   }
 
 </script>
