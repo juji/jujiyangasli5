@@ -168,9 +168,11 @@
   @keyframes popout{
     from {
       scale: 0;
+      translate: 100% 0 0;
     }
     to{
       scale: 1;
+      translate: 0% 0 0;
     }
   }
 
