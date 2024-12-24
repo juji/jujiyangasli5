@@ -119,7 +119,11 @@
   function onClick(){
     clicked = true
     globalState.viewTransitionDelay = 300
-    globalState.waitForAssets = 500
+    globalState.waitForAssets = new Promise((r) => {
+      const img = new Image()
+      img.onload = () => { r() }
+      img.src = work.image.url
+    })
   }
 
 </script>

@@ -25,16 +25,17 @@ export function viewTransition(){
       globalState.viewTransitionDelay = 0
     }
 
+    // wait for assets to load
+    if(globalState.waitForAssets){
+      await globalState.waitForAssets
+      globalState.waitForAssets = null
+    }
+
     return new Promise((resolve) => {
       document.startViewTransition(async () => {
         resolve()
         
-        // blindly wait for assets to load
-        if(globalState.waitForAssets){
-          await wait(globalState.waitForAssets)
-          globalState.waitForAssets = 0
-        }
-        
+
         await navigation.complete
 
       });

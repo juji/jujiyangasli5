@@ -61,13 +61,13 @@
       background-size: 200% auto;
       background-position: 0 100%;
       animation: gradient 500ms infinite forwards linear;
+      transition: width 200ms ease-out;
     }
 
     &.loading{
-      transition: width 1000ms ease-out;
       opacity: 1;
       &::after{
-        width: 50%;
+        width: 80%;
       }
     }
 
