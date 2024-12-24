@@ -16,28 +16,23 @@ export function viewTransition(){
   })
 
   onNavigate(async (navigation) => {
-    
-    if (!document.startViewTransition) return;
-
-    
+     
     if(globalState.viewTransitionDelay){
       await wait(globalState.viewTransitionDelay)
       globalState.viewTransitionDelay = 0
     }
-
-    // wait for assets to load
+    
     if(globalState.waitForAssets){
       await globalState.waitForAssets
       globalState.waitForAssets = null
     }
 
+    if (!document.startViewTransition) return;
+
     return new Promise((resolve) => {
       document.startViewTransition(async () => {
         resolve()
-        
-
         await navigation.complete
-
       });
     });
 
