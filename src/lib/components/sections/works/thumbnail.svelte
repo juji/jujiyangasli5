@@ -75,8 +75,8 @@
       'background',
       `radial-gradient(
         circle at ${x * 150 + 150}% ${- 150 + (y * -150) }%, 
-        hsl(0 0% 0% / 0) 50%, 
-        hsl(0 0% 0% / ${shadowOpacity * 0.3}) 80%
+        hsl(0 0% 0% / 0) 55%, 
+        hsl(0 0% 0% / ${shadowOpacity}) 110%
       )`
     )
 
