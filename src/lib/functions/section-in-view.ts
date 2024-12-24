@@ -20,7 +20,8 @@ export function sectionInView(
       menu && menu.classList.remove('active')  
       if(onOut) onOut(entry)
     },
-    margin: '-1px 0px -1px 0px',
+    margin: '-1px 0px -10% 0px',
+    amount: 0.5
   })
 
 }

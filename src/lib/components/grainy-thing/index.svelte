@@ -12,6 +12,8 @@
 
     // if screen width < 768, just use 3 balls
     let smaller = false
+    console.log(window.innerWidth)
+    console.log(window.innerHeight)
     if(Math.min(window.innerWidth,window.innerHeight) <= 768){
       document.querySelectorAll('.ball').forEach(v => {
         if(v.classList.contains('remove')) v.remove()
@@ -32,6 +34,7 @@
         jsBalls.push(dball)
       })
       dBalls = jsBalls
+      console.log('balls', dBalls.length)
     }
   })
 

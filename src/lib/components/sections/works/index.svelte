@@ -7,7 +7,6 @@
   let { works } = $props();
   let inView = $state(false)
   $effect(() => { sectionInView( elm, () => { 
-    console.log('sectionInView')
     inView = true
   } ) })
 

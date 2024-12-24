@@ -54,7 +54,7 @@ export class Ball {
 
     this.elm = elm
 
-    const smaller = Math.min(window.innerHeight, window.innerWidth)
+    let smaller = Math.min(window.innerHeight, window.innerWidth)
     this.radius = smallScreen ? 
       Math.round((smaller * 0.5) + (Math.random() * 100)) :
       Math.round((smaller * 0.5) + (-50 + (Math.random() * 150)))

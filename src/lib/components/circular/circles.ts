@@ -5,7 +5,7 @@ import { Anim } from "../anim";
 
 export class Circles extends Anim {
 
-  num = 1000
+  num = Math.max(1000,Math.max(window.innerWidth, window.innerHeight))
   sal = 7
   
   renderer:Worker
@@ -16,6 +16,12 @@ export class Circles extends Anim {
   calculatorReady = false
   rendererReady = false
   ready = false
+
+  radiusXMultiplier = 0.4
+  radiusYMultiplier = 0.6
+  positionYMultiplier = 0.2
+  speedMultiplier = 0.005
+  canvas: HTMLCanvasElement
 
   constructor(
     canvas: HTMLCanvasElement, 
@@ -32,6 +38,7 @@ export class Circles extends Anim {
     const sab = new SharedArrayBuffer(Float32Array.BYTES_PER_ELEMENT * this.num * this.sal);
     const sharedArray = new Float32Array(sab)
     
+    let wMax = Math.max(window.innerWidth, window.innerHeight)
     let n = this.num
     while(n--){
 
@@ -40,20 +47,22 @@ export class Circles extends Anim {
       // y
       sharedArray[ n * this.sal + 1 ] = 0
       // radiusX
-      sharedArray[ n * this.sal + 2 ] = Math.random() * (window.innerWidth * 0.8)
+      sharedArray[ n * this.sal + 2 ] = Math.random() * wMax * this.radiusXMultiplier
       // radiusY
-      sharedArray[ n * this.sal + 3 ] = 0.6 * sharedArray[ n * this.sal + 2 ]
+      sharedArray[ n * this.sal + 3 ] = sharedArray[ n * this.sal + 2 ] * this.radiusYMultiplier
       // radians
       sharedArray[ n * this.sal + 4 ] = Math.random() * Math.PI * 2
       // translateY
-      sharedArray[ n * this.sal + 5 ] = Math.random() * (Math.random() ? -1 : 1)
+      sharedArray[ n * this.sal + 5 ] = Math.random() * (Math.random() ? -1 : 1) * this.positionYMultiplier
       // speed
-      sharedArray[ n * this.sal + 6 ] = Math.random() * 0.003
+      sharedArray[ n * this.sal + 6 ] = Math.random() * this.speedMultiplier
 
     }
 
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
+    canvas.style.setProperty('width', window.innerWidth+'px')
+    canvas.style.setProperty('height', window.innerHeight+'px')
     const offscreen = canvas.transferControlToOffscreen()
 
     this.renderer.postMessage({
@@ -63,7 +72,7 @@ export class Circles extends Anim {
       dataLength: this.sal,
       width: window.innerWidth,
       height: window.innerHeight,
-      devicePixelRatio: Math.max(2, window.devicePixelRatio)
+      devicePixelRatio: window.devicePixelRatio
     },[ offscreen ])
 
     this.calculator.postMessage({
@@ -72,6 +81,7 @@ export class Circles extends Anim {
       dataLength: this.sal,
     })
 
+    this.canvas = canvas
     this.listenEvents()
 
   }
@@ -125,13 +135,22 @@ export class Circles extends Anim {
 
     })
 
-    window.addEventListener('touchstart', (e: TouchEvent) => {
+    window.addEventListener('touchstart', (init: TouchEvent) => {
       if(this.paused) return;
 
       let pointerDownTime = performance.now()
-      this.calculator.postMessage({ pause: true, pointerX: e.touches[0].clientX })
+      this.calculator.postMessage({ pause: true, pointerX: init.touches[0].clientX })
+
+      const initY = init.touches[0].clientY
+      const initX = init.touches[0].clientX
 
       const onPointerMove = (e: TouchEvent) => {
+        if(
+          // ignore vertical swipe
+          Math.abs(e.touches[0].clientY - initY) > Math.abs(e.touches[0].clientX - initX)
+        )
+          return;
+
         this.calculator.postMessage({ pointerX: e.touches[0].clientX })
       }
 
@@ -165,6 +184,16 @@ export class Circles extends Anim {
   }
 
   resize(){
+
+    if(this.canvas.width === window.innerHeight){
+      // if rotated
+      this.canvas.style.setProperty('height', window.innerHeight+'px')
+      this.canvas.style.setProperty('width', window.innerWidth+'px')
+    }else{
+      // else, just do the width
+      this.canvas.style.setProperty('width', window.innerWidth+'px')
+    }
+
     this.renderer.postMessage({
       width: window.innerWidth,
       height: window.innerHeight,

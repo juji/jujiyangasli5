@@ -11,12 +11,10 @@
   let activateScroll = $state(false)
 
   function onReady(){
-    if(!window.scrollY){
-      animate(overlay, { opacity: 0 }, { duration: 1 })
-      .then(() => { activateScroll = true })
-    }else{
-      activateScroll = true
-    }
+    animate(overlay, { 
+      opacity: Math.min(1, 1 - ((window.innerHeight - window.scrollY) / window.innerHeight))
+    }, { duration: 1 })
+    .then(() => { activateScroll = true })
   }
 
   $effect(() => {
@@ -60,20 +58,28 @@
   canvas.circularcanvas{
     position: fixed;
     width: 100%;
+
+    /* anchor to top */
     height: 100lvh;
     top: 0;
+
     left: 0;
     z-index: 0;
+    pointer-events: none;
   }
 
   .overlay{
     position: fixed;
     width: 100%;
+
+    /* anchor to top */
     height: 100lvh;
     top: 0;
+
     left: 0;
     z-index: 1;
     background: black;
+    pointer-events: none;
   }
 
 </style>

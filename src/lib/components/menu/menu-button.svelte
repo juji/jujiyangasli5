@@ -35,7 +35,6 @@
   function onClickLocal(){
     normalizeStyle()
     onClick()
-    console.log('open', open)
   }
 
   function onMouseLeave(e: MouseEvent){

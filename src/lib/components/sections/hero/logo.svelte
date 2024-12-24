@@ -13,26 +13,11 @@
 
   @keyframes logo {
     0%{
-      opacity: 0;
-      translate: 34px 0;
-      transform: skew(0);
-    }
-
-    33%{
-      opacity: 0.5;
-      translate: 2px 0;
-      transform: skew(-21deg);
-    }
-
-    75%{
-      opacity: 1;
-      translate: -5px 0;
+      transform: scaleY(0) scaleX(0) translateX(-34px);
     }
 
     100%{
-      opacity: 1;
-      translate: 0px 0;
-      transform: skew(0);
+      transform: scaleY(1) scaleX(1) translateX(0px);
     }
   }
 
@@ -64,17 +49,17 @@
     span{
       --anim-gap: 120ms;
       animation-name: logo;
-      animation-duration: 300ms;
+      animation-duration: 1000ms;
       animation-fill-mode: both;
-      animation-timing-function: ease-out;
+      animation-timing-function: var(--rubbery);
 
       
       &.j0{
-        animation-delay: calc(0 * var(--anim-gap));
+        animation-delay: calc(1 * var(--anim-gap));
       }
 
       &.u{
-        animation-delay: calc(1.2 * var(--anim-gap));
+        animation-delay: calc(1.6 * var(--anim-gap));
       }
 
       &.j1{

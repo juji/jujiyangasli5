@@ -1,6 +1,6 @@
 <script>
 
-  import HeroAnimation from '$lib/components/hero-animation.svelte'
+  import HeroAnimation from '$lib/components/hero-animation/index.svelte'
   import Hero from '$lib/components/sections/hero/index.svelte'
   import Works from '$lib/components/sections/works/index.svelte'
   import Play from '$lib/components/sections/play/index.svelte'
