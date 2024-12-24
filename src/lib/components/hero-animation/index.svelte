@@ -2,25 +2,19 @@
 
   /* 
   for hero animation 
-  we check the viewport size, and 
-  load the module
+  we set animation based on screen size
   */
 
-  let js = false
-  $effect(() => { js = true })
-
   let importPromise: Promise<any> | null = $state(null)
+  
   $effect(() => {
-    if(
-      window.innerWidth <= 1024 ||
-      window.innerWidth > 1920
-    ){
-      importPromise = import('../circular/index.svelte')
+    if(Math.max(window.innerWidth, window.innerHeight) <= 1024){
+      importPromise = import('$lib/components/circular/index.svelte')
     }else{
-      importPromise = import('../grainy-thing/index.svelte')
+      importPromise = import('$lib/components/grainy-thing/index.svelte')
     }
   })
-
+  
 </script>
 
 {#if importPromise}

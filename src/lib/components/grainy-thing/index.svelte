@@ -1,9 +1,6 @@
 <script lang="ts">
   import { Ball } from "./ball";
   import { scroll } from "motion";
-
-  // lower performance
-  // import { frame, cancelFrame } from "motion"
   
   let dBalls: Ball[] = $state([]);
   let overlay: HTMLDivElement
@@ -12,8 +9,6 @@
 
     // if screen width < 768, just use 3 balls
     let smaller = false
-    console.log(window.innerWidth)
-    console.log(window.innerHeight)
     if(Math.min(window.innerWidth,window.innerHeight) <= 768){
       document.querySelectorAll('.ball').forEach(v => {
         if(v.classList.contains('remove')) v.remove()
@@ -34,16 +29,27 @@
         jsBalls.push(dball)
       })
       dBalls = jsBalls
-      console.log('balls', dBalls.length)
     }
   })
 
   let offscreen = $state(false)
+  let perf: number[] = []
+  let perfAvg = $state(0)
 
   $effect(() => {
     if(!offscreen) requestAnimationFrame(function draw(){
+      
+      if(!perf.length) perf[0] = performance.now()
+      
       dBalls.forEach(v => v.update())
       dBalls.forEach(v => v.render())
+
+      if(perf.length >= 30 && !perfAvg){
+        perfAvg = perf.reduce((a,b) => a+b,0) / perf.length
+      }else if(perf.length < 30){
+        perf.push(performance.now() - perf[perf.length-1])
+      }
+
       if(!offscreen) requestAnimationFrame(draw)
     })
   })
@@ -95,11 +101,11 @@
 <div class="wrapper" class:shown={!offscreen}>
   <div class="grain">
     <div class="balls">
-      <div style="--delay:2000ms;--pos-x:50%;--pos-y:50%;--color:6,82,221;--diameter:860px" class="ball" ></div>
-      <div style="--delay:2300ms;--pos-x:56%;--pos-y:6%;--color:234,32,39;--diameter:676px" class="ball" ></div>
-      <div style="--delay:2600ms;--pos-x:18%;--pos-y:40%;--color:153,128,250;--diameter:698px" class="ball" ></div>
-      <div style="--delay:2900ms;--pos-x:67%;--pos-y:34%;--color:163,203,56;--diameter:676px" class="ball remove" ></div>
-      <div style="--delay:3100ms;--pos-x:43%;--pos-y:23%;--color:253,167,223;--diameter:646px" class="ball remove" ></div>
+      <div style="--delay:2000ms;--pos-x:50%;--pos-y:50%;--color:6,82,221;--diameter:860px" class="ball"></div>
+      <div style="--delay:2300ms;--pos-x:56%;--pos-y:6%;--color:234,32,39;--diameter:676px" class="ball"></div>
+      <div style="--delay:2600ms;--pos-x:18%;--pos-y:40%;--color:153,128,250;--diameter:698px" class="ball"></div>
+      <div style="--delay:2900ms;--pos-x:67%;--pos-y:34%;--color:163,203,56;--diameter:676px" class="ball remove"></div>
+      <div style="--delay:3100ms;--pos-x:43%;--pos-y:23%;--color:253,167,223;--diameter:646px" class="ball remove"></div>
     </div>
   </div>
 </div>
@@ -127,10 +133,12 @@
     left: 0;
     z-index: 0;
     transform: translate3d(1,1,1);
+    transition: left 200ms ease-out;
 
     :global(&.shown){
       display: block;
     }
+
   }
 
   svg.hidden{
@@ -150,65 +158,65 @@
     image-rendering: pixelated;  
   }
 
-    .balls{
-      height: 100%;
-      filter: url(#goo) blur(5px);
-    }
+  .balls{
+    height: 100%;
+    filter: url(#goo) blur(5px);
+  }
 
-    @keyframes popout{
-      from {
-        scale: 0;
-      }
-      to{
-        scale: 1;
-      }
+  @keyframes popout{
+    from {
+      scale: 0;
+    }
+    to{
+      scale: 1;
+    }
+  }
+
+  .ball{
+
+    --diameter: 0px;
+    --color: '0,0,0';
+    --pos-x: 0%;
+    --pos-y: 0%;
+    --delay: 0ms;
+
+    position: fixed;
+    image-rendering: pixelated;
+    animation-name: popout;
+    animation-duration: 2000ms;
+    animation-fill-mode: both;
+    animation-timing-function: ease-out;
+    animation-delay: var(--delay);
+
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    filter: blur(75px);
+    display: block;
+    width: var(--diameter);
+    height: var(--diameter);
+    
+    background: radial-gradient(circle at center, rgba(var(--color), 0.9) 0%, rgba(var(--color), 0) 100%) no-repeat;
+    
+    top: var(--pos-y);
+    left: var(--pos-x);
+
+    transform: translate3d(-20%, -20%, 0);
+
+    :global(&.small){
+      transform: translate3d(-40%, -20%, 0);
+    }
+  }
+
+  /* safari only */
+  @supports (hanging-punctuation: first) and (font: -apple-system-body) and (-webkit-appearance: none) {
+
+    .balls{
+      filter: url(#goosafari);
     }
 
     .ball{
-
-      --diameter: 0px;
-      --color: '0,0,0';
-      --pos-x: 0%;
-      --pos-y: 0%;
-      --delay: 0ms;
-
-      image-rendering: pixelated;
-      animation-name: popout;
-      animation-duration: 2000ms;
-      animation-fill-mode: both;
-      animation-timing-function: ease-out;
-      animation-delay: var(--delay);
-
-      border-radius: 50%;
-      mix-blend-mode: screen;
-      filter: blur(75px);
-      display: block;
-      position: fixed;
-      width: var(--diameter);
-      height: var(--diameter);
-      
-      background: radial-gradient(circle at center, rgba(var(--color), 0.9) 0%, rgba(var(--color), 0) 100%) no-repeat;
-      
-      top: var(--pos-y);
-      left: var(--pos-x);
-
-      transform: translate3d(-20%, -20%, 0);
-
-      :global(&.small){
-        transform: translate3d(-40%, -20%, 0);
-      }
+      mix-blend-mode: plus-lighter;
     }
 
-    /* safari only */
-    @supports (hanging-punctuation: first) and (font: -apple-system-body) and (-webkit-appearance: none) {
-
-      .balls{
-        filter: url(#goosafari);
-      }
-
-      .ball{
-        mix-blend-mode: plus-lighter;
-      }
-
-    }
+  }
 </style>
