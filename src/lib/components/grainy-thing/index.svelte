@@ -10,7 +10,6 @@
     // if screen width < 768, just use 3 balls
     let smaller = false
     if(Math.max(window.innerWidth,window.innerHeight) <= 1536){
-      console.log('smaller')
       document.querySelectorAll('.ball').forEach(v => {
         if(v.classList.contains('remove')) v.remove()
         else v.classList.add('small')
