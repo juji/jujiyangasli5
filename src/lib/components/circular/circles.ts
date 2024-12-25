@@ -5,7 +5,7 @@ import { Anim } from "../anim";
 
 export class Circles extends Anim {
 
-  num = Math.max(1000,Math.max(window.innerWidth, window.innerHeight))
+  num = Math.max(500,Math.max(window.innerWidth, window.innerHeight))
   sal = 7
   
   renderer:Worker
@@ -79,6 +79,7 @@ export class Circles extends Anim {
       num: this.num,
       sharedBuffer: sab,
       dataLength: this.sal,
+      canvasHeight: window.innerHeight
     })
 
     this.canvas = canvas
@@ -116,7 +117,7 @@ export class Circles extends Anim {
       if(this.paused) return;
 
       let pointerDownTime = performance.now()
-      this.calculator.postMessage({ pause: true, pointerX: e.x })
+      this.calculator.postMessage({ pointerX: e.x })
 
       const onPointerMove = (e: MouseEvent) => {
         this.calculator.postMessage({ pointerX: e.x })
@@ -124,7 +125,7 @@ export class Circles extends Anim {
 
       const onPointerUp = (e: MouseEvent) => {
         pointerDownTime = performance.now() - pointerDownTime
-        this.calculator.postMessage({ pointerDownTime, play: true })
+        this.calculator.postMessage({ pointerDownTime })
 
         window.removeEventListener('mousemove', onPointerMove)
         window.removeEventListener('mouseup', onPointerUp)
@@ -139,7 +140,7 @@ export class Circles extends Anim {
       if(this.paused) return;
 
       let pointerDownTime = performance.now()
-      this.calculator.postMessage({ pause: true, pointerX: init.touches[0].clientX })
+      this.calculator.postMessage({ pointerX: init.touches[0].clientX })
 
       const initY = init.touches[0].clientY
       const initX = init.touches[0].clientX
@@ -156,7 +157,7 @@ export class Circles extends Anim {
 
       const onPointerUp = (e: TouchEvent) => {
         pointerDownTime = performance.now() - pointerDownTime
-        this.calculator.postMessage({ pointerDownTime, play: true })
+        this.calculator.postMessage({ pointerDownTime })
 
         window.removeEventListener('touchmove', onPointerMove)
         window.removeEventListener('touchend', onPointerUp)
@@ -199,6 +200,7 @@ export class Circles extends Anim {
       height: window.innerHeight,
       devicePixelRatio: Math.max(2, window.devicePixelRatio)
     })
+
   }
 
   scroll(scroll: number){

@@ -22,13 +22,20 @@
   })
 
   $effect(() => {
+    // this results in better performance
+    window.addEventListener('scroll',(e: Event) => {
+      circles && circles.scroll(window.scrollY)
+    })
+  })
+
+  $effect(() => {
     const hMult = 1.5
 
     scroll((_, info) => {
 
       if(!activateScroll) return;
 
-      circles && circles.scroll(info.y.current)
+      // circles && circles.scroll(info.y.current)
 
       if(!info.y.current){
         overlay && overlay.style.setProperty('opacity', '0')
@@ -63,28 +70,42 @@
     position: fixed;
     width: 100%;
 
+    
+    left: 0;
+    z-index: 0;
+    pointer-events: none;
+    
     /* anchor to bottom */
     height: 100lvh;
     bottom: 0;
 
-    left: 0;
-    z-index: 0;
-    pointer-events: none;
+    @supports (-webkit-touch-callout: none) {
+     /* CSS specific to iOS devices */ 
+     bottom: unset;
+     top: 0;
+    }
   }
 
   .overlay{
     position: fixed;
     width: 100%;
-
-    /* anchor to bottom */
-    height: 100lvh;
-    bottom: 0;
-
+    
     left: 0;
     z-index: 1;
     background: black;
     pointer-events: none;
+
+    /* anchor to bottom */
+    height: 100lvh;
+    bottom: 0;
+    
+    @supports (-webkit-touch-callout: none) {
+     /* CSS specific to iOS devices */ 
+     bottom: unset;
+     top: 0;
+    }
   }
+
 
 </style>
 

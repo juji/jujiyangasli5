@@ -58,9 +58,10 @@
         context.beginPath();
         context.arc(
           bufferData[ num * sal + 0 ],
-          bufferData[ num * sal + 1 ] - (bufferData[ num * sal + 5 ] * canvas.height) + (
-            translateTop ? -translateTop / 2 : 0
-          ),
+          bufferData[ num * sal + 1 ]
+           - (bufferData[ num * sal + 5 ] * canvas.height)
+           - (translateTop / 10)
+          ,
           radiuses[ num ], 
           0, 2 * Math.PI
         )
@@ -92,6 +93,7 @@
 
     if(typeof scroll !== 'undefined' && started){
       translateTop = scroll
+      return;
     }
 
     if(w && h && started && canvas && devicePixelRatio){
