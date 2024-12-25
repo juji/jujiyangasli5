@@ -22,16 +22,20 @@
   })
 
   $effect(() => {
+    const hMult = 1.5
+
     scroll((_, info) => {
 
       if(!activateScroll) return;
+
+      circles && circles.scroll(info.y.current)
 
       if(!info.y.current){
         overlay && overlay.style.setProperty('opacity', '0')
         circles && circles.paused && circles.play()
       }
   
-      else if(info.y.current >= window.innerHeight){
+      else if(info.y.current >= (window.innerHeight * hMult)){
         if(circles && circles.paused) return;
         overlay && overlay.style.setProperty('opacity', '1')
         circles && !circles.paused && circles.pause()
@@ -39,7 +43,7 @@
   
       else {
         overlay && overlay.style.setProperty(
-          'opacity', `${1 - ((window.innerHeight - info.y.current) / window.innerHeight)}`
+          'opacity', `${1 - (((window.innerHeight * hMult) - info.y.current) / (window.innerHeight * hMult))}`
         )
         circles && circles.paused && circles.play()
       }

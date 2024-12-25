@@ -36,8 +36,6 @@
 
   main{
 
-    position: relative;
-
     .nojs-overlay{
       position: relative;
       background-color: rgba(0,0,0,0.8);

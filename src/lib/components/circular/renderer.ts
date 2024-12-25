@@ -21,6 +21,7 @@
   let bufferData:Float32Array
   let sal: number;
   let dpr: number
+  let translateTop: number = 0
 
   function setupCanvas(){
     if(!canvas) throw new Error('no canvas')
@@ -57,7 +58,9 @@
         context.beginPath();
         context.arc(
           bufferData[ num * sal + 0 ],
-          bufferData[ num * sal + 1 ] - (bufferData[ num * sal + 5 ] * canvas.height),
+          bufferData[ num * sal + 1 ] - (bufferData[ num * sal + 5 ] * canvas.height) + (
+            translateTop ? -translateTop / 2 : 0
+          ),
           radiuses[ num ], 
           0, 2 * Math.PI
         )
@@ -83,8 +86,13 @@
       play,
       width: w,
       height: h,
-      devicePixelRatio
+      devicePixelRatio,
+      scroll
     } = data
+
+    if(typeof scroll !== 'undefined' && started){
+      translateTop = scroll
+    }
 
     if(w && h && started && canvas && devicePixelRatio){
 
