@@ -140,10 +140,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: rgba(from var(--color) r g b / 0.7);
+      background-color: rgba(from var(--color) r g b / 0.9);
       border: 0px;
       padding: 1rem 0;
-      border: 1px solid rgba(0 0 0 / 0.1);
+      border: 1px solid hsla(from var(--color) h s calc(l + 15) / 1);
       cursor: pointer;
       
       &.left{
@@ -151,6 +151,7 @@
         border-bottom-right-radius: 0.2rem;
         padding-left: 0; 
         transition: padding-left 200ms ease-out;
+        border-left: 0px;
         &:hover{
           padding-left: 1rem;
         }
@@ -163,6 +164,7 @@
         border-bottom-left-radius: 0.2rem;
         padding-right: 0; 
         transition: padding-right 200ms ease-out;
+        border-right: 0px;
         &:hover{
           padding-right: 1rem;
         }
