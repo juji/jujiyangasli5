@@ -160,11 +160,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: rgba(from var(--color) r g b / 0.9);
+      background-color: hsla(from var(--color) h s calc(l + 10) / 0.9);
       border: 0px;
       padding: 0.5rem 0;
-      border: 1px solid hsla(from var(--color) h s calc(l + 15) / 1);
+      border: 1px solid hsla(from var(--color) h s calc(l + 34) / 0.6);
       cursor: pointer;
+
+      box-shadow:
+        0px 0px 0.4px rgba(0, 0, 0, 0.41),
+        0px 0px 1.1px rgba(0, 0, 0, 0.24),
+        0px 0px 2.7px rgba(0, 0, 0, 0.203),
+        0px 0px 9px rgba(0, 0, 0, 0.179)
+      ;
 
       @media screen and (hover: none) {
         display: none;
@@ -176,9 +183,11 @@
         padding-left: 0; 
         transition: padding-left 200ms ease-out;
         border-left: 0px;
+
         &:hover{
           padding-left: 1rem;
         }
+
       }
 
       &.right{
@@ -189,6 +198,7 @@
         padding-right: 0; 
         transition: padding-right 200ms ease-out;
         border-right: 0px;
+
         &:hover{
           padding-right: 1rem;
         }
@@ -204,7 +214,7 @@
       }
 
       &:active{
-        background-color: hsla(from var(--color) h s calc(l + 20) / 1);
+        filter: brightness(80%);
       }
 
       :global(&.hidden){
