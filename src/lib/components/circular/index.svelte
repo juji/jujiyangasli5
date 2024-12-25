@@ -59,9 +59,9 @@
     position: fixed;
     width: 100%;
 
-    /* anchor to top */
+    /* anchor to bottom */
     height: 100lvh;
-    top: 0;
+    bottom: 0;
 
     left: 0;
     z-index: 0;
@@ -72,9 +72,9 @@
     position: fixed;
     width: 100%;
 
-    /* anchor to top */
+    /* anchor to bottom */
     height: 100lvh;
-    top: 0;
+    bottom: 0;
 
     left: 0;
     z-index: 1;
