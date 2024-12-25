@@ -48,10 +48,6 @@
   }
 
   main{
-
-
-    
-
     .container{
       @media screen and (min-width: 1024px) {
         display: grid;

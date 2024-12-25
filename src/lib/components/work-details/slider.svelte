@@ -5,7 +5,7 @@
   import PhotoSwipeLightbox from 'photoswipe/lightbox';
   import 'photoswipe/style.css';
 
-  import { MySlider } from './my-slider'
+  import { MySlider, type ScrollParams } from './my-slider'
 
   const { images, id, color }: {
     images: WorkImage[]
@@ -15,9 +15,16 @@
 
   let container: HTMLElement
   let mySlider: MySlider
+  let arrowLeft: HTMLElement
+  let arrowRight: HTMLElement
 
-  function onBeforeScroll(){
-
+  function onBeforeScroll({
+    start, end
+  }: ScrollParams){
+    if(start) arrowLeft.classList.add('hidden')
+    else arrowLeft.classList.remove('hidden')
+    if(end) arrowRight.classList.add('hidden')
+    else arrowRight.classList.remove('hidden')
   }
 
   $effect(() => {
@@ -30,8 +37,14 @@
     lightbox.init();
 
     mySlider = new MySlider({
+      // _log: '*',
       elm: container,
-      interval: 5000
+      interval: 5000,
+      onBeforeScroll: onBeforeScroll,
+      onAfterScroll: onBeforeScroll,
+      dimensionMarkers: {
+        maxWidth: 1024
+      }
     })
 
     lightbox.on('beforeOpen', () => {
@@ -42,13 +55,19 @@
       mySlider.start()
     });
 
+    return () => {
+      lightbox.destroy()
+      mySlider.destroy()
+    }
+
   })
 
 
 </script>
 
 <div class="slider-container" style={`--color:${color}`}>
-  <button aria-label="previous image" onclick={() => mySlider.prev()} class="arrow left">
+  <button aria-label="previous image" bind:this={arrowLeft} 
+    onclick={() => mySlider.prev()} class="arrow left hidden">
     <svg
       width="24"
       height="24"
@@ -62,7 +81,8 @@
       />
     </svg>
   </button>
-  <button aria-label="next image" onclick={() => mySlider.next()} class="arrow right">
+  <button aria-label="next image" bind:this={arrowRight} 
+    onclick={() => mySlider.next()} class="arrow right">
     <svg
       width="24"
       height="24"
@@ -185,6 +205,14 @@
 
       &:active{
         background-color: hsla(from var(--color) h s calc(l + 20) / 1);
+      }
+
+      :global(&.hidden){
+        display: none;
+      }
+
+      @media screen and (min-width: 1024px) {
+        display: none;
       }
     }
   }

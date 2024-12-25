@@ -66,8 +66,10 @@
 
     .grid{
       display: grid;
+
+      /* https://css-tricks.com/a-responsive-grid-layout-with-no-media-queries/ */
       grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
-      /* grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr)); */
+
       gap: 3px;
 
       .item{
