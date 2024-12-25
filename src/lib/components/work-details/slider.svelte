@@ -5,16 +5,20 @@
   import PhotoSwipeLightbox from 'photoswipe/lightbox';
   import 'photoswipe/style.css';
 
-  const { images, id }: {
+  import { MySlider } from './my-slider'
+
+  const { images, id, color }: {
     images: WorkImage[]
     id: string
+    color: string
   } = $props()
 
-  let currentImage = $state(0)
-  let timeout = 5000
   let container: HTMLElement
-  let sliderStart = $state(new Date())
-  let stopSlider = $state(false)
+  let mySlider: MySlider
+
+  function onBeforeScroll(){
+
+  }
 
   $effect(() => {
 
@@ -25,120 +29,83 @@
     });
     lightbox.init();
 
-  })
-  
-  $effect(() => {
-    // to make svelte understand 
-    // that we are using sliderStart
-    // also to prevent double invocation
-    let ss = sliderStart.toISOString()
+    mySlider = new MySlider({
+      elm: container,
+      interval: 5000
+    })
 
-    const to = setTimeout(() => {
-      if(stopSlider) return;
-      if(sliderStart.toISOString() !== ss) return;
-
-      if(currentImage === (images.length-1)) currentImage = 0
-      else currentImage += 1
-      
-      container && container.scrollTo( window.innerWidth * currentImage ,0)
-      
-      sliderStart = new Date()
-    },timeout)
-
-    return () => {
-      clearTimeout(to)
-    }
-  })
-
-
-  // touch handlers
-  let touchEndInt = 0;
-  function onTouchStart(){
-    if(touchEndInt) clearTimeout(touchEndInt)
-    stopSlider = true
-  }
-
-  function onTouchEnd(){
-    if(touchEndInt) clearTimeout(touchEndInt)
-    touchEndInt = setTimeout(() => {
-      stopSlider = false
-      sliderStart = new Date()
-    },5000)
-  }
-
-  // image intersection observer
-  // record current image on currentImage
-  $effect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if(entry.isIntersecting){
-          const img = entry.target as HTMLImageElement
-          const idx = Number(img.dataset.index)
-          if(idx !== currentImage) currentImage = idx
-        }
-      })
-    }, {
-      root: container,
-      rootMargin: '0px -1px -1px 0px'
+    lightbox.on('beforeOpen', () => {
+      mySlider.pause()
     });
 
-    container.querySelectorAll('img').forEach(img => observer.observe(img))
-
-    return () => {
-      observer.disconnect()
-    }
-  })
-
-  // update stopSlider based on browser size
-  let innerWidth = $state(0)
-  $effect(() => {
-    
-    if(innerWidth >= 1024 && !stopSlider){
-      stopSlider = true
-    }else if(innerWidth < 1024 && stopSlider){
-      stopSlider = false
-      sliderStart = new Date()
-    }
+    lightbox.on('close', () => {
+      mySlider.start()
+    });
 
   })
 
 
 </script>
 
-<svelte:window bind:innerWidth={innerWidth} />
-
-<div class="container" id="my-gallery" data-fancybox={1} bind:this={container}>
-  {#each images as image, index }
-    <a
-      href={image.url}
-      data-pswp-width={image.dimension.image.width}
-      data-pswp-height={image.dimension.image.height}
-      target="_blank"
-      ontouchstart={onTouchStart}
-      ontouchcancel={onTouchEnd}
-      ontouchend={onTouchEnd}
+<div class="slider-container" style={`--color:${color}`}>
+  <button aria-label="previous image" onclick={() => mySlider.prev()} class="arrow left">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      <picture>
-        <source media="(max-width: 767px)" 
-          srcset={image.thumbnail} 
-          width={image.dimension.thumb.width}
-          height={image.dimension.thumb.height}
-        />
-        <source media="(min-width: 768px)" 
-          srcset={image.url} 
-          width={image.dimension.image.width}
-          height={image.dimension.image.height}
-        />
-        <img 
-          src={image.url} 
-          alt={image.title} 
-          loading={index === 0 ? null : "lazy"}
-          data-index={index}
-          style={index === 0 ? `view-transition-name: ${id}` : ''}
-        />
-      </picture>
-    </a>
-  {/each}
+      <path
+        d="M16.2426 6.34317L14.8284 4.92896L7.75739 12L14.8285 19.0711L16.2427 17.6569L10.5858 12L16.2426 6.34317Z"
+        fill="currentColor"
+      />
+    </svg>
+  </button>
+  <button aria-label="next image" onclick={() => mySlider.next()} class="arrow right">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.5858 6.34317L12 4.92896L19.0711 12L12 19.0711L10.5858 17.6569L16.2427 12L10.5858 6.34317Z"
+        fill="currentColor"
+      />
+    </svg>
+  </button>
+  <div class="container" id="my-gallery" data-fancybox={1} bind:this={container}>
+    {#each images as image, index }
+      <a
+        href={image.url}
+        data-pswp-width={image.dimension.image.width}
+        data-pswp-height={image.dimension.image.height}
+        target="_blank"
+      >
+        <picture>
+          <source media="(max-width: 767px)" 
+            srcset={image.thumbnail} 
+            width={image.dimension.thumb.width}
+            height={image.dimension.thumb.height}
+          />
+          <source media="(min-width: 768px)" 
+            srcset={image.url} 
+            width={image.dimension.image.width}
+            height={image.dimension.image.height}
+          />
+          <img 
+            src={image.url} 
+            data-index={index}
+            alt={image.title} 
+            loading={index === 0 ? null : "lazy"}
+            style={index === 0 ? `view-transition-name: ${id}` : ''}
+          />
+        </picture>
+      </a>
+    {/each}
+  </div>
 </div>
 
 <style>
@@ -156,6 +123,63 @@
     transition: transform 700ms ease-out;
     @media screen and (hover: none){
       transition: initial;
+    }
+  }
+
+  .slider-container{
+
+    --color: rgb(255 255 255 / 1);
+    position: relative;
+
+    .arrow{
+      position: absolute;
+      top: 50%;
+      left: calc(-1 * var(--page-padding));
+      transform: translateY(-50%);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(from var(--color) r g b / 0.7);
+      border: 0px;
+      padding: 1rem 0;
+      border: 1px solid rgba(0 0 0 / 0.1);
+      cursor: pointer;
+      
+      &.left{
+        border-top-right-radius: 0.2rem;
+        border-bottom-right-radius: 0.2rem;
+        padding-left: 0; 
+        transition: padding-left 200ms ease-out;
+        &:hover{
+          padding-left: 1rem;
+        }
+      }
+
+      &.right{
+        left: unset;
+        right: calc(-1 * var(--page-padding));
+        border-top-left-radius: 0.2rem;
+        border-bottom-left-radius: 0.2rem;
+        padding-right: 0; 
+        transition: padding-right 200ms ease-out;
+        &:hover{
+          padding-right: 1rem;
+        }
+      }
+
+      svg{
+        position: relative;
+        left: -2px;
+      }
+
+      &:hover{
+        background-color: hsla(from var(--color) h s calc(l + 10) / 1);
+      }
+
+      &:active{
+        background-color: hsla(from var(--color) h s calc(l + 20) / 1);
+      }
     }
   }
 
@@ -188,6 +212,7 @@
       height: 100%;
       width: auto;
       display: block;
+      scroll-snap-align: start;
     }
 
     img{
@@ -197,7 +222,11 @@
       display: block;
       object-fit: cover;
       object-position: center top;
-      scroll-snap-align: center;
+      padding: 0 1px;
+    }
+
+    @media screen and (min-width: 768px) {
+      aspect-ratio: 32 / 9;
     }
 
     @media screen and (min-width: 1024px) {

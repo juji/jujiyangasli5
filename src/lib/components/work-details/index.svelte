@@ -18,7 +18,11 @@
 <main>
   <Container>
     <div class="container">
-      <Slider id={data.work.id} images={data.work.images} />
+      <Slider 
+        id={data.work.id} 
+        images={data.work.images} 
+        color={data.work.gradientColor}
+      />
       <Text data={data} />
     </div>
   </Container>
