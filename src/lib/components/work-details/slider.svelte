@@ -130,13 +130,91 @@
 
 <style>
 
-  :global(.pswp__icn-shadow){
-    /* stroke: #8c8c8c; */
-    stroke: transparent;
+  :root{
+    --lightbox-button-color: rgb(169, 169, 169);
   }
 
-  :global(.pswp__icn){
-    fill: #adadad;
+  :global(.pswp__button--arrow){
+
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0;
+    padding: 1rem 0;
+    transform: translateY(-50%);
+    background-color: rgb(0 0 0 / 0.7);
+    border: 1px solid var(--lightbox-button-color);
+    cursor: pointer;
+
+    &:hover,
+    &:focus,
+    &:active{
+      background-color: rgb(0 0 0 / 0.8);
+      border: 1px solid var(--lightbox-button-color);
+      cursor: pointer;
+      padding: 1rem 0;
+    }
+
+    & :global(.pswp__icn){
+      all: initial;
+      cursor: pointer;
+      display: block;
+      width: 21px;
+      height: 21px;
+      color: var(--lightbox-button-color);
+      fill: currentColor;
+      transition: translate 200ms 100ms;
+    }
+
+    &:global(.pswp__button--arrow--prev){
+      border-left: 0px solid var(--lightbox-button-color);
+      border-top-right-radius: 0.3rem;
+      border-bottom-right-radius: 0.3rem;
+      transition: padding-left 100ms ease-out;
+    }
+
+    &:global(.pswp__button--arrow--next){
+      border-right: 0px solid var(--lightbox-button-color);
+      border-top-left-radius: 0.3rem;
+      border-bottom-left-radius: 0.3rem;
+      transition: padding-right 100ms ease-out;
+      
+      & :global(.pswp__icn){
+        transform: scale(-1, 1);
+        translate: -1px 0 0;
+      }
+    }
+
+
+    @media screen and (hover: hover){
+      &:hover{
+        background-color: rgb(50 50 50 / 0.8);
+  
+        &:global(.pswp__button--arrow--prev){
+          padding-left: .8rem;
+          & :global(.pswp__icn){
+            translate: 3px 0 0;
+            filter: brightness(200%);
+          }
+        }
+  
+        &:global(.pswp__button--arrow--next){
+          padding-right: .8rem;
+          & :global(.pswp__icn){
+            translate: -4px 0 0;
+            filter: brightness(200%); 
+          }
+        }
+      }
+    }
+
+    &:active{
+      background-color: rgb(80 80 80 / 0.9)
+    }
+  }
+
+  :global(.pswp__icn-shadow){
+    stroke: transparent;
   }
 
   :global(.pswp__container){
@@ -150,21 +228,23 @@
 
     --color: rgb(255 255 255 / 1);
     position: relative;
+    overflow: hidden;
+    left: calc(-1 * var(--page-padding));
+    width: calc(100% + var(--page-padding) + var(--page-padding));
 
     .arrow{
       position: absolute;
       top: 50%;
-      left: calc(-1 * var(--page-padding));
       transform: translateY(-50%);
       z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: center;
       background-color: hsla(from var(--color) h s calc(l + 10) / 0.9);
-      border: 0px;
       padding: 0.5rem 0;
       border: 1px solid hsla(from var(--color) h s calc(l + 34) / 0.6);
       cursor: pointer;
+      translate: 0 0 0;
 
       box-shadow:
         0px 0px 0.4px rgba(0, 0, 0, 0.41),
@@ -180,27 +260,41 @@
       &.left{
         border-top-right-radius: 0.2rem;
         border-bottom-right-radius: 0.2rem;
+        left: 0;
         padding-left: 0; 
-        transition: padding-left 200ms ease-out;
         border-left: 0px;
+        transition: 
+          translate 200ms,
+          padding-left 200ms ease-out;
 
         &:hover{
           padding-left: 1rem;
         }
 
+        :global(&.hidden){
+          pointer-events: none;
+          translate: -100% 0 0;
+        }
+
       }
 
       &.right{
-        left: unset;
-        right: calc(-1 * var(--page-padding));
+        right: 0;
         border-top-left-radius: 0.2rem;
         border-bottom-left-radius: 0.2rem;
         padding-right: 0; 
-        transition: padding-right 200ms ease-out;
+        transition: 
+          translate 200ms,
+          padding-right 200ms ease-out;
         border-right: 0px;
 
         &:hover{
           padding-right: 1rem;
+        }
+
+        :global(&.hidden){
+          pointer-events: none;
+          translate: 100% 0 0;
         }
       }
 
@@ -217,21 +311,21 @@
         filter: brightness(80%);
       }
 
-      :global(&.hidden){
-        display: none;
-      }
-
       @media screen and (min-width: 1024px) {
         display: none;
       }
+    }
+
+    @media screen and (min-width: 1024px) {
+      left: 0;
+      width: 100%;
     }
   }
 
   .container{
 
     position: relative;
-    left: calc(-1 * var(--page-padding));
-    width: calc(100% + var(--page-padding) + var(--page-padding));
+    width: auto;
 
     display: flex;
     aspect-ratio: 16 / 9;
@@ -278,8 +372,6 @@
       aspect-ratio: unset;
       overflow-x: hidden;
       overflow-y: auto;
-      left: 0;
-      width: 100%;
 
       a{
         margin-bottom: 1rem;
