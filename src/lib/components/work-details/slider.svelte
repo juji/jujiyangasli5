@@ -134,6 +134,16 @@
     --lightbox-button-color: rgb(169, 169, 169);
   }
 
+  :global(.pswp__icn){
+    color: var(--lightbox-button-color);
+    filter: 
+      drop-shadow(0px 1px 1px rgb(0 0 0 / 0.6))
+      drop-shadow(0px 0px 1px rgb(0 0 0 / 0.4))
+      drop-shadow(1px 1px 1px rgb(0 0 0 / 0.2))
+    ;
+
+  }
+
   :global(.pswp__button--arrow){
 
     width: auto;
@@ -142,14 +152,14 @@
     margin: 0;
     padding: 1rem 0;
     transform: translateY(-50%);
-    background-color: rgb(0 0 0 / 0.7);
+    background-color: rgb(50 50 50 / 0.8);
     border: 1px solid var(--lightbox-button-color);
     cursor: pointer;
 
     &:hover,
     &:focus,
     &:active{
-      background-color: rgb(0 0 0 / 0.8);
+      background-color: rgb(50 50 50 / 0.8);
       border: 1px solid var(--lightbox-button-color);
       cursor: pointer;
       padding: 1rem 0;
@@ -164,6 +174,11 @@
       color: var(--lightbox-button-color);
       fill: currentColor;
       transition: translate 200ms 100ms;
+
+      @media screen and (min-width: 768px) {
+        width: 34px;
+        height: 34px;
+      }
     }
 
     &:global(.pswp__button--arrow--prev){
@@ -185,31 +200,32 @@
       }
     }
 
+    &:hover{
+      background-color: rgb(50 50 50 / 0.8);
 
-    @media screen and (hover: hover){
-      &:hover{
-        background-color: rgb(50 50 50 / 0.8);
-  
-        &:global(.pswp__button--arrow--prev){
-          padding-left: .8rem;
-          & :global(.pswp__icn){
-            translate: 3px 0 0;
-            filter: brightness(200%);
-          }
+      &:global(.pswp__button--arrow--prev){
+        padding-left: .8rem;
+        & :global(.pswp__icn){
+          translate: 3px 0 0;
+          filter: brightness(200%);
         }
-  
-        &:global(.pswp__button--arrow--next){
-          padding-right: .8rem;
-          & :global(.pswp__icn){
-            translate: -4px 0 0;
-            filter: brightness(200%); 
-          }
+      }
+
+      &:global(.pswp__button--arrow--next){
+        padding-right: .8rem;
+        & :global(.pswp__icn){
+          translate: -4px 0 0;
+          filter: brightness(200%); 
         }
       }
     }
 
     &:active{
       background-color: rgb(80 80 80 / 0.9)
+    }
+
+    @media screen and (hover: none){
+      display: none;
     }
   }
 
