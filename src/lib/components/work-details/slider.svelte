@@ -142,9 +142,13 @@
       justify-content: center;
       background-color: rgba(from var(--color) r g b / 0.9);
       border: 0px;
-      padding: 1rem 0;
+      padding: 0.5rem 0;
       border: 1px solid hsla(from var(--color) h s calc(l + 15) / 1);
       cursor: pointer;
+
+      @media screen and (hover: none) {
+        display: none;
+      }
       
       &.left{
         border-top-right-radius: 0.2rem;
