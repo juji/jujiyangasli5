@@ -3,8 +3,9 @@ let sharedBuffer: Float32Array
 let started = false
 let paused = false
 let len = 0
-let speedScale = 2
-let speedScaleLimit = 2
+let speedScale = 1
+let speedScaleUpperLimit = 1
+let speedScaleLowerLimit = 1
 
 let pointerDistance = 0
 let pointerInit = 0
@@ -32,12 +33,18 @@ function start(){
   
     }
 
-    if(speedScale > speedScaleLimit){
+    if(
+      Math.abs(speedScale) > speedScaleUpperLimit
+    ){
       speedScale -= speedScale * 0.005
     }
 
-    if(speedScale < -speedScaleLimit){
-      speedScale += -speedScale * 0.005
+    if(
+      // is not being interactive
+      lastPointer === null &&
+      Math.abs(speedScale) < speedScaleLowerLimit
+    ){
+      speedScale += speedScale * 0.05
     }
 
     requestAnimationFrame(calculate)
@@ -89,7 +96,10 @@ self.onmessage = (e: MessageEvent) => {
     throw new Error('not paused')
   }
 
-  if(!num) throw new Error('num is gone')
+  if(!num) {
+    console.log(e.data)
+    throw new Error('num is gone')
+  }
   if(!sab) throw new Error('sharedBufferBuffer is gone')
   if(!dataLength) throw new Error('dataLength is gone')
 
