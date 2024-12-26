@@ -64,13 +64,13 @@
 
     22.2%{
       translate: 0 -42px 0;
-      scale: 1.03 1.05 1;
+      scale: 1.03 1 1;
       rotate: 3deg;
     }
 
     28%{
       translate: 0 -48px 0;
-      scale: 1.04 1.1 1;
+      scale: 1.04 1.2 1;
       rotate: 1deg;
     }
 
