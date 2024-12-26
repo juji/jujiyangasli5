@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Ball } from "./ball";
   import { scroll } from "motion";
+  import { isSafariOrWebkit } from '$lib/functions/safari'
   
   let dBalls: Ball[] = $state([]);
   let overlay: HTMLDivElement
@@ -9,6 +10,12 @@
   let height = 520
   let translateX = 300
   let translateY = 120
+
+  let minimumOpacity = $state(0)
+  $effect(() => {
+    if(isSafariOrWebkit().usesSafariWebKit)
+      minimumOpacity = 0.1
+  })
 
   $effect(() => {
 
@@ -59,7 +66,7 @@
 
 
       if(!info.y.current){
-        overlay && overlay.style.setProperty('opacity', '0')
+        overlay && overlay.style.setProperty('opacity', minimumOpacity + '')
         if(offscreen) offscreen = false
       }
 
@@ -76,7 +83,7 @@
           `${1 - (
             ((window.innerHeight * hMult) - info.y.current) / 
             (window.innerHeight * hMult)
-          )}`
+          ) + minimumOpacity}`
         ) 
       }
     })
@@ -238,6 +245,14 @@
 
   /* safari only */
   @supports (hanging-punctuation: first) and (font: -apple-system-body) and (-webkit-appearance: none) {
+
+    .overlay{
+      opacity: 0.2;
+    }
+
+    .grain{
+      filter: brightness(90%) contrast(200%);
+    }
 
     .balls{
       filter: url(#goosafari);
