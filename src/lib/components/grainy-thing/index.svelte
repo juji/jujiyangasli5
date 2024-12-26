@@ -5,6 +5,11 @@
   let dBalls: Ball[] = $state([]);
   let overlay: HTMLDivElement
 
+  let width = 800
+  let height = 520
+  let translateX = 300
+  let translateY = 120
+
   $effect(() => {
 
     // if screen width < 768, just use 3 balls
@@ -24,7 +29,10 @@
       balls.forEach(ball => {
         const dball = new Ball(
           ball as HTMLDivElement,
-          smaller // smaller number
+          {
+            width,
+            height
+          }
         )
         jsBalls.push(dball)
       })
@@ -79,7 +87,7 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" class="hidden">
   <filter id="goo">
-    <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="blur" />
+    <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
     <feColorMatrix in="blur" type="matrix" 
       values="1 0 0 0 0  
               0 1 0 0 0  
@@ -98,7 +106,9 @@
 </svg>
 <div class="wrapper" class:shown={!offscreen}>
   <div class="grain">
-    <div class="balls">
+    <div class="balls"
+      style={`--translateX: ${translateX}px;--translateY: ${translateY}px`}
+    >
       <div style="--delay:2000ms;--pos-x:50%;--pos-y:50%;--color:6,82,221;--diameter:860px" class="ball"></div>
       <div style="--delay:2300ms;--pos-x:56%;--pos-y:6%;--color:234,32,39;--diameter:676px" class="ball"></div>
       <div style="--delay:2600ms;--pos-x:18%;--pos-y:40%;--color:153,128,250;--diameter:698px" class="ball"></div>
@@ -108,8 +118,26 @@
   </div>
 </div>
 <div class="overlay" bind:this={overlay}></div>
+<div class="debug" style={
+  `--width: ${width}px;--height: ${height}px;`+
+  `--translateX: ${translateX}px;--translateY: ${translateY}px`
+}></div>
 
 <style>
+
+  .debug{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    width: var(--width,0);
+    height: var(--height,0);
+    border: 1px solid red;
+    transform: translate3d(-50%, -50%, 0);
+    translate: var(--translateX,0) var(--translateY,0);
+
+    display: none;
+  }
 
   .overlay{
     position: fixed;
@@ -158,7 +186,10 @@
 
   .balls{
     height: 100%;
-    filter: url(#goo) blur(5px);
+    width: 100%;
+    filter: url(#goo);
+    position: absolute;
+    translate: var(--translateX,0) var(--translateY,0);
   }
 
   @keyframes popout{
@@ -180,13 +211,15 @@
     --pos-y: 0%;
     --delay: 0ms;
 
-    position: fixed;
-    image-rendering: pixelated;
+    position: absolute;
+    
+    
     animation-name: popout;
     animation-duration: 2000ms;
     animation-fill-mode: both;
     animation-timing-function: ease-out;
-    animation-delay: var(--delay);
+    animation-delay: var(--delay); 
+   
 
     border-radius: 50%;
     mix-blend-mode: screen;
@@ -200,11 +233,7 @@
     top: var(--pos-y);
     left: var(--pos-x);
 
-    transform: translate3d(-30%, -30%, 0);
-
-    :global(&.small){
-      transform: translate3d(-40%, -30%, 0);
-    }
+    transform: translate3d(-50%, -50%, 0);
   }
 
   /* safari only */

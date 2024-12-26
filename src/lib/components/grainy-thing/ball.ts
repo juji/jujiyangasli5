@@ -1,4 +1,4 @@
-import { frame, cancelFrame } from "motion"
+
 
 const colors = [
   [196, 229, 56], // '#C4E538',
@@ -36,38 +36,52 @@ export class Ball {
   bottomBorder = 0
 
   // blur = 0
-  maxSpeed = 2
-  accelDelta = 0.05
+  maxSpeed = 999
+  turnAccelDelta = 0.05
   // state = {}
 
-  baseSpeed = 1
+  baseSpeed = 2
 
   runFunc = {
     update: () => {},
     render: () => {}
   }
 
+  box = {
+    width: 720, 
+    height: 580
+  }
+
   constructor(
     elm: HTMLDivElement,
-    smallScreen: boolean
+    {
+      width,
+      height
+    } : {
+      width: number,
+      height: number
+    }
   ){
 
     this.elm = elm
 
-    let smaller = Math.min(1080, Math.min(window.innerHeight, window.innerWidth))
-    this.radius = Math.round((smaller * 0.5) + (Math.random() * 100))
+    this.box.width = width
+    this.box.height = height
 
-    this.x = Math.random() * window.innerWidth
-    this.y = Math.random() * window.innerHeight
+    this.baseSpeed = this.baseSpeed + (-.6 + Math.random())
+
+    this.setBorders()
+
+    let radius = this.box.width * (0.3 + (Math.random() * 0.4))
+    this.radius = Math.round(radius + (Math.random() * 100))
+
+    this.x = ((screen.width - this.box.width) / 2) + (Math.random() * this.box.width)
+    this.y = ((screen.height - this.box.height) / 2) + (Math.random() * this.box.height)
     this.color = randomColor()
 
-    this.speedX = this.baseSpeed + Math.random() * (Math.random() < .5 ? 1 : -1)
-    this.speedY = this.baseSpeed + Math.random() * (Math.random() < .5 ? 1 : -1)
+    this.speedX = this.baseSpeed * (Math.random() < .5 ? -1 : 1)
+    this.speedY = this.baseSpeed * (Math.random() < .5 ? -1 : 1)
 
-    this.leftBorder = smallScreen ? window.innerWidth * 0.1 : this.radius * Math.random()
-    this.topBorder = smallScreen ? window.innerHeight * 0.5 : this.radius * Math.random()
-    this.rightBorder = smallScreen ? window.innerWidth - (window.innerWidth * 0.1) : window.innerWidth - (this.radius * Math.random())
-    this.bottomBorder = smallScreen ? window.innerHeight - (window.innerHeight * 0.4) : window.innerHeight - (this.radius * Math.random())
 
     this.elm.style.setProperty('--diameter', (this.radius * 2) + 'px')
     this.elm.style.setProperty('--color', this.color)
@@ -79,49 +93,41 @@ export class Ball {
 
   }
 
+  setBorders(){
+    const screen = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    }
+  
+    this.leftBorder = ((screen.width - this.box.width) / 2)
+    this.topBorder = ((screen.height - this.box.height) / 2)
+    this.rightBorder = (((screen.width - this.box.width) / 2) + this.box.width)
+    this.bottomBorder = (((screen.height - this.box.height) / 2) + this.box.height)
+  }
+
   onResize(){
-    this.rightBorder = window.innerWidth - (this.radius * Math.random())
-    this.bottomBorder = window.innerHeight - (this.radius * Math.random())
-  }
-
-  start(){
-    this.runFunc.render = () => { this.render() }
-    this.runFunc.update = () => { this.update() }
-    frame.update(this.runFunc.update, true)
-    frame.render(this.runFunc.render, true)
-  }
-
-  stop(){
-    cancelFrame(this.runFunc.update)
-    cancelFrame(this.runFunc.render)
+    this.setBorders()
   }
 
   update(){
     if(this.x > this.rightBorder){
-      this.accelX -= this.accelDelta
+      this.accelX -= this.turnAccelDelta
     }
 
     if(this.x < this.leftBorder){
-      this.accelX += this.accelDelta
+      this.accelX += this.turnAccelDelta
     }
 
     if(this.y > this.bottomBorder){
-      this.accelY -= this.accelDelta
+      this.accelY -= this.turnAccelDelta
     }
 
     if(this.y < this.topBorder){
-      this.accelY += this.accelDelta
+      this.accelY += this.turnAccelDelta
     }
 
-    this.x += Math.max(
-      Math.min(this.speedX + this.accelX, this.maxSpeed), 
-      -this.maxSpeed
-    )
-    
-    this.y += Math.max(
-      Math.min(this.speedY + this.accelY, this.maxSpeed), 
-      -this.maxSpeed
-    )
+    this.x += this.speedX + this.accelX
+    this.y += this.speedY + this.accelY
   }
 
   render(){
