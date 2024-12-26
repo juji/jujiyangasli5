@@ -45,25 +45,31 @@
   })
 
   $effect(() => {
-
+    
+    const hMult = 1.2
     scroll((_, info) => {
+
 
       if(!info.y.current){
         overlay && overlay.style.setProperty('opacity', '0')
         if(offscreen) offscreen = false
       }
 
-      else if(info.y.current >= window.innerHeight){
+      else if(info.y.current >= (window.innerHeight * hMult)){
         if(offscreen) return;
         offscreen = true
-        overlay && overlay.style.setProperty('opacity', '0.8')
+        overlay && overlay.style.setProperty('opacity', '1')
       }
       
       else {
         if(offscreen) offscreen = false 
-        overlay && overlay.style.setProperty('opacity', `${0.8 - (
-          (window.innerHeight - info.y.current) / window.innerHeight
-        )}`) 
+        overlay && overlay.style.setProperty(
+          'opacity', 
+          `${1 - (((window.innerHeight * hMult) - info.y.current) / (window.innerHeight * hMult))}`
+          // `${1 - (
+          // (window.innerHeight - info.y.current) / window.innerHeight
+          // )}`
+        ) 
       }
     })
 
