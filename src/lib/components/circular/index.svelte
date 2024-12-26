@@ -51,7 +51,10 @@
       else {
         overlay && overlay.style.setProperty(
           'opacity', 
-          `${1 - (((window.innerHeight * hMult) - info.y.current) / (window.innerHeight * hMult))}`
+          `${1 - (
+            ((window.innerHeight * hMult) - info.y.current) / 
+            (window.innerHeight * hMult)
+          )}`
         )
         circles && circles.paused && circles.play()
       }
