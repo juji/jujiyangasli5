@@ -22,7 +22,6 @@
   <meta property="og:description" content={`Checkout juji's work: ${data.work.title}.`} />
   <meta property="og:image" content={`${page.url.origin}${data.work.images[0].url}`} />
 
-  <!-- Twitter Meta Tags -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="twitter:domain" content={`${page.url.host}`} />
   <meta property="twitter:url" content={`${page.url.href}`} />

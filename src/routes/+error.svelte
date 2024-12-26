@@ -3,6 +3,11 @@
   import GrainyThing from '$lib/components/grainy-thing/index.svelte'
 </script>
 
+<svelte:head>
+  <title>Juji: Web Developer</title>
+  <meta name="description" content="Hello, my name is Tri Rahmat Gunadi, and i like to code stuff." />
+  <meta name="color-scheme" content="dark" />
+</svelte:head>
 
 <GrainyThing />
 <div class="wrapper">
