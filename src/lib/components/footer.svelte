@@ -66,7 +66,6 @@
       if(!vars.started) return;
       if(!footer) return;
 
-      
       // draw
       footer.style.setProperty(
         'background',
@@ -80,7 +79,6 @@
       // done
       if(!vars.deltaAlpha) {
         vars.started = false
-        console.log('stop')
         return;
       }
 
