@@ -52,8 +52,8 @@
       content: ' ';
       position: fixed;
       top:0;
-      left:0;
-      width: 0%;
+      left: 50%;
+      width: 100%;
       height: 2px;
       background: rgb(0, 196, 95);
       background: radial-gradient(circle, rgb(76, 255, 130) 0%, rgb(0, 163, 122) 37%);
@@ -61,19 +61,21 @@
       background-size: 200% auto;
       background-position: 0 100%;
       animation: gradient 500ms infinite forwards linear;
-      transition: width 200ms ease-out;
+      transform: scaleX(0%);
+      translate: -50% 0;
+      transition: transform 500ms ease-out;
     }
 
     &.loading{
       opacity: 1;
       &::after{
-        width: 80%;
+        transform: scaleX(80%);
       }
     }
 
     &.end{
       &::after{
-        width: 100%;
+        transform: scaleX(100%);
       }
     }
 

@@ -6,12 +6,12 @@ const wait = (timeout: number) => new Promise(r => setTimeout(r,timeout))
 export function viewTransition(){
 
   beforeNavigate(async () => {
-    document.querySelector('html')?.classList.add('no-smooth')
+    document.querySelector('html')?.classList.add('loading')
     globalState.loading = true
   })
 
   afterNavigate(() => {
-    document.querySelector('html')?.classList.remove('no-smooth')
+    document.querySelector('html')?.classList.remove('loading')
     globalState.loading = false
   })
 
