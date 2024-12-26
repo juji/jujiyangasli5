@@ -15,6 +15,7 @@
 
   let colors: string[] = []
   let radiuses: number[] = []
+  let translateTopRatios: number[] = []
   let canvas: OffscreenCanvas
   let started = false
   let paused = false
@@ -60,7 +61,7 @@
           bufferData[ num * sal + 0 ],
           bufferData[ num * sal + 1 ]
            - (bufferData[ num * sal + 5 ] * canvas.height)
-           - (translateTop / 10)
+           - (translateTopRatios[num] * translateTop / 9)
           ,
           radiuses[ num ], 
           0, 2 * Math.PI
@@ -75,6 +76,7 @@
 
   }
 
+  let lastScroll = 0
   self.onmessage = (e: MessageEvent) => {
 
     const { data } = e
@@ -92,6 +94,7 @@
     } = data
 
     if(typeof scroll !== 'undefined' && started){
+      // global parallax thing
       translateTop = scroll
       return;
     }
@@ -162,6 +165,9 @@
     for(let i =0;i<num;i++){
       colors.push(randomColor())
       radiuses.push(randomSize())
+
+      // local parallax thing
+      translateTopRatios.push(1 + (Math.random() * .25))
     }
 
     sal = dataLength
