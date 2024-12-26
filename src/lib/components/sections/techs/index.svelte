@@ -67,9 +67,11 @@
   <div class="grid" onmouseenter={setColor} role="complementary">
     {#each techs as techrow}
     {#each techrow as item}
-      <div class="item" style={`--in-delay:${animDelay++}`}>
-        <img src={item.image} alt={item.title} loading="lazy" />
-        <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.title}></a>
+      <div class="item-container">
+        <div class="item" style={`--in-delay:${animDelay++}`}>
+          <img src={item.image} alt={item.title} loading="lazy" />
+          <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.title}></a>
+        </div>
       </div>
     {/each}
     {/each}
@@ -88,18 +90,22 @@
 
     --tech-color: rgb(119, 0, 117); /* i currently like this purple */
     margin-bottom: 8rem;
-    perspective: 1000px;
-
+    
     .grid{
       display: grid;
-
+      
       /* https://css-tricks.com/a-responsive-grid-layout-with-no-media-queries/ */
       grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
-
+      
       gap: 3px;
-      transform-style: preserve-3d;
-
-      --delay-mult: 80ms;
+      
+      
+      --delay-mult: 100ms;
+      
+      .item-container{
+        perspective: 500px;
+        transform-style: preserve-3d;
+      }
 
 
       .item{
@@ -136,7 +142,7 @@
           left: 0;
           width: 350%;
           height: 100%;
-          transform: translateX(-100%);
+          transform: translateX(-200%);
           background: linear-gradient(
             111deg, 
               rgb(0 0 0 / 0) 0%,
@@ -162,8 +168,8 @@
           opacity: 1;
 
           a{
-            transition: transform 500ms ease-out calc(var(--in-delay) * var(--delay-mult));
-            transform: translateX(0%);  
+            transition: transform 700ms ease-out calc(var(--in-delay) * var(--delay-mult));
+            transform: translateX(0%);
           }
 
           @media screen and (hover: hover) {
@@ -177,7 +183,7 @@
               ;
   
               /* border: 1px solid hsl(from var(--tech-color) h s calc(l * 1.5)); */
-              border: 1px solid hsl(from var(--background-color) h s calc(l + 34));
+              border: 1px solid hsl(from var(--background-color) h s calc(l + 42));
               /* background: var(--tech-color); */
   
               img{

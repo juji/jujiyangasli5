@@ -1,8 +1,8 @@
 
 
-const colors = [
-  [196, 229, 56], // '#C4E538',
-  [18, 203, 196], // '#12CBC4',
+let colors = [
+  // [196, 229, 56], // '#C4E538',
+  // [18, 203, 196], // '#12CBC4',
   [237, 76, 103], // '#ED4C67',
   [163, 203, 56], // '#A3CB38',
   [238, 90, 36], // '#EE5A24',
@@ -12,6 +12,8 @@ const colors = [
   [217, 128, 250], // '#D980FA',
   [153, 128, 250], // '#9980FA',
 ]
+
+colors = [ ...colors, ...colors, ...colors ]
 
 function randomColor(){
   return colors[Math.floor(Math.random() * colors.length)].join(',');
@@ -37,7 +39,7 @@ export class Ball {
 
   // blur = 0
   maxSpeed = 999
-  turnAccelDelta = 0.05
+  turnAccelDelta = 0.09
   // state = {}
 
   baseSpeed = 2

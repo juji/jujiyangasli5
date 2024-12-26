@@ -188,7 +188,6 @@
       radial-gradient(circle at 50% 50%, rgba(0,0,0,.7), rgba(0,0,0,.6)),
       url("data:image/svg+xml,%3Csvg viewBox='0 0 277 277' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='10' numOctaves='6' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")
       ;
-    image-rendering: pixelated;  
   }
 
   .balls{
@@ -199,14 +198,14 @@
     translate: var(--translateX,0) var(--translateY,0);
   }
 
-  @keyframes popout{
+  @keyframes rushin{
     from {
       scale: 0;
-      translate: 100% 0 0;
+      /* translate: 50% 0 0; */
     }
     to{
       scale: 1;
-      translate: 0% 0 0;
+      /* translate: 0% 0 0; */
     }
   }
 
@@ -221,10 +220,10 @@
     position: absolute;
     
     
-    animation-name: popout;
+    animation-name: rushin;
     animation-duration: 2000ms;
     animation-fill-mode: both;
-    animation-timing-function: ease-out;
+    animation-timing-function: cubic-bezier(0.025, 0.725, 0.530, 1.475);
     animation-delay: var(--delay); 
    
 

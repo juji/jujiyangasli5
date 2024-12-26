@@ -6,6 +6,7 @@
   import 'sanitize.css/assets.css';
   import 'sanitize.css/forms.css';
   import 'minireset.css';
+  import 'lenis/dist/lenis.css'
   
   import '$lib/styles/fonts.css';
   import '$lib/styles/main.css';
@@ -15,10 +16,21 @@
   import { viewTransition } from '$lib/functions/view-transition';
   import Footer from '$lib/components/footer.svelte'
   import LoadingIndicator from '$lib/components/loading-indicator.svelte';
+  import Lenis from 'lenis'
 
   let { children } = $props();
 
   viewTransition();
+
+  $effect(() => {
+    const lenis = new Lenis({
+      autoRaf: true,
+    });
+
+    lenis.on('scroll', (e) => {
+      console.log(e);
+    });
+  })
 
 </script>
 
