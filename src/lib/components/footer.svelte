@@ -74,7 +74,7 @@
           rgb(0 255 0 / ${vars.minAlpha + vars.deltaAlpha}) 0%,
           rgb(0 0 0 / 0) 100%
         ), rgb(from var(--background-color) r g b / 0.2)`
-        )
+      )
         
       // done
       if(!vars.deltaAlpha) {
