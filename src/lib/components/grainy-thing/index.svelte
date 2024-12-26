@@ -65,10 +65,10 @@
         if(offscreen) offscreen = false 
         overlay && overlay.style.setProperty(
           'opacity', 
-          `${1 - (((window.innerHeight * hMult) - info.y.current) / (window.innerHeight * hMult))}`
-          // `${1 - (
-          // (window.innerHeight - info.y.current) / window.innerHeight
-          // )}`
+          `${1 - (
+            ((window.innerHeight * hMult) - info.y.current) / 
+            (window.innerHeight * hMult)
+          )}`
         ) 
       }
     })
