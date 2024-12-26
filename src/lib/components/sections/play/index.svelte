@@ -52,7 +52,7 @@
 
     12.6%{
       translate: 0 10px 0;
-      scale: 1 .8 1;
+      scale: 1 .78 1;
       rotate: 0deg;
     }
 
@@ -98,7 +98,7 @@
 
     h2{
       display: inline-block;
-      animation: h2 4000ms ease-in infinite both;
+      animation: h2 3500ms ease-in infinite both;
       padding-bottom: 0;
     }
 
