@@ -39,6 +39,7 @@
 		"vite": "^6.0.0"
 	},
 	"dependencies": {
+		"lenis": "^1.1.18",
 		"minireset.css": "^0.0.7",
 		"motion": "^11.15.0",
 		"photoswipe": "^5.4.4",

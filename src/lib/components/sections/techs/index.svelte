@@ -166,7 +166,7 @@
             transform: translateX(0%);  
           }
 
-          @media screen and(hover: hover) {
+          @media screen and (hover: hover) {
             
             &:hover{
               transition: 
