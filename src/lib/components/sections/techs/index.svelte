@@ -173,6 +173,7 @@
             ;
 
             /* border: 1px solid hsl(from var(--tech-color) h s calc(l * 1.5)); */
+            border: 1px solid hsl(from var(--background-color) h s calc(l + 34));
             /* background: var(--tech-color); */
 
             img{
