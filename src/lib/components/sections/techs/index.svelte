@@ -1,13 +1,17 @@
 <script lang="ts">
 	import type { TechItem } from '$lib/data/techs/types';
   import { sectionInView } from '$lib/functions/section-in-view';
+	import { inView } from 'motion';
 
   let { techs } : { techs: TechItem[][] } = $props()
   let elm: HTMLElement
   let js = $state(false)
   $effect(() => { 
-    sectionInView( elm ) 
+    const stop = sectionInView( elm ) 
     js = true
+    return () => {
+      stop()
+    }
   })
 
   let colors = [
@@ -19,7 +23,7 @@
     [106, 97, 0]
   ]
 
-  // so random will actualy get edges value
+  // so random will actualy get value on the edges
   // not so keen of having to write a big array
   colors = [ ...colors, ...colors, ...colors ] 
 
@@ -30,6 +34,27 @@
       `rgb(${colors[ index ].join(' ')})`
     )
   }
+
+  $effect(() => {
+    
+    const stop = inView('.grid',( info ) => {
+      info.target.classList.add('visible')
+      return () => {
+        info.target.classList.remove('visible')
+      }
+    },{
+      margin: '999% 0% -10% 0%',
+      amount: 'some'
+    })
+
+
+    return () => {
+      stop()
+    }
+  })
+
+  // svelte-ignore (non_reactive_update)
+  let animDelay = 0
 
 </script>
 
@@ -42,7 +67,7 @@
   <div class="grid" onmouseenter={setColor} role="complementary">
     {#each techs as techrow}
     {#each techrow as item}
-      <div class="item">
+      <div class="item" style={`--in-delay:${animDelay++}`}>
         <img src={item.image} alt={item.title} loading="lazy" />
         <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.title}></a>
       </div>
@@ -63,6 +88,7 @@
 
     --tech-color: rgb(119, 0, 117); /* i currently like this purple */
     margin-bottom: 8rem;
+    perspective: 1000px;
 
     .grid{
       display: grid;
@@ -71,6 +97,8 @@
       grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
 
       gap: 3px;
+      transform-style: preserve-3d;
+
 
       .item{
         aspect-ratio: 1;
@@ -79,9 +107,15 @@
         background: rgb( from var(--tech-color) r g b / 0);
         border-radius: 3px;
         transition: 
+          transform 100ms ease-out,
+          opacity 100ms ease-out,
           background 1000ms 500ms,
           border 2000ms 500ms
         ;
+        opacity: 0;
+        transform: rotateY(45deg);
+        transform-origin: 0px;
+        overflow: hidden;
 
         img{
           display: block;
@@ -98,19 +132,53 @@
           position: absolute;
           top: 0;
           left: 0;
-          width: 100%;
+          width: 350%;
           height: 100%;
+          transform: translateX(-100%);
+          background: linear-gradient(
+            111deg, 
+              rgb(0 0 0 / 0) 0%,
+              rgb(0 0 0 / 0) 38%,
+              rgb(255 255 255 / .3) 40%,
+              rgb(255 255 255 / .3) 60%,
+              rgb(0 0 0 / 0) 62%,
+              rgb(0 0 0 / 0) 100%
+          );
         }
 
-        &:hover{
+      }
+
+      &:global(.visible){
+        .item{
           transition: 
-            background 0ms,
-            border 0ms
+            transform 700ms ease-out calc(var(--in-delay) * 100ms),
+            opacity 200ms ease-out calc(var(--in-delay) * 100ms),
+            background 1000ms 500ms,
+            border 2000ms 500ms
           ;
-          border: 1px solid hsl(from var(--tech-color) h s calc(l * 2));
-          background: var(--tech-color);
-          img{
-            scale: 1.1;
+          transform: rotateY(0deg);
+          opacity: 1;
+
+          a{
+            transition: transform 500ms ease-out calc(var(--in-delay) * 100ms);
+            transform: translateX(0%);  
+          }
+
+          &:hover{
+            transition: 
+              transform 200ms ease-out,
+              opacity 200ms ease-out calc(var(--in-delay) * 100ms),
+              background 0ms,
+              border 0ms
+            ;
+
+            /* border: 1px solid hsl(from var(--tech-color) h s calc(l * 1.5)); */
+            /* background: var(--tech-color); */
+
+            img{
+              scale: 1;
+            }
+
           }
         }
       }

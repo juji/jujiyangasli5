@@ -6,9 +6,12 @@
 
   let { works } = $props();
   let inView = $state(false)
-  $effect(() => { sectionInView( elm, () => { 
-    inView = true
-  } ) })
+  $effect(() => { 
+    const stop = sectionInView( elm, () => { 
+      inView = true
+    }) 
+    return () => stop()
+  })
 
 </script>
 

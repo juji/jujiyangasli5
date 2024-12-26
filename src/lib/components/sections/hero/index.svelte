@@ -3,7 +3,10 @@
   import { sectionInView } from '$lib/functions/section-in-view';
 
   let elm: HTMLElement
-  $effect(() => { sectionInView( elm ) })
+  $effect(() => { 
+    const stop = sectionInView( elm ) 
+    return () => stop()
+  })
 
 </script>
 

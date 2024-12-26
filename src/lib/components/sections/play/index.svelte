@@ -6,7 +6,10 @@
 
   let { play } : { play: Play[] } = $props()
   let elm: HTMLElement
-  $effect(() => { sectionInView( elm ) })
+  $effect(() => { 
+    const stop = sectionInView( elm ) 
+    return () => stop()
+  })
 
 </script>
 

@@ -1,4 +1,4 @@
-import { elmInView } from "./elm-in-view"
+import { inView } from "motion";
 
 export function sectionInView( 
   elm: HTMLElement, 
@@ -7,19 +7,22 @@ export function sectionInView(
 ){
 
   const id = elm.id
-  
-  elmInView({
-    selector: `#${id}`,
-    onIn(entry: IntersectionObserverEntry){
-      const menu = document.querySelector(`#menuTop a[href="#${id}"]`) as HTMLAnchorElement
-      menu && menu.classList.add('active')
-      onIn && onIn(entry)  
-    },
-    onOut(entry: IntersectionObserverEntry) {
+
+  return inView(`#${id}`, (info: IntersectionObserverEntry) => {
+    
+    // entering viewport
+    const menu = document.querySelector(`#menuTop a[href="#${id}"]`) as HTMLAnchorElement
+    menu && menu.classList.add('active')
+    onIn && onIn(info)
+
+    // leaving
+    return (leaveInfo) => { 
       const menu = document.querySelector(`#menuTop a[href="#${id}"]`) as HTMLAnchorElement
       menu && menu.classList.remove('active')  
-      if(onOut) onOut(entry)
-    },
+      onOut && onOut(leaveInfo) 
+    }
+    
+  },{
     margin: '-1px 0px -10% 0px',
     amount: 0.5
   })

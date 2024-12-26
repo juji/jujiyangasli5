@@ -3,7 +3,8 @@
 
   let elm:HTMLElement
   $effect(() => { 
-    sectionInView( elm ) 
+    const stop = sectionInView( elm ) 
+    return () => { stop() }
   })
 
 </script>
