@@ -8,6 +8,7 @@
   import Container from '$lib/components/container.svelte'
   import Menu from '$lib/components/menu/index.svelte'
   import { page } from '$app/state';
+  // import { browser } from '$app/environment';
 
   let js = $state(false)
   $effect(() => { if(!js) js = true })
@@ -70,3 +71,7 @@
   }
 
 </style>
+
+<!-- {#if browser}
+<script src="/scroll-timeline.js"></script>
+{/if} -->

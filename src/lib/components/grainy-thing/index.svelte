@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Ball } from "./ball";
-  import { scroll } from "motion";
+  import { scroll, animate } from "motion";
   import { isSafariOrWebkit } from '$lib/functions/safari'
   
   let dBalls: Ball[] = $state([]);
@@ -10,12 +10,6 @@
   let height = 520
   let translateX = 300
   let translateY = 120
-
-  let minimumOpacity = $state(0)
-  $effect(() => {
-    if(isSafariOrWebkit().usesSafariWebKit)
-      minimumOpacity = 0.1
-  })
 
   $effect(() => {
 
@@ -62,30 +56,16 @@
   $effect(() => {
     
     const hMult = 1.2
+    const minimumOpacity = isSafariOrWebkit().usesSafariWebKit ? 0.1 : 0
+
+    // scroll overlay's opacity
+    scroll(animate(overlay,{
+      opacity: [ minimumOpacity, 1 ]
+    }), { offset: [ 0, `${100 * hMult}vh` ]})
+
+    // is offscreen?
     scroll((_, info) => {
-
-
-      if(!info.y.current){
-        overlay && overlay.style.setProperty('opacity', minimumOpacity + '')
-        if(offscreen) offscreen = false
-      }
-
-      else if(info.y.current >= (window.innerHeight * hMult)){
-        if(offscreen) return;
-        offscreen = true
-        overlay && overlay.style.setProperty('opacity', '1')
-      }
-      
-      else {
-        if(offscreen) offscreen = false 
-        overlay && overlay.style.setProperty(
-          'opacity', 
-          `${1 - (
-            ((window.innerHeight * hMult) - info.y.current) / 
-            (window.innerHeight * hMult)
-          ) + minimumOpacity}`
-        ) 
-      }
+      offscreen = info.y.current >= (window.innerHeight * hMult)
     })
 
   })
