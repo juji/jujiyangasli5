@@ -21,29 +21,45 @@
     circles = new Circles(canvas, onReady)
   })
 
-  $effect(() => {
-    // this results in better performance
-    window.addEventListener('scroll',(e: Event) => {
-      circles && circles.scroll(window.scrollY)
-    })
-  })
+  // $effect(() => {
+  //   // this results in better performance
+  //   window.addEventListener('scroll',(e: Event) => {
+  //     // circles && !circles.paused && circles.scroll(window.scrollY)
+  //   })
+  // })
 
   $effect(() => {
     const hMult = 1.5
 
     // scroll overlay's opacity
-    scroll(animate(overlay,{
-      opacity: [ 0, 1 ]
-    }), { offset: [ 0, `${100 * hMult}vh` ]})
+    scroll(
+      animate(
+        overlay,
+        { opacity: [ 0, 1 ] }
+      ), 
+      { offset: [ 0, `${100 * hMult}vh` ]}
+    )
+
+    scroll(
+      animate(
+        canvas,
+        { transform: [
+          'translateY(0)',
+          'translateY(-200px)'
+        ] }
+      ), 
+      { offset: [ 0, `${100 * hMult}vh` ]}
+    )
 
     scroll((_, info) => {
 
       if(!activateScroll) return;
 
       if(
-        info.y.current >= (window.innerHeight * hMult) &&
-        circles && !circles.paused
-      ) circles.pause()
+        info.y.current >= (window.innerHeight * hMult)
+      ) {
+        circles && !circles.paused && circles.pause()
+      }
 
       else if(circles && circles.paused) circles.play()
 

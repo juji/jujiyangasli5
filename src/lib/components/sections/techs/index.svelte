@@ -1,11 +1,12 @@
 <script lang="ts">
 	import type { TechItem } from '$lib/data/techs/types';
   import { sectionInView } from '$lib/functions/section-in-view';
-	import { inView } from 'motion';
+	import { animate, scroll } from 'motion';
 
   let { techs } : { techs: TechItem[][] } = $props()
   let elm: HTMLElement
   let js = $state(false)
+
   $effect(() => { 
     const stop = sectionInView( elm ) 
     js = true
@@ -14,47 +15,25 @@
     }
   })
 
-  let colors = [
-    [119, 0, 117],
-    [0, 49, 184],
-    [39, 82, 0],
-    [120, 0, 0],
-    [116, 74, 7],
-    [106, 97, 0]
-  ]
-
-  // so random will actualy get value on the edges
-  // not so keen of having to write a big array
-  colors = [ ...colors, ...colors, ...colors ] 
-
-  function setColor(){
-    const index = Math.floor(Math.random() * colors.length)
-    elm.style.setProperty(
-      '--tech-color', 
-      `rgb(${colors[ index ].join(' ')})`
-    )
-  }
+  // 
+  let animDelay = 0
 
   $effect(() => {
-    
-    const stop = inView('.grid',( info ) => {
-      info.target.classList.add('visible')
-      return () => {
-        info.target.classList.remove('visible')
-      }
-    },{
-      margin: '999% 0% -10% 0%',
-      amount: 'some'
+    techs.forEach(row => {
+      row.forEach(item => {
+        const elm = document.getElementById(`tech-item-${item.id}`)
+        if(!elm) return;
+        scroll(animate(
+          elm,
+          { opacity: [ 0, 1 ] },
+          { ease: 'linear' }
+        ),{
+          // target: elm
+          offset: [ 0, '100vh' ]
+        })
+      })
     })
-
-
-    return () => {
-      stop()
-    }
   })
-
-  // svelte-ignore (non_reactive_update)
-  let animDelay = 0
 
 </script>
 
@@ -64,11 +43,11 @@
     Techs
   </h2>
   <p>Things i've used in my work,</p><p>Still learning bunch of stuff</p><br />
-  <div class="grid" onmouseenter={setColor} role="complementary">
+  <div class="grid" role="complementary">
     {#each techs as techrow}
     {#each techrow as item}
       <div class="item-container">
-        <div class="item" style={`--in-delay:${animDelay++}`}>
+        <div class="item" id={`tech-item-${item.id}`} style={`--in-delay:${animDelay++}`}>
           <img src={item.image} alt={item.title} loading="lazy" />
           <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.title}></a>
         </div>
@@ -115,13 +94,13 @@
         background: rgb( from var(--tech-color) r g b / 0);
         border-radius: 3px;
         transition: 
-          transform 100ms ease-out,
-          opacity 100ms ease-out,
-          background 1000ms 500ms,
+          /* transform 100ms ease-out, */
+          /* opacity 100ms ease-out, */
+          /* background 1000ms 500ms, */
           border 2000ms 500ms
         ;
-        opacity: 0;
-        transform: rotateY(45deg);
+        /* opacity: 0; */
+        /* transform: rotateY(45deg); */
         transform-origin: 0px;
         overflow: hidden;
 
@@ -142,7 +121,7 @@
           left: 0;
           width: 350%;
           height: 100%;
-          transform: translateX(-200%);
+          /* transform: translateX(-200%); */
           background: linear-gradient(
             111deg, 
               rgb(0 0 0 / 0) 0%,
@@ -159,38 +138,37 @@
       &:global(.visible){
         .item{
           transition: 
-            transform 700ms ease-out calc(var(--in-delay) * var(--delay-mult)),
-            opacity 200ms ease-out calc(var(--in-delay) * var(--delay-mult)),
-            background 1000ms 500ms,
+            /* transform 700ms ease-out calc(var(--in-delay) * var(--delay-mult)), */
+            /* opacity 200ms ease-out calc(var(--in-delay) * var(--delay-mult)), */
+            /* background 1000ms 500ms, */
             border 2000ms 500ms
           ;
           transform: rotateY(0deg);
           opacity: 1;
 
           a{
-            transition: transform 700ms ease-out calc(var(--in-delay) * var(--delay-mult));
+            /* transition: transform 700ms ease-out calc(var(--in-delay) * var(--delay-mult)); */
             transform: translateX(0%);
           }
 
-          @media screen and (hover: hover) {
-            
-            &:hover{
-              transition: 
-                transform 200ms ease-out,
-                opacity 200ms ease-out calc(var(--in-delay) * var(--delay-mult)),
-                background 0ms,
-                border 0ms
-              ;
-  
-              /* border: 1px solid hsl(from var(--tech-color) h s calc(l * 1.5)); */
-              border: 1px solid hsl(from var(--background-color) h s calc(l + 42));
-              /* background: var(--tech-color); */
-  
-              img{
-                scale: 1;
-              }
-  
-            }
+        }
+      }
+
+      @media screen and (hover: hover) {    
+        & .item:hover{
+          transition: 
+            transform 200ms ease-out,
+            opacity 200ms ease-out calc(var(--in-delay) * var(--delay-mult)),
+            background 0ms,
+            border 0ms
+          ;
+
+          /* border: 1px solid hsl(from var(--tech-color) h s calc(l * 1.5)); */
+          border: 1px solid hsl(from var(--background-color) h s calc(l + 42));
+          /* background: var(--tech-color); */
+
+          img{
+            scale: 1;
           }
 
         }

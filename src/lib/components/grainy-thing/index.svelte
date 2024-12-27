@@ -5,6 +5,7 @@
   
   let dBalls: Ball[] = $state([]);
   let overlay: HTMLDivElement
+  let wrapper: HTMLDivElement
 
   let width = 800
   let height = 520
@@ -61,7 +62,21 @@
     // scroll overlay's opacity
     scroll(animate(overlay,{
       opacity: [ minimumOpacity, 1 ]
-    }), { offset: [ 0, `${100 * hMult}vh` ]})
+    }), 
+    { offset: [ 0, `${100 * hMult}vh` ]}
+  )
+
+    // scroll canvas paralax
+    scroll(
+      animate(
+        wrapper,
+        { transform: [
+          'translateY(0)',
+          'translateY(-300px)'
+        ] }
+      ), 
+      { offset: [ 0, `${100 * hMult}vh` ]}
+    )
 
     // is offscreen?
     scroll((_, info) => {
@@ -91,7 +106,7 @@
     <feComposite in="blur" in2="goo" operator="in" result="composite" />
   </filter>
 </svg>
-<div class="wrapper" class:shown={!offscreen}>
+<div class="wrapper" class:shown={!offscreen} bind:this={wrapper}>
   <div class="grain">
     <div class="balls"
       style={`--translateX: ${translateX}px;--translateY: ${translateY}px`}
@@ -145,7 +160,6 @@
     top: 0;
     left: 0;
     z-index: 0;
-    transform: translate3d(1,1,1);
     transition: left 200ms ease-out;
 
     :global(&.shown){
@@ -161,9 +175,9 @@
   }
 
   .grain{
-    overflow: hidden;
+    /* overflow: hidden; */
     filter: contrast(200%);
-    height: 100%;
+    height: 200%;
     background: 
       radial-gradient(circle at 50% 50%, rgba(0,0,0,.7), rgba(0,0,0,.6)),
       url("data:image/svg+xml,%3Csvg viewBox='0 0 277 277' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='10' numOctaves='6' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")

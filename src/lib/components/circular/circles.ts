@@ -203,8 +203,9 @@ export class Circles extends Anim {
 
   }
 
+  // this is not used
   scroll(scroll: number){
-    this.renderer.postMessage({ scroll })
+    // this.renderer.postMessage({ scroll })
   }
 
 }
