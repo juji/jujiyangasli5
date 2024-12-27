@@ -11,6 +11,3 @@ export async function load({ url, setHeaders }) {
 
   return {};
 }
-
-
-// disable vercel tollbar
