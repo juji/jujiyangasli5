@@ -26,6 +26,7 @@
   -moz-osx-font-smoothing: grayscale;
 
   interpolate-size: allow-keywords;
+  color-scheme: dark;
 
   @media screen and (min-width: 500px){
     --page-padding: 3rem;

@@ -25,40 +25,41 @@
   }
 
   $effect(() => {
-    // this is deprecated
+
     // @ts-expect-error
-    window.addEventListener('mousewheel',(e: WheelEvent) => {
+    window.addEventListener('hijacked-scroll',(e: CustomEvent) => {
+      const { deltaY } = e.detail
       if(
-        e.deltaY < 0 || 
+        deltaY < 0 || 
         window.scrollY <
         (document.body.offsetHeight - window.innerHeight)
       ) return;
       addOffset()
     })
 
-    window.addEventListener('touchstart', (init: TouchEvent) => {
-      if(
-      window.scrollY <
-      (document.body.offsetHeight - window.innerHeight)
-    ) return;
+    // window.addEventListener('touchstart', (init: TouchEvent) => {
+    //   if(
+    //     window.scrollY <
+    //     (document.body.offsetHeight - window.innerHeight)
+    //   ) return;
 
-      const initY = init.touches[0].clientY
+    //   const initY = init.touches[0].clientY
 
-      const onPointerMove = (e: TouchEvent) => {
-        if(e.touches[0].clientY < initY) addOffset( 0.3 )
-      }
+    //   const onPointerMove = (e: TouchEvent) => {
+    //     if(e.touches[0].clientY < initY) addOffset( 0.3 )
+    //   }
 
-      const onPointerUp = (e: TouchEvent) => {
-        window.removeEventListener('touchmove', onPointerMove)
-        window.removeEventListener('touchend', onPointerUp)
-        window.removeEventListener('touchcancel', onPointerUp)
-      }
+    //   const onPointerUp = (e: TouchEvent) => {
+    //     window.removeEventListener('touchmove', onPointerMove)
+    //     window.removeEventListener('touchend', onPointerUp)
+    //     window.removeEventListener('touchcancel', onPointerUp)
+    //   }
 
-      window.addEventListener('touchmove', onPointerMove)
-      window.addEventListener('touchend', onPointerUp)
-      window.addEventListener('touchcancel', onPointerUp)
+    //   window.addEventListener('touchmove', onPointerMove)
+    //   window.addEventListener('touchend', onPointerUp)
+    //   window.addEventListener('touchcancel', onPointerUp)
 
-    })
+    // })
   })
 
   function start(){

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { page } from '$app/state';
 
   import 'sanitize.css';
@@ -17,20 +17,30 @@
   import Footer from '$lib/components/footer.svelte'
   import LoadingIndicator from '$lib/components/loading-indicator.svelte';
   import Lenis from 'lenis'
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
 
   let { children } = $props();
 
   viewTransition();
 
-  $effect(() => {
-    // const lenis = 
-    new Lenis({
+  let lenis: Lenis | null = null
+  beforeNavigate(() => {
+    if(lenis) lenis.destroy()
+    lenis = null
+  })
+
+  afterNavigate(() => {
+    if(lenis) lenis.destroy()
+    lenis = new Lenis({
       autoRaf: true,
     });
-
-    // lenis.on('scroll', (e) => {
-    //   console.log(e);
-    // });
+    lenis.on('virtual-scroll', ({ deltaX, deltaY, event }) => {
+      window.dispatchEvent(new CustomEvent("hijacked-scroll", {
+        detail: {
+          deltaX, deltaY, event
+        },
+      }))
+    })
   })
 
 </script>

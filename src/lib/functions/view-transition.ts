@@ -5,7 +5,7 @@ const wait = (timeout: number) => new Promise(r => setTimeout(r,timeout))
 
 export function viewTransition(){
 
-  beforeNavigate(async () => {
+  beforeNavigate(() => {
     document.querySelector('html')?.classList.add('loading')
     globalState.loading = true
   })
