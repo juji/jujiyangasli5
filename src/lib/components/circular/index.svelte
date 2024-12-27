@@ -31,6 +31,8 @@
   $effect(() => {
     const hMult = 1.5
 
+    if(!activateScroll) return;
+
     // scroll overlay's opacity
     scroll(
       animate(
@@ -52,8 +54,6 @@
     )
 
     scroll((_, info) => {
-
-      if(!activateScroll) return;
 
       if(
         info.y.current >= (window.innerHeight * hMult)
