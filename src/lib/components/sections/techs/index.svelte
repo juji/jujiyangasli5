@@ -19,18 +19,46 @@
   let animDelay = 0
 
   $effect(() => {
+
+    let i = 0
     techs.forEach(row => {
       row.forEach(item => {
         const elm = document.getElementById(`tech-item-${item.id}`)
         if(!elm) return;
+        const anchor = elm?.querySelector('a')
+        if(!anchor) return;
+
+        scroll(animate(
+          anchor,
+          {
+            transform: [ 'translateX(-200%)', 'translateX(0%)' ]
+          }, { ease: 'linear' }
+        ),{
+          target: elm,
+          offset: [ .9 - i, 0.60 - i ]
+        })
+
         scroll(animate(
           elm,
-          { opacity: [ 0, 1 ] },
+          {
+            opacity: [ 0, 1 ]
+          }, { ease: 'linear' }
+        ),{
+          target: elm,
+          offset: [ 1 - i, 0.90 - i ]
+        })
+
+        scroll(animate(
+          elm,
+          {
+            transform: [ 'rotateY(45deg)', 'rotateY(0deg)' ] },
           { ease: 'linear' }
         ),{
-          // target: elm
-          offset: [ 0, '100vh' ]
+          target: elm,
+          offset: [ 1 - i, 0.70 - i ]
         })
+
+        i += 0.005
       })
     })
   })
