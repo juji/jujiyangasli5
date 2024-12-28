@@ -20,7 +20,7 @@
   $effect(() => {
     circles = new Circles(canvas, onReady)
     return () => {
-      circles?.pause()
+      circles?.terminate()
     }
   })
 
