@@ -21,6 +21,7 @@
     circles = new Circles(canvas, onReady)
     return () => {
       circles?.terminate()
+      circles = null
     }
   })
 
