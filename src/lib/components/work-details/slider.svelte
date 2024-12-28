@@ -118,7 +118,7 @@
             src={image.url} 
             data-index={index}
             alt={image.title} 
-            loading={index === 0 ? null : "lazy"}
+            loading={"lazy"}
             style={index === 0 ? `view-transition-name: ${id}` : ''}
           />
         </picture>
