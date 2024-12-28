@@ -37,7 +37,6 @@
     lightbox.init();
 
     mySlider = new MySlider({
-      // _log: '*',
       elm: container,
       interval: 5000,
       onBeforeScroll: onBeforeScroll,

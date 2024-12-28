@@ -14,48 +14,6 @@ export type DimensionMarkers = {
   container?: HTMLElement
 }
 
-export enum LoggerType {
-  INIT = 'INIT',
-  START = 'START',
-  STOP = 'STOP',
-  PREV = 'PREV',
-  NEXT = 'NEXT',
-  RUN = 'RUN',
-  DESTROY = 'DESTROY',
-  SCROLL = 'SCROLL'
-}
-
-class Logger {
-  settings: boolean | LoggerType[] | LoggerType = false 
-
-  constructor(settings: boolean | LoggerType[] | LoggerType | '*'){
-    if(settings === '*'){
-      this.settings = [
-        LoggerType.INIT,
-        LoggerType.START,
-        LoggerType.STOP,
-        LoggerType.PREV,
-        LoggerType.NEXT,
-        LoggerType.RUN,
-        LoggerType.DESTROY,
-        LoggerType.SCROLL,
-      ]
-    }else{
-      this.settings = settings
-    }
-  }
-
-  log(
-    type: string,
-    ...par: unknown[]
-  ){
-    if(!this.settings) return;
-    if(this.settings instanceof Array && !this.settings.includes(type as LoggerType)) return;
-    if(this.settings instanceof String && this.settings !== type) return;
-    console.log.call(this, `[${type}]`, ...par)
-  }
-}
-
 export class MySlider {
 
   #elm: HTMLElement
@@ -70,7 +28,6 @@ export class MySlider {
   #dimensionMarkers: DimensionMarkers | null = null
   #windowLength = 0
   
-  #logger: Logger
   #destroyed: boolean = false
 
   onBeforeScroll: ((par: ScrollParams) => void) | null = null
@@ -82,7 +39,6 @@ export class MySlider {
     onBeforeScroll?: (par: ScrollParams) => void
     onAfterScroll?: (par: ScrollParams) => void
     dimensionMarkers?: DimensionMarkers
-    _log?: boolean | LoggerType[] | LoggerType | '*'
   }){
 
     this.#elm = par.elm
@@ -90,9 +46,6 @@ export class MySlider {
     this.onBeforeScroll = par.onBeforeScroll ? par.onBeforeScroll : null
     this.onAfterScroll = par.onAfterScroll ? par.onAfterScroll : null
     this.#dimensionMarkers = par.dimensionMarkers ? par.dimensionMarkers : null
-
-
-    this.#logger = new Logger(par._log || false)
 
     // check stop marker validity
     if(
@@ -190,8 +143,6 @@ export class MySlider {
       })
     })
 
-    this.#logger.log(LoggerType.INIT, par)
-
     // should run?
     if(this.#dimensionMarkers){
       const container = this.#dimensionMarkers.container || document.body
@@ -255,13 +206,11 @@ export class MySlider {
       start: !index
     }
 
-    this.#logger.log(LoggerType.SCROLL, { ...params, timing })
     return params
 
   }
 
   start(){
-    this.#logger.log(LoggerType.START, new Date())
     this.#stopped = false
     this.run()
   }
@@ -271,7 +220,6 @@ export class MySlider {
   }
 
   stop(){
-    this.#logger.log(LoggerType.STOP, new Date())
     this.#stopped = true
     clearTimeout(this.#settimout)
   }
@@ -281,11 +229,6 @@ export class MySlider {
   }
 
   prev(){
-    
-    this.#logger.log(LoggerType.PREV, 'START', {
-      scrollLeft: this.#elm.scrollLeft,
-      currentScroll: this.#scrollIndex
-    })
  
     clearTimeout(this.#settimout)
     this.#stopped = true
@@ -296,21 +239,11 @@ export class MySlider {
     this.#elm.scrollTo(index * this.#elm.clientWidth, 0)
     this.#scrollIndex = index
 
-    this.#logger.log(LoggerType.PREV, 'END', {
-      scrollLeft: this.#elm.scrollLeft,
-      currentScroll: this.#scrollIndex
-    })
-
     this.#stopped = false
     this.run()
   }
 
   next(){
-
-    this.#logger.log(LoggerType.NEXT, 'START', {
-      scrollLeft: this.#elm.scrollLeft,
-      currentScroll: this.#scrollIndex
-    })
 
     clearTimeout(this.#settimout)
     this.#stopped = true
@@ -320,21 +253,11 @@ export class MySlider {
     this.#elm.scrollTo(index * this.#elm.clientWidth, 0)
     this.#scrollIndex = index
 
-    this.#logger.log(LoggerType.NEXT, 'END', {
-      scrollLeft: this.#elm.scrollLeft,
-      currentScroll: this.#scrollIndex
-    })
-
     this.#stopped = false
     this.run()
   }
 
   run(){
-
-    this.#logger.log(LoggerType.RUN, 'START', {
-      scrollLeft: this.#elm.scrollLeft,
-      currentScroll: this.#scrollIndex
-    })
     
     clearTimeout(this.#settimout)
     this.#settimout = setTimeout(() => {
@@ -353,8 +276,6 @@ export class MySlider {
   }
 
   destroy(){
-
-    this.#logger.log(LoggerType.DESTROY, 'DESTROY')
     
     this.#destroyed = true
     this.stop()
