@@ -28,7 +28,7 @@
     
     window.addEventListener('wheel',(e: WheelEvent) => {
       if(
-        e.deltaY < 0 || 
+        e.deltaY < 0 ||
         window.scrollY <
         (document.body.offsetHeight - window.innerHeight)
       ) return;
@@ -38,7 +38,7 @@
     window.addEventListener('touchstart', (init: TouchEvent) => {
       if(
         window.scrollY <
-        (document.body.offsetHeight - window.innerHeight)
+        (document.body.offsetHeight - window.innerHeight - 100) // 100 is topbar
       ) return;
 
       const initY = init.touches[0].clientY
