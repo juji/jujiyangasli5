@@ -11,45 +11,6 @@
   $effect(() => { 
     const stop = sectionInView( elm ) 
 
-    // const hiCancel = scroll(animate(
-    //   hi,
-    //   {
-    //     transform: [ 
-    //       `translateY(0px)`, 
-    //       `translateY(15lvh)`, 
-    //     ]
-    //   }, { ease: 'linear' }
-    // ),{
-    //   target: elm,
-    //   offset: [ 0, `100vh` ]
-    // })
-
-    // const menuCancel = scroll(animate(
-    //   menu,
-    //   {
-    //     transform: [ 
-    //       `translateY(0px)`, 
-    //       `translateY(28lvh)`, 
-    //     ]
-    //   }, { ease: 'linear' }
-    // ),{
-    //   target: elm,
-    //   offset: [ 0, `100vh` ]
-    // })
-
-    // const elmCancel = scroll(animate(
-    //   elm,
-    //   {
-    //     transform: [ 
-    //       `translateY(0vh)`, 
-    //       `translateY(40vh)`, 
-    //     ]
-    //   }, { ease: 'linear' }
-    // ),{
-    //   target: elm,
-    //   offset: [ 0, `100vh` ]
-    // })
-
     return () => {
       stop()
       // hiCancel()

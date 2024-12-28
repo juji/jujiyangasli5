@@ -47,6 +47,7 @@
 
 
     span{
+      /* Somehow, having these makes LCP goes null and red
       --anim-gap: 120ms;
       animation-name: logo;
       animation-duration: 1000ms;
@@ -55,7 +56,7 @@
 
       
       &.j0{
-        animation-delay: calc(1 * var(--anim-gap));
+        animation-delay: calc(0 * var(--anim-gap));
       }
 
       &.u{
@@ -68,7 +69,8 @@
 
       &.i{
         animation-delay: calc(3.5 * var(--anim-gap));
-      }
+      } 
+      */
 
       text-shadow: var(--text-shadow);
 
