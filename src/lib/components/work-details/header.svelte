@@ -36,6 +36,7 @@
     --gradient: rgb(0 0 0 / 1);
 
     position: sticky;
+    height: var(--header-height);
     top: 0;
     z-index: 20;
     background: rgb(from var(--background-color) r g b / 0.2);

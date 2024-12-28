@@ -35,3 +35,9 @@
 </svelte:head>
 
 <WorkDetails data={data} />
+
+<style>
+  :root{
+    --header-height: 66px;
+  }
+</style>

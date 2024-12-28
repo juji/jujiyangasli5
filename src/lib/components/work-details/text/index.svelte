@@ -8,24 +8,63 @@
     content: string 
   } } = $props();
 
+  let js = $state(false)
+  $effect(() => { js = true })
+
+  let sticky: HTMLElement
+  let innerHeight = $state(0)
+  let stickyTop = $state(0)
+  $effect(() => {
+    var style = window.getComputedStyle(document.body)
+    const headerHeight = Number(style.getPropertyValue('--header-height').replace('px',''))
+    const elmHeight = sticky.getBoundingClientRect().height
+    if(
+      elmHeight <=
+      (innerHeight - headerHeight)
+    ) {
+      stickyTop = 0  
+    }else{
+      stickyTop = elmHeight - window.innerHeight + headerHeight + 55 // padding
+    }
+
+  })
+
   let { work, content } = data
   const urlText = work.url.replace(/https?\:\/\/(www\.)?/,'')
 
 </script>
 
-<div class="container">
-  <p><a href={work.url} rel="noopener noreferrer" target="_blank">{urlText}</a></p>
-  <p>Year: {work.year}</p>
-  <br />
-  <SvelteMarkdown source={content} 
-    renderers={{ link: Link }} 
-  />
+<svelte:window bind:innerHeight={innerHeight} />
+
+<div class="container" style={`--sticky-top: ${stickyTop}px;`}>
+  <div class="sticky-container" class:js bind:this={sticky}>
+
+    <p><a href={work.url} rel="noopener noreferrer" target="_blank">{urlText}</a></p>
+    <p>Year: {work.year}</p>
+    <br />
+    <SvelteMarkdown source={content} 
+      renderers={{ link: Link }} 
+    />
+  </div>
 </div>
 
 <style>
   .container{
+
+    --topbar-height: var(--header-height);
+    --sticky-top: 0;
+
     line-height: 1.8rem;
-    margin-top: 3rem;
+    
+    .sticky-container{
+      padding-top: 3rem;
+
+      &.js{
+        position: sticky;
+        top: calc(var(--topbar-height) - var(--sticky-top));
+        /* bottom: 0; */
+      }
+    }
 
     :global(ul),:global(ol){ 
       margin-left: 1.2rem;
