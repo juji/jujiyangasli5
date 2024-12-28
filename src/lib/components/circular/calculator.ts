@@ -14,6 +14,8 @@ let radialMovement = 0
 
 let sal: number
 
+const d = new Date()
+
 function start(){
   started = true
 

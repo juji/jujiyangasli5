@@ -19,14 +19,10 @@
 
   $effect(() => {
     circles = new Circles(canvas, onReady)
+    return () => {
+      circles?.pause()
+    }
   })
-
-  // $effect(() => {
-  //   // this results in better performance
-  //   window.addEventListener('scroll',(e: Event) => {
-  //     // circles && !circles.paused && circles.scroll(window.scrollY)
-  //   })
-  // })
 
   $effect(() => {
     const hMult = 1.5

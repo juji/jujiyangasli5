@@ -11,10 +11,11 @@
   let height = 520
   let translateX = 300
   let translateY = 120
+  let dt: Date = new Date()
 
   $effect(() => {
 
-    // if screen width < 768, just use 3 balls
+    // if screen width < 1536, just use 3 balls
     let smaller = false
     if(Math.max(window.innerWidth,window.innerHeight) <= 1536){
       document.querySelectorAll('.ball').forEach(v => {
@@ -43,15 +44,19 @@
   })
 
   let offscreen = $state(false)
-
+  let rid:number;
   $effect(() => {
-    if(!offscreen) requestAnimationFrame(function draw(){
-      
+    if(offscreen) return;
+    rid = requestAnimationFrame(function draw(){
       dBalls.forEach(v => v.update())
       dBalls.forEach(v => v.render())
 
-      if(!offscreen) requestAnimationFrame(draw)
+      if(offscreen) return;
+      rid = requestAnimationFrame(draw)
     })
+    return () => {
+      cancelAnimationFrame(rid)
+    }
   })
 
   $effect(() => {
