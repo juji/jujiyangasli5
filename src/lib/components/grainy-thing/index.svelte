@@ -60,14 +60,14 @@
     const minimumOpacity = isSafariOrWebkit().usesSafariWebKit ? 0.1 : 0
 
     // scroll overlay's opacity
-    scroll(animate(overlay,{
+    const overlayCancel = scroll(animate(overlay,{
       opacity: [ minimumOpacity, 1 ]
     }), 
     { offset: [ 0, `${100 * hMult}vh` ]}
   )
 
     // scroll canvas paralax
-    scroll(
+    const canvasCancel = scroll(
       animate(
         wrapper,
         { transform: [
@@ -79,9 +79,15 @@
     )
 
     // is offscreen?
-    scroll((_, info) => {
+    const offscreenCancel = scroll((_, info) => {
       offscreen = info.y.current >= (window.innerHeight * hMult)
     })
+
+    return () => {
+      offscreenCancel()
+      canvasCancel()
+      overlayCancel()
+    }
 
   })
 

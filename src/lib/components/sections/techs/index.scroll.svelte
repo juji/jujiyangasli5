@@ -20,6 +20,8 @@
 
   $effect(() => {
 
+    let cancels: (() => void)[] = []
+
     let i = 0
     techs.forEach(row => {
       row.forEach(item => {
@@ -28,7 +30,7 @@
         const anchor = elm?.querySelector('a')
         if(!anchor) return;
 
-        scroll(animate(
+        let a = scroll(animate(
           anchor,
           {
             transform: [ 'translateX(-200%)', 'translateX(0%)' ]
@@ -38,7 +40,7 @@
           offset: [ .9 - i, 0.60 - i ]
         })
 
-        scroll(animate(
+        let e = scroll(animate(
           elm,
           {
             opacity: [ 0, 1 ]
@@ -48,7 +50,7 @@
           offset: [ 1 - i, 0.90 - i ]
         })
 
-        scroll(animate(
+        let e2 = scroll(animate(
           elm,
           {
             transform: [ 'rotateY(45deg)', 'rotateY(0deg)' ] },
@@ -59,8 +61,18 @@
         })
 
         i += 0.005
+
+        cancels.push(a)
+        cancels.push(e)
+        cancels.push(e2)
       })
+
     })
+
+    return () => {
+      cancels.forEach(c => c())
+    }
+    
   })
 
 </script>

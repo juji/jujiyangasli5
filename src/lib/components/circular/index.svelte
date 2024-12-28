@@ -34,7 +34,7 @@
     if(!activateScroll) return;
 
     // scroll overlay's opacity
-    scroll(
+    const overlayCancel = scroll(
       animate(
         overlay,
         { opacity: [ 0, 1 ] }
@@ -42,7 +42,7 @@
       { offset: [ 0, `${100 * hMult}vh` ]}
     )
 
-    scroll(
+    const canvasCancel = scroll(
       animate(
         canvas,
         { transform: [
@@ -53,7 +53,7 @@
       { offset: [ 0, `${100 * hMult}vh` ]}
     )
 
-    scroll((_, info) => {
+    const timelineCancel = scroll((_, info) => {
 
       if(
         info.y.current >= (window.innerHeight * hMult)
@@ -64,6 +64,12 @@
       else if(circles && circles.paused) circles.play()
 
     })
+
+    return () => {
+      overlayCancel()
+      canvasCancel()
+      timelineCancel()
+    }
   })
 
 </script>
