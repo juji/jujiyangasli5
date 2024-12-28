@@ -54,6 +54,11 @@
   <p class="copy">
     @ 2024 by Tri Rahmat Gunadi
   </p>
+  <p class="made">
+    Made with <span class="red">♥️</span> + <a href="https://svelte.dev/" 
+      rel="noreferrer noopener"
+      target="_blank">svelte</a>
+  </p>
 </section>
 
 <style>
@@ -112,6 +117,10 @@
 
     .copy{
       color: var(--muted-color);
+    }
+
+    .made{
+      margin-top: 1rem;
     }
   }
 
