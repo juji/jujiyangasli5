@@ -47,8 +47,9 @@
     
   })
 
+  let rid:number | null = null;
   function start(){
-    requestAnimationFrame(function anim(){
+    rid = requestAnimationFrame(function anim(){
       if(!vars.started) return;
       if(!footer) return;
 
@@ -71,9 +72,15 @@
       // set & loop
       vars.deltaAlpha *= vars.timeEffect
       if(vars.deltaAlpha <= 0.001) vars.deltaAlpha = 0
-      requestAnimationFrame(anim)
+      rid = requestAnimationFrame(anim)
     })
   }
+
+  $effect(() => {
+    return () => {
+      if(rid) cancelAnimationFrame(rid)
+    }
+  })
 
 </script>
 
