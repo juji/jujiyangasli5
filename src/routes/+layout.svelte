@@ -16,33 +16,46 @@
   import { viewTransition } from '$lib/functions/view-transition';
   import Footer from '$lib/components/footer.svelte'
   import LoadingIndicator from '$lib/components/loading-indicator.svelte';
-  import Lenis from 'lenis'
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
+  // import Lenis from 'lenis'
+  // import LocomotiveScroll from 'locomotive-scroll';
+  import { HijackScrollWheel } from '$lib/functions/hijack-scrollwheel'
 
   let { children } = $props();
 
   viewTransition();
 
-  let lenis: Lenis | null = null
+  // let lenis: Lenis | null = null
+  // let locoScroll: LocomotiveScroll | null = null
   beforeNavigate(() => {
-    if(lenis) lenis.destroy()
-    lenis = null
+    // if(lenis) lenis.destroy()
+    // lenis = null
+    // if(locoScroll) locoScroll.destroy()
   })
 
   afterNavigate(() => {
-    if(lenis) lenis.destroy()
-    lenis = new Lenis({
-      autoRaf: true,
-      lerp: 0.1,
-      easing: (x: number) => x * x * x * x
-    });
-    lenis.on('virtual-scroll', ({ deltaX, deltaY, event }) => {
-      window.dispatchEvent(new CustomEvent("hijacked-scroll", {
-        detail: {
-          deltaX, deltaY, event
-        },
-      }))
-    })
+    
+    // locoScroll = new LocomotiveScroll({
+    //   smooth: true
+    // })
+    // if(lenis) lenis.destroy()
+    // lenis = new Lenis({
+    //   autoRaf: true,
+    //   lerp: 0.1,
+    //   easing: (x: number) => x * x * x * x
+    // });
+    // lenis.on('virtual-scroll', ({ deltaX, deltaY, event }) => {
+    //   window.dispatchEvent(new CustomEvent("hijacked-scroll", {
+    //     detail: {
+    //       deltaX, deltaY, event
+    //     },
+    //   }))
+    // })
+  })
+
+  $effect(() => {
+    const hijacker = new HijackScrollWheel()
+    return () => { hijacker.destroy() }
   })
 
 </script>
