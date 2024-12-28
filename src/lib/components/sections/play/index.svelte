@@ -15,7 +15,7 @@
 
 
 <section class="container" id="play" bind:this={elm}>
-  <h2 class="section-title">Play</h2>
+  <h2 class="section-title funny">Play</h2>
   <p class="border"></p>
   <p>
     Things learned, 
@@ -107,7 +107,7 @@
 
     .border{
       border-top: 1px solid #868686;
-      padding-bottom: 2rem;
+      padding-bottom: 1rem;
       width: 67px;
       position: relative;
       top: -21px;

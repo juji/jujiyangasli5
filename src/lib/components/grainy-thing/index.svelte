@@ -71,17 +71,18 @@
     { offset: [ 0, `${100 * hMult}vh` ]}
   )
 
-    // scroll canvas paralax
-    const canvasCancel = scroll(
-      animate(
-        wrapper,
-        { transform: [
-          'translateY(0)',
-          'translateY(-300px)'
-        ] }
-      ), 
-      { offset: [ 0, `${100 * hMult}vh` ]}
-    )
+    // slooooow
+    // // scroll canvas paralax
+    // const canvasCancel = scroll(
+    //   animate(
+    //     wrapper,
+    //     { transform: [
+    //       'translateY(0)',
+    //       'translateY(-300px)'
+    //     ] }
+    //   ), 
+    //   { offset: [ 0, `${100 * hMult}vh` ]}
+    // )
 
     // is offscreen?
     const offscreenCancel = scroll((_, info) => {
@@ -90,7 +91,7 @@
 
     return () => {
       offscreenCancel()
-      canvasCancel()
+      // canvasCancel()
       overlayCancel()
     }
 

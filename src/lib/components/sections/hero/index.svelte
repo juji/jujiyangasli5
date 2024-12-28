@@ -4,7 +4,6 @@
 	import { animate, scroll } from 'motion';
 
   let elm: HTMLElement
-  let header: HTMLElement
   let hi: HTMLElement
   let menu: HTMLElement
 
@@ -47,7 +46,7 @@
 </script>
 
 <div class="hero" id="home" bind:this={elm}>
-  <header bind:this={header}>
+  <header>
     <Logo />
   </header>
   <p class="webdev" bind:this={hi}>Hi, I'm a web&nbsp;developer</p>
