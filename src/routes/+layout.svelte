@@ -6,7 +6,6 @@
   import 'sanitize.css/assets.css';
   import 'sanitize.css/forms.css';
   import 'minireset.css';
-  import 'lenis/dist/lenis.css'
   
   import '$lib/styles/fonts.css';
   import '$lib/styles/main.css';
