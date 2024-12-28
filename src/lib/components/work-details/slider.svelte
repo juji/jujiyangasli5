@@ -357,6 +357,9 @@
     overscroll-behavior: none; 
     -webkit-user-select: none; 
     -webkit-touch-callout: none; 
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     a{
       margin: 0;
