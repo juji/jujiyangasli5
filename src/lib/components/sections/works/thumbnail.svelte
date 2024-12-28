@@ -4,10 +4,16 @@
   import { noHover } from "$lib/functions/no-hover";
   import { globalState } from "$lib/functions/global.svelte";
 
-  let { work, inView, index }: {
+  let { 
+    work, inView, index,
+    fadeOut,
+    onThumbnailClick 
+  }: {
     work: WorkSingle
     inView: boolean
     index: number 
+    fadeOut: boolean
+    onThumbnailClick: () => void
   } = $props()
 
   let elm:HTMLDivElement;
@@ -86,10 +92,7 @@
 
   }
 
-  function onMouseLeave(){
-    if(noHover()) return;
-    if(clicked) return;
-
+  function normalizeTransform(){
     animate(
       elm, 
       { transform: `rotateX(0rad) rotateY(0rad) translate3d(0,0,0)` }
@@ -112,13 +115,21 @@
         hsl(0 0% 0% / .1) 80%
       )` }
     )
-    
+  }
+
+  function onMouseLeave(){
+    if(noHover()) return;
+    if(clicked) return;
+    normalizeTransform()
     rect = null
   }
 
+  const viewTransitionDelay = 350
   function onClick(){
+    onThumbnailClick()
+    normalizeTransform()
     clicked = true
-    globalState.viewTransitionDelay = 300
+    globalState.viewTransitionDelay = viewTransitionDelay
     globalState.waitForAssets = new Promise((r) => {
       const img = new Image()
       img.onload = () => { r() }
@@ -128,7 +139,7 @@
 
 </script>
 
-<div class="container">
+<div class="container" class:fadeOut style={`--viewTransitionDelay: ${viewTransitionDelay}ms`}>
   <div class="work-thumb" id={work.id} class:inView 
     bind:this={elm} 
     style={`--index:${index}`}
@@ -144,6 +155,7 @@
     />
     <div 
       class="work-logo"
+      class:clicked
       data-bg={work.logo.url}
     >
       <img 
@@ -168,13 +180,24 @@
 <style>
 
   .container{
+
+    --viewTransitionDelay: 200ms;
+
     perspective: 1000px;
     z-index: 2;
-    transition: z-index 0ms 200ms;
+    transition: 
+      z-index 0ms 200ms,
+      opacity var(--viewTransitionDelay)
+    ;
+    opacity: 1;
     position: relative;
     &:hover{ 
       transition: z-index 0ms 0ms;
       z-index: 20;
+    }
+
+    &.fadeOut{
+      opacity: 0;
     }
   }
 
@@ -317,6 +340,11 @@
       @media (hover: none) {
         translate: 0 0 -10px;
       } 
+    }
+
+    .work-logo.clicked{
+      transition: opacity var(--viewTransitionDelay) 0ms;
+      opacity: 0 !important;
     }
   }
 </style>

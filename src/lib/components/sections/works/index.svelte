@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Work } from '$lib/data/works/types';
   import { sectionInView } from '$lib/functions/section-in-view';
   import Thumbnail from './thumbnail.svelte';
 
@@ -6,6 +7,8 @@
 
   let { works } = $props();
   let inView = $state(false)
+  let fadeOut: null | {[key:string]: boolean} = $state(null)
+
   $effect(() => { 
     const stop = sectionInView( elm, () => { 
       inView = true
@@ -13,12 +16,26 @@
     return () => stop()
   })
 
+  function onThumbnailClick(i: number){
+    return function(){
+      fadeOut = works.reduce((a: {[key:string]: boolean}, _:Work, idx:number) => {
+        if (idx === i) return a
+        a[`key${idx}`] = true
+        return a
+      },{})
+    }
+  }
+
+  $inspect('fadeOut', fadeOut)
+
 </script>
 
 <section id="works" bind:this={elm}>
   <h2 class="section-title">Works</h2>
   <div class="works">
     {#each works as work, index}<Thumbnail 
+      onThumbnailClick={onThumbnailClick(index)}
+      fadeOut={fadeOut && fadeOut[`key${index}`] || false}
       work={work} 
       inView={inView} 
       index={index} 
