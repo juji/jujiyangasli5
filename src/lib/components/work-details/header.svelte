@@ -7,10 +7,10 @@
     content: string 
   } } = $props();
 
-  function onBackButton(ev: MouseEvent){
-    ev.preventDefault()
-    history.back()
-  }
+  // function onBackButton(ev: MouseEvent){
+  //   ev.preventDefault()
+  //   history.back()
+  // }
 
 </script>
 
@@ -22,7 +22,7 @@
         <h1 class="work-title">{data.work.title}</h1>
       </div>
       <div class="back-button">
-        <a onclick={onBackButton} href={`/#${data.work.id}`}>◀ Back</a>
+        <a href={`/#${data.work.id}`}>◀ Back</a>
       </div>
     </div>
   </Container>
