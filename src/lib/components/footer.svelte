@@ -35,7 +35,6 @@
       ) return;
       addOffset()
     }
-
     // @ts-expect-error
     window.addEventListener('hijacked-scroll', listenToScroll)
     

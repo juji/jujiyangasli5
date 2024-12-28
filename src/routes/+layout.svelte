@@ -33,6 +33,8 @@
     if(lenis) lenis.destroy()
     lenis = new Lenis({
       autoRaf: true,
+      lerp: 0.1,
+      easing: (x: number) => x * x * x * x
     });
     lenis.on('virtual-scroll', ({ deltaX, deltaY, event }) => {
       window.dispatchEvent(new CustomEvent("hijacked-scroll", {
