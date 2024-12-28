@@ -71,6 +71,7 @@ export class MySlider {
   #windowLength = 0
   
   #logger: Logger
+  #destroyed: boolean = false
 
   onBeforeScroll: ((par: ScrollParams) => void) | null = null
   onAfterScroll: ((par: ScrollParams) => void) | null = null
@@ -220,14 +221,14 @@ export class MySlider {
   }
 
   #OBS( scroll: -1 | 1 ){
-    if(this.#stopped) return { index: null };
+    if(this.#destroyed) return { index: null };
     const params = this.#onScroll( scroll, 'before' )
     params && this.onBeforeScroll && this.onBeforeScroll(params)
     return params || { index: null }
   }
 
   #OAS(){
-    if(this.#stopped) return { index: null };
+    if(this.#destroyed) return { index: null };
     const params = this.#onScroll( 0, 'after' )
     params && this.onAfterScroll && this.onAfterScroll(params)
     return params || { index: null }
@@ -238,7 +239,7 @@ export class MySlider {
     timing: 'before' | 'after'
   ){
 
-    if(this.#stopped) return null
+    if(this.#destroyed) return null
     
     let index = this.#scrollIndex + scroll
     
@@ -355,6 +356,7 @@ export class MySlider {
 
     this.#logger.log(LoggerType.DESTROY, 'DESTROY')
     
+    this.#destroyed = true
     this.stop()
     this.#resizeObserver.disconnect()
     if(this.#dimensionResizeObserver) this.#dimensionResizeObserver.disconnect()
