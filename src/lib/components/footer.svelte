@@ -25,26 +25,59 @@
   }
 
   $effect(() => {
-
-    const listenToScroll = (e: CustomEvent) => {
-      const { deltaY } = e.detail
+    
+    window.addEventListener('wheel',(e: WheelEvent) => {
       if(
-        deltaY < 0 || 
+        e.deltaY < 0 || 
         window.scrollY <
         (document.body.offsetHeight - window.innerHeight)
       ) return;
       addOffset()
-    }
-    // @ts-expect-error
-    window.addEventListener('hijacked-scroll', listenToScroll)
-    
-    return () => {
-      // @ts-expect-error
-      window.removeEventListener('hijacked-scroll', listenToScroll)
-      if(vars.started) vars.started = false
-    }
-    
+    })
+
+    window.addEventListener('touchstart', (init: TouchEvent) => {
+      if(
+        window.scrollY <
+        (document.body.offsetHeight - window.innerHeight)
+      ) return;
+
+      const initY = init.touches[0].clientY
+      const onPointerMove = (e: TouchEvent) => {
+        if(e.touches[0].clientY < initY) addOffset( 0.3 )
+      }
+      const onPointerUp = (e: TouchEvent) => {
+        window.removeEventListener('touchmove', onPointerMove)
+        window.removeEventListener('touchend', onPointerUp)
+        window.removeEventListener('touchcancel', onPointerUp)
+      }
+      window.addEventListener('touchmove', onPointerMove)
+      window.addEventListener('touchend', onPointerUp)
+      window.addEventListener('touchcancel', onPointerUp)
+    })
   })
+  
+
+  // $effect(() => {
+
+  //   const listenToScroll = (e: CustomEvent) => {
+  //     const { deltaY } = e.detail
+  //     if(
+  //       deltaY < 0 || 
+  //       window.scrollY <
+  //       (document.body.offsetHeight - window.innerHeight)
+  //     ) return;
+  //     addOffset()
+  //   }
+  //   // @ts-expect-error
+  //   window.addEventListener('hijacked-scroll', listenToScroll)
+    
+  //   return () => {
+  //     // @ts-expect-error
+  //     window.removeEventListener('hijacked-scroll', listenToScroll)
+  //     if(vars.started) vars.started = false
+  //   }
+    
+  // })
 
   let rid:number | null = null;
   function start(){

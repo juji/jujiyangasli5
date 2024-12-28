@@ -26,8 +26,6 @@
     }
   }
 
-  $inspect('fadeOut', fadeOut)
-
 </script>
 
 <section id="works" bind:this={elm}>
