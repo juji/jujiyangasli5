@@ -2,7 +2,7 @@
 	import type { Play } from '$lib/data/play/types';
 
 
-  import { sectionInView } from '$lib/functions/section-in-view';
+  import { sectionInView } from '$lib/modules/section-in-view';
 
   let { play } : { play: Play[] } = $props()
   let elm: HTMLElement

@@ -1,6 +1,6 @@
 <script lang="ts">
 
-  import { globalState } from '$lib/functions/global.svelte';
+  import { globalState } from '$lib/modules/global.svelte';
 
   let loading = $state(false)
   let end = $state(false)

@@ -1,6 +1,7 @@
 <script lang="ts">
   import Container from "../container.svelte";
   import type { Work } from "$lib/data/works/types";
+	import { globalState } from "$lib/modules/global.svelte";
 
   let { data }: { data: { 
     work: Work
@@ -9,6 +10,7 @@
 
   function onBackButton(ev: MouseEvent){
     ev.preventDefault()
+    globalState.fromWork = data.work.id
     history.back()
   }
 

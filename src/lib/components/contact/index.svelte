@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { sectionInView } from '$lib/functions/section-in-view';
+  import { sectionInView } from '$lib/modules/section-in-view';
 
   let elm:HTMLElement
   $effect(() => { 

@@ -1,13 +1,13 @@
 <script lang="ts">
 	import type { WorkSingle } from "$lib/data/works/types";
 	import { animate } from "motion/mini";
-  import { noHover } from "$lib/functions/no-hover";
-  import { globalState } from "$lib/functions/global.svelte";
+  import { noHover } from "$lib/modules/no-hover";
+  import { globalState } from "$lib/modules/global.svelte";
 
   let { 
     work, inView, index,
     fadeOut,
-    onThumbnailClick 
+    onThumbnailClick,
   }: {
     work: WorkSingle
     inView: boolean
@@ -137,9 +137,23 @@
     })
   }
 
+  let fromWork = $state(false)
+  $effect(() => {
+    if(
+      globalState.fromWork &&
+      globalState.fromWork !== work.id
+    ) fromWork = true
+    else if(fromWork) fromWork = false
+  })
+
 </script>
 
-<div class="container" class:fadeOut style={`--viewTransitionDelay: ${viewTransitionDelay}ms`}>
+<div class="container" 
+  class:fadeOut 
+  class:fromWork
+  style={
+    `--viewTransitionDelay: ${viewTransitionDelay}ms;`
+  }>
   <div class="work-thumb" id={work.id} class:inView 
     bind:this={elm} 
     style={`--index:${index}`}
@@ -194,6 +208,10 @@
     &:hover{ 
       transition: z-index 0ms 0ms;
       z-index: 20;
+    }
+
+    &.fromWork{
+      opacity: 0;
     }
 
     &.fadeOut{

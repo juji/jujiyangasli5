@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Work } from '$lib/data/works/types';
-  import { sectionInView } from '$lib/functions/section-in-view';
+	import { globalState } from '$lib/modules/global.svelte';
+  import { sectionInView } from '$lib/modules/section-in-view';
   import Thumbnail from './thumbnail.svelte';
 
   let elm: HTMLElement;
@@ -25,6 +26,16 @@
       },{})
     }
   }
+
+  let lastWork = $state('');
+  $effect(() => {
+    if(globalState.fromWork){
+      lastWork = globalState.fromWork
+      setTimeout(() => {
+        globalState.fromWork = null
+      },500)
+    }
+  })
 
 </script>
 

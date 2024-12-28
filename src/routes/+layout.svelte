@@ -12,11 +12,11 @@
   import 'sanitize.css/reduce-motion.css';
   import '$lib/styles/view-transition.css';
 
-  import { viewTransition } from '$lib/functions/view-transition';
+  import { viewTransition } from '$lib/modules/view-transition';
   import Footer from '$lib/components/footer.svelte'
   import LoadingIndicator from '$lib/components/loading-indicator.svelte';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
-  import { ScrollWheelHijacker } from '$lib/functions/scrollwheel-hijacker'
+  import { ScrollWheelHijacker } from '$lib/modules/scrollwheel-hijacker'
 
   let { children } = $props();
   let hijacker: ScrollWheelHijacker | null = null

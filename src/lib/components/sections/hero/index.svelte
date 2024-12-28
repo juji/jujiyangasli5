@@ -1,6 +1,6 @@
 <script lang="ts">
   import Logo from './logo.svelte'
-  import { sectionInView } from '$lib/functions/section-in-view';
+  import { sectionInView } from '$lib/modules/section-in-view';
 	import { animate, scroll } from 'motion';
 
   let elm: HTMLElement

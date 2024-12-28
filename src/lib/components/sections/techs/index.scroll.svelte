@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { TechItem } from '$lib/data/techs/types';
-  import { sectionInView } from '$lib/functions/section-in-view';
+  import { sectionInView } from '$lib/modules/section-in-view';
 	import { animate, scroll } from 'motion';
 
   let { techs } : { techs: TechItem[][] } = $props()

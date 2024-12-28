@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Ball } from "./ball";
   import { scroll, animate } from "motion";
-  import { isSafariOrWebkit } from '$lib/functions/safari'
+  import { isSafariOrWebkit } from '$lib/modules/safari'
   
   let dBalls: Ball[] = $state([]);
   let overlay: HTMLDivElement
