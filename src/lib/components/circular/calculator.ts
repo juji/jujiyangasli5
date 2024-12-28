@@ -55,6 +55,8 @@ function start(){
 }
 
 self.onmessage = (e: MessageEvent) => {
+
+  console.log('date', d)
   
   const { 
     sharedBuffer: sab,

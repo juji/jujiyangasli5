@@ -220,15 +220,17 @@ export class MySlider {
   }
 
   #OBS( scroll: -1 | 1 ){
+    if(this.#stopped) return { index: null };
     const params = this.#onScroll( scroll, 'before' )
-    this.onBeforeScroll && this.onBeforeScroll(params)
-    return params
+    params && this.onBeforeScroll && this.onBeforeScroll(params)
+    return params || { index: null }
   }
 
   #OAS(){
+    if(this.#stopped) return { index: null };
     const params = this.#onScroll( 0, 'after' )
-    this.onAfterScroll && this.onAfterScroll(params)
-    return params
+    params && this.onAfterScroll && this.onAfterScroll(params)
+    return params || { index: null }
   }
 
   #onScroll(
@@ -236,6 +238,8 @@ export class MySlider {
     timing: 'before' | 'after'
   ){
 
+    if(this.#stopped) return null
+    
     let index = this.#scrollIndex + scroll
     
     if( // on last
@@ -286,6 +290,8 @@ export class MySlider {
     this.#stopped = true
 
     const { index } = this.#OBS( -1 )
+    if(index === null) return;
+
     this.#elm.scrollTo(index * this.#elm.clientWidth, 0)
     this.#scrollIndex = index
 
@@ -309,6 +315,7 @@ export class MySlider {
     this.#stopped = true
 
     const { index } = this.#OBS( 1 )
+    if(index === null) return;
     this.#elm.scrollTo(index * this.#elm.clientWidth, 0)
     this.#scrollIndex = index
 
@@ -334,6 +341,7 @@ export class MySlider {
       if(this.#stopped) return;
 
       const { index } = this.#OBS( 1 )
+      if(index === null) return;
       this.#elm.scrollTo(index * this.#elm.clientWidth, 0)
       this.#scrollIndex = index
 
