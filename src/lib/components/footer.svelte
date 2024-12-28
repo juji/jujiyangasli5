@@ -26,8 +26,7 @@
 
   $effect(() => {
 
-    // @ts-expect-error
-    window.addEventListener('hijacked-scroll',(e: CustomEvent) => {
+    const listenToScroll = (e: CustomEvent) => {
       const { deltaY } = e.detail
       if(
         deltaY < 0 || 
@@ -35,31 +34,17 @@
         (document.body.offsetHeight - window.innerHeight)
       ) return;
       addOffset()
-    })
+    }
 
-    // window.addEventListener('touchstart', (init: TouchEvent) => {
-    //   if(
-    //     window.scrollY <
-    //     (document.body.offsetHeight - window.innerHeight)
-    //   ) return;
-
-    //   const initY = init.touches[0].clientY
-
-    //   const onPointerMove = (e: TouchEvent) => {
-    //     if(e.touches[0].clientY < initY) addOffset( 0.3 )
-    //   }
-
-    //   const onPointerUp = (e: TouchEvent) => {
-    //     window.removeEventListener('touchmove', onPointerMove)
-    //     window.removeEventListener('touchend', onPointerUp)
-    //     window.removeEventListener('touchcancel', onPointerUp)
-    //   }
-
-    //   window.addEventListener('touchmove', onPointerMove)
-    //   window.addEventListener('touchend', onPointerUp)
-    //   window.addEventListener('touchcancel', onPointerUp)
-
-    // })
+    // @ts-expect-error
+    window.addEventListener('hijacked-scroll', listenToScroll)
+    
+    return () => {
+      // @ts-expect-error
+      window.removeEventListener('hijacked-scroll', listenToScroll)
+      if(vars.started) vars.started = false
+    }
+    
   })
 
   function start(){
@@ -87,8 +72,6 @@
       vars.deltaAlpha *= vars.timeEffect
       if(vars.deltaAlpha <= 0.001) vars.deltaAlpha = 0
       requestAnimationFrame(anim)
-      
-
     })
   }
 
