@@ -1,22 +1,57 @@
 <script lang="ts">
   import Logo from './logo.svelte'
   import { sectionInView } from '$lib/functions/section-in-view';
+	import { animate, scroll } from 'motion';
 
   let elm: HTMLElement
+  let header: HTMLElement
+  let hi: HTMLElement
+  let menu: HTMLElement
+
   $effect(() => { 
     const stop = sectionInView( elm ) 
-    return () => stop()
+
+    const hiCancel = scroll(animate(
+      hi,
+      {
+        transform: [ 
+          `translateY(0px)`, 
+          `translateY(15lvh)`, 
+        ]
+      }, { ease: 'linear' }
+    ),{
+      target: elm,
+      offset: [ 0, `100vh` ]
+    })
+
+    const menuCancel = scroll(animate(
+      menu,
+      {
+        transform: [ 
+          `translateY(0px)`, 
+          `translateY(28lvh)`, 
+        ]
+      }, { ease: 'linear' }
+    ),{
+      target: elm,
+      offset: [ 0, `100vh` ]
+    })
+
+    return () => {
+      stop()
+      hiCancel()
+      menuCancel()
+    }
   })
 
 </script>
 
-
 <div class="hero" id="home" bind:this={elm}>
-  <header>
+  <header bind:this={header}>
     <Logo />
   </header>
-  <p class="webdev">Hi, I'm a web&nbsp;developer</p>
-  <div class="menu-bottom">
+  <p class="webdev" bind:this={hi}>Hi, I'm a web&nbsp;developer</p>
+  <div class="menu-bottom" bind:this={menu}>
     <a class="link" style="--delay:0ms" href="#works">Works</a>
     <a class="link" style="--delay:50ms" href="#play">Play</a>
     <a class="link" style="--delay:100ms" href="#techs">Techs</a>
