@@ -16,7 +16,7 @@ export class ScrollWheelHijacker {
   listener: (e: WheelEvent) => void
   listening = false
   ease = 0.05
-  minimumDelta = 0.1
+  minimumDelta = 1
   rafId: number = 0
   onMouseWheel: (() => void) | null = null
 
@@ -75,19 +75,15 @@ export class ScrollWheelHijacker {
     
     const scrollBy = () => {
 
-      let delta = 0
+      let delta = this.deltaY * this.ease
+      if(Math.abs(delta) < this.minimumDelta){
+        delta = this.minimumDelta * Math.abs(delta) / delta
+      }
 
-      // make things round
-      if(Math.abs(this.deltaY) <= this.minimumDelta) {
-
-        delta = this.minimumDelta * Math.abs(this.deltaY) / this.deltaY
+      if(Math.abs(delta) > Math.abs(this.deltaY)){
         this.deltaY = 0
-
       }else{
-
-        delta = this.deltaY * this.ease
         this.deltaY -= delta
-
       }
 
       this.elm.scrollBy({
