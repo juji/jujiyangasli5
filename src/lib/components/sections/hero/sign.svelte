@@ -6,21 +6,21 @@
   // i don't know
   // i want to watch movies instead
 
-  let to = 0
-  $effect(() => {
-    if(!globalState.heroAnimationMessage) return;
-    if(to) clearTimeout(to)
-    to = setTimeout(() => {
-      globalState.heroAnimationMessage = ''
-    },3000)
-  })
+  // let to = 0
+  // $effect(() => {
+  //   if(!globalState.heroAnimationMessage) return;
+  //   if(to) clearTimeout(to)
+  //   to = setTimeout(() => {
+  //     globalState.heroAnimationMessage = ''
+  //   },3000)
+  // })
 
 </script>
 
 <div class="sign">
-  <span class:shown={!!globalState.heroAnimationMessage}>
+  <!-- <span class:shown={!!globalState.heroAnimationMessage}>
     {globalState.heroAnimationMessage}
-  </span>
+  </span> -->
 </div>
 
 <style>
@@ -29,7 +29,7 @@
     display: block;
     margin-top: 2rem;
     
-    span{
+    /* span{
       font-size: 0.9rem;
       color: black;
       background-color: #1fc31f;
@@ -40,7 +40,7 @@
         transition: opacity 500ms ease-out;
         opacity: 1;
       }
-    }
+    } */
 
   }
 </style>
