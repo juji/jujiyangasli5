@@ -7,6 +7,7 @@
 
   let importPromise: Promise<any> | null = $state(null)
   let goodInterval = 1000 / 60 // 60 fps
+  let windowSizeLimit = 1366
   let module: 'circular' | 'grainy-thing' | null = $state(null)
   let sign: string = $state('')
   let js = $state(false)
@@ -56,7 +57,7 @@
     
     console.log('calculating window size and fps')
 
-    if(Math.max(window.innerWidth, window.innerHeight) <= 1366){
+    if(Math.max(window.innerWidth, window.innerHeight) <= windowSizeLimit){
 
       if(module === 'circular') return;
       showSign('window size is small, use "circular"')
