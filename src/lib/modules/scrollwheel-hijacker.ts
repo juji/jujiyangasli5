@@ -104,6 +104,13 @@ export class ScrollWheelHijacker {
       if(scrollPos === 0 && this.deltaY < 0){
         this.scrolling = false
         this.deltaY = 0
+
+        // somehow, this is needed
+        this.elm.scrollBy({
+          top: -333,
+          left: 0,
+          behavior: 'smooth'
+        })
         return;
       }
 

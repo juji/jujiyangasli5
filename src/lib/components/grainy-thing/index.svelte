@@ -97,14 +97,6 @@
               0 0 0 3 -1" />
 
   </filter>
-  <filter id="goosafari">
-    <feGaussianBlur in="dimmed" stdDeviation="1" result="blur" />
-    <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  
-                                                  0 1 0 0 0  
-                                                  0 0 1 0 0  
-                                                  0 0 0 21 -7" />
-    <feComposite in="blur" in2="goo" operator="in" result="composite" />
-  </filter>
 </svg>
 <div class="wrapper" class:shown={!offscreen}>
   <div class="grain">
@@ -189,6 +181,7 @@
     height: 100%;
     width: 100%;
     filter: url(#goo);
+    border: 3px solid salmon;
     position: absolute;
     translate: var(--translateX,0) var(--translateY,0);
   }
@@ -234,9 +227,9 @@
     
     background: radial-gradient(circle at center, rgba(var(--color), 0.9) 0%, rgba(var(--color), 0) 100%) no-repeat;
     
-    top: var(--pos-y);
-    left: var(--pos-x);
-
+    top: 0%;
+    left: 0%;
+    translate: var(--pos-x) var(--pos-y);
     transform: translate3d(-50%, -50%, 0);
   }
 
@@ -249,10 +242,6 @@
 
     .grain{
       filter: brightness(90%) contrast(200%);
-    }
-
-    .balls{
-      filter: url(#goosafari);
     }
 
     .ball{

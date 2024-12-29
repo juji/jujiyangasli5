@@ -7,6 +7,7 @@
   */
 
   // import Sign from './sign.svelte';
+  import { isSafariOrWebkit } from '$lib/modules/safari';
 
   let importPromise: Promise<any> | null = $state(null)
   let goodInterval = 1000 / 60 // 60 fps
@@ -50,10 +51,17 @@
     if(Math.max(window.innerWidth, window.innerHeight) <= windowSizeLimit){
 
       if(module === 'circular') return;
-      sign = 'window size is small, use "circular"'
+      sign = 'window size is small, using "circular"'
       module = 'circular'
       return;
 
+    }
+
+    if(isSafariOrWebkit().usesSafariWebKit){
+      if(module === 'circular') return;
+      sign = 'browser detected, using "circular"'
+      module = 'circular'
+      return;
     }
 
     calcRepaintInterval().then((n: number) => {

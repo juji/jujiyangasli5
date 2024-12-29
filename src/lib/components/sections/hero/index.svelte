@@ -2,6 +2,7 @@
   import Logo from './logo.svelte'
   import { sectionInView } from '$lib/modules/section-in-view';
 	import { animate, scroll } from 'motion';
+  import { isSafariOrWebkit } from '$lib/modules/safari';
 
   let elm: HTMLElement
   let hi: HTMLElement
@@ -24,6 +25,10 @@
   let elmCancel: (() => void) | null
   let to = 0
   $effect(() => {
+
+
+    // this is bad in safari?
+    // if(isSafariOrWebkit().usesSafariWebKit) return;
 
     if(
       lastInnerHeight &&

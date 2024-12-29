@@ -26,12 +26,8 @@
     bottom: 0;
     width: 100%;
     text-align: center;
-    opacity: 1;
     z-index: 0;
     font-size: 0.9rem;
-    transition: 
-      opacity 500ms ease-out
-    ;
 
     span{
       background-color: #1fc31f;
