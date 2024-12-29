@@ -22,6 +22,7 @@
   let innerHeight: number = $state(0)
   let lastInnerHeight: number = 0
   let elmCancel: (() => void) | null
+  let to = 0
   $effect(() => {
 
     if(
@@ -31,7 +32,8 @@
 
     lastInnerHeight = innerHeight
 
-    setTimeout(() => {
+    if(to) clearTimeout(to)
+    to = setTimeout(() => {
       if(elmCancel) elmCancel()
 
       const elmHeight = container.getBoundingClientRect().height
