@@ -3,6 +3,7 @@
   /* 
   for hero animation 
   we set animation based on screen size
+  and fps
   */
 
   let importPromise: Promise<any> | null = $state(null)
