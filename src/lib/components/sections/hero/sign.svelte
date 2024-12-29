@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { globalState } from "$lib/modules/global.svelte";
 
+  // why is this causing LCP issue?
+  // it's probaly because it's a moving part
+  // i don't know
+  // i want to watch movies instead
+
   let to = 0
   $effect(() => {
     if(!globalState.heroAnimationMessage) return;
@@ -13,7 +18,7 @@
 </script>
 
 <div class="sign">
-  <span class:shown={!globalState.heroAnimationMessage}>
+  <span class:shown={!!globalState.heroAnimationMessage}>
     {globalState.heroAnimationMessage}
   </span>
 </div>

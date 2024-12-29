@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { globalState } from '$lib/modules/global.svelte';
+  // LCP issues by displaying log
+  // removing log instead
+	// import { globalState } from '$lib/modules/global.svelte';
 
   /* 
   for hero animation 
@@ -51,7 +53,7 @@
     if(Math.max(window.innerWidth, window.innerHeight) <= windowSizeLimit){
 
       if(module === 'circular') return;
-      globalState.heroAnimationMessage = 'window size is small, using "circular"'
+      // globalState.heroAnimationMessage = 'window size is small, using "circular"'
       module = 'circular'
       return;
 
@@ -60,7 +62,7 @@
     const safari = isSafariOrWebkit()
     if(safari.usesSafariWebKit || safari.isSafari || safari.isIOS){
       if(module === 'circular') return;
-      globalState.heroAnimationMessage = 'browser detected, using "circular"'
+      // globalState.heroAnimationMessage = 'browser detected, using "circular"'
       module = 'circular'
       return;
     }
@@ -71,12 +73,12 @@
       if(n <= goodInterval){
 
         if(module === 'grainy-thing') return;
-        globalState.heroAnimationMessage = 'fps calc shows 💛, using "blob"'
+        // globalState.heroAnimationMessage = 'fps calc shows 💛, using "blob"'
         module = 'grainy-thing'
 
       }else if(module !== 'circular'){
 
-        globalState.heroAnimationMessage = 'fps calc done, using "circular"'
+        // globalState.heroAnimationMessage = 'fps calc done, using "circular"'
         module = 'circular'
 
       }
