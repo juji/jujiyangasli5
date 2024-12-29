@@ -13,9 +13,9 @@
 </script>
 
 <div class="sign">
-  {#if globalState.heroAnimationMessage}
-  <span>{globalState.heroAnimationMessage}</span>
-  {/if}
+  <span class:shown={!globalState.heroAnimationMessage}>
+    {globalState.heroAnimationMessage}
+  </span>
 </div>
 
 <style>
@@ -29,6 +29,12 @@
       color: black;
       background-color: #1fc31f;
       padding: 0.5rem 1rem;
+      opacity: 0;
+
+      &.shown{
+        transition: opacity 500ms ease-out;
+        opacity: 1;
+      }
     }
 
   }
