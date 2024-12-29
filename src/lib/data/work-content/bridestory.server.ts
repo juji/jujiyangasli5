@@ -1,6 +1,6 @@
 export const bridestory = `
 
-Bridestory was Awesome. Great friends, Excellent team. Alluring work ambience.
+Bridestory was Awesome. Great friends, Excellent team. Fascinating work ambience.
 
 My time in Bridestory cannot be describe by only one creation.
 But this one have a special place in my heart.
