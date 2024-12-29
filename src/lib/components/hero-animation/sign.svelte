@@ -1,24 +1,24 @@
 <script lang="ts">
-  import { fade } from 'svelte/transition';
+  // import { fade } from 'svelte/transition';
 
   let { content = '' } = $props()
 
   let to = 0
-  // $effect(() => {
-  //   if(!content) return;
-  //   if(to) clearTimeout(to)
-  //   to = setTimeout(() => {
-  //     content = ''
-  //   },5000)
-  // })
+  $effect(() => {
+    if(!content) return;
+    if(to) clearTimeout(to)
+    to = setTimeout(() => {
+      content = ''
+    },3000)
+  })
 
 </script>
 
-<!-- {#if content}
-  <div class="sign" transition:fade>
+{#if content}
+  <div class="sign">
     <span>{content}</span>
   </div>
-{/if} -->
+{/if}
 
 <style>
   .sign{

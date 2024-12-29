@@ -6,7 +6,7 @@
   and fps
   */
 
-  import Sign from './sign.svelte';
+  // import Sign from './sign.svelte';
 
   let importPromise: Promise<any> | null = $state(null)
   let goodInterval = 1000 / 60 // 60 fps
@@ -101,5 +101,5 @@
   {/await}
 {/if}
 
-<Sign content={sign} />
+<!-- <Sign content={sign} /> -->
 

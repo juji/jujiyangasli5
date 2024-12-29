@@ -20,7 +20,7 @@
   })
 
   let innerHeight: number = $state(0)
-  let lastInnerHeight: number = $state(0)
+  let lastInnerHeight: number = 0
   let elmCancel: (() => void) | null
   $effect(() => {
 
@@ -49,7 +49,7 @@
         target: elm,
         offset: [ 0.5, `100vh` ]
       })
-    })
+    },10)
 
     return () => {
       elmCancel && elmCancel()
@@ -58,7 +58,7 @@
 
 </script>
 
-<svelte:window bind:innerHeight={innerHeight}></svelte:window>
+<!-- <svelte:window bind:innerHeight={innerHeight}></svelte:window> -->
 
 <div class="hero" id="home" bind:this={elm}>
   <div class="container" bind:this={container}>
