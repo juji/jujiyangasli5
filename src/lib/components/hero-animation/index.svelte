@@ -35,6 +35,16 @@
     return p
   };
 
+  // get average repaint interval
+  async function calcRepaintInterval(){
+    const r1 = await getRepaintInterval()
+    const r2 = await getRepaintInterval()
+    const r3 = await getRepaintInterval()
+    const r4 = await getRepaintInterval()
+    const r5 = await getRepaintInterval()
+    return (r1 + r2 + r3 + r4 + r5) / 5
+  }
+
   function showSign(str: string){
     signElm && signElm.classList.remove('fadeOut')
     signElm && signElm.classList.remove('off')
@@ -67,7 +77,7 @@
 
     }
 
-    getRepaintInterval().then((n: number) => {
+    calcRepaintInterval().then((n: number) => {
 
       console.log('repaint interval', n)
       if(n <= goodInterval){

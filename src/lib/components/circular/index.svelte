@@ -9,6 +9,7 @@
 
   let overlay: HTMLDivElement
   let activateScroll = $state(false)
+  let paused = $state(false)
 
   function onReady(){
     animate(overlay, { 
@@ -55,10 +56,12 @@
       if(
         info.y.current >= (window.innerHeight * hMult)
       ) {
-        circles && !circles.paused && circles.pause()
+        paused = true
       }
 
-      else if(circles && circles.paused) circles.play()
+      else {
+        paused = false
+      }
 
     })
 
@@ -69,10 +72,15 @@
     }
   })
 
+  $effect(() => {
+    if(paused) circles && !circles.paused && circles.pause()
+    else circles && circles.paused && circles.play()
+  })
+
 </script>
 
 
-<canvas class="circularcanvas" bind:this={canvas}></canvas>
+<canvas class="circularcanvas" bind:this={canvas} class:paused></canvas>
 <div class="overlay" bind:this={overlay}></div>
 
 
@@ -95,6 +103,10 @@
      /* CSS specific to iOS devices */ 
      bottom: unset;
      top: 0;
+    }
+
+    &.paused{
+      display: none;
     }
   }
 

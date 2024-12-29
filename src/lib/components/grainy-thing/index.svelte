@@ -5,7 +5,6 @@
   
   let dBalls: Ball[] = $state([]);
   let overlay: HTMLDivElement
-  let wrapper: HTMLDivElement
 
   let width = 800
   let height = 520
@@ -103,16 +102,16 @@
     <feComposite in="blur" in2="goo" operator="in" result="composite" />
   </filter>
 </svg>
-<div class="wrapper" class:shown={!offscreen} bind:this={wrapper}>
+<div class="wrapper" class:shown={!offscreen}>
   <div class="grain">
     <div class="balls"
       style={`--translateX: ${translateX}px;--translateY: ${translateY}px`}
     >
-      <div style="--delay:2000ms;--pos-x:50%;--pos-y:50%;--color:6,82,221;--diameter:860px" class="ball"></div>
-      <div style="--delay:2300ms;--pos-x:56%;--pos-y:6%;--color:234,32,39;--diameter:676px" class="ball"></div>
-      <div style="--delay:2600ms;--pos-x:18%;--pos-y:40%;--color:153,128,250;--diameter:698px" class="ball"></div>
-      <div style="--delay:2900ms;--pos-x:67%;--pos-y:34%;--color:163,203,56;--diameter:676px" class="ball remove"></div>
-      <div style="--delay:3100ms;--pos-x:43%;--pos-y:23%;--color:253,167,223;--diameter:646px" class="ball remove"></div>
+      <div style="--delay:0ms;--pos-x:50%;--pos-y:50%;--color:6,82,221;--diameter:860px" class="ball"></div>
+      <div style="--delay:0ms;--pos-x:56%;--pos-y:6%;--color:234,32,39;--diameter:676px" class="ball"></div>
+      <div style="--delay:0ms;--pos-x:18%;--pos-y:40%;--color:153,128,250;--diameter:698px" class="ball"></div>
+      <div style="--delay:0ms;--pos-x:67%;--pos-y:34%;--color:163,203,56;--diameter:676px" class="ball remove"></div>
+      <div style="--delay:0ms;--pos-x:43%;--pos-y:23%;--color:253,167,223;--diameter:646px" class="ball remove"></div>
     </div>
   </div>
 </div>
@@ -158,7 +157,8 @@
     left: 0;
     z-index: 0;
     transition: left 200ms ease-out;
-
+    display: none;
+    
     :global(&.shown){
       display: block;
     }
@@ -192,10 +192,12 @@
   @keyframes rushin{
     from {
       scale: 0;
+      /* opacity: 0; */
       /* translate: 50% 0 0; */
     }
     to{
       scale: 1;
+      /* opacity: 1; */
       /* translate: 0% 0 0; */
     }
   }
@@ -212,9 +214,10 @@
     
     
     animation-name: rushin;
-    animation-duration: 2000ms;
+    animation-duration: 15s;
     animation-fill-mode: both;
-    animation-timing-function: cubic-bezier(0.025, 0.725, 0.530, 1.475);
+    /* animation-timing-function: cubic-bezier(0.025, 0.725, 0.530, 1.475); */
+    animation-timing-function: var(--rubbery);
     animation-delay: var(--delay); 
    
 
