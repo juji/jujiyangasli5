@@ -6,7 +6,7 @@
   and fps
   */
 
-  import Sign from './sign.svelte';
+  // import Sign from './sign.svelte';
   import { isSafariOrWebkit } from '$lib/modules/safari';
 
   let importPromise: Promise<any> | null = $state(null)
@@ -110,5 +110,5 @@
   {/await}
 {/if}
 
-<Sign content={sign} />
+<!-- <Sign content={sign} /> -->
 
