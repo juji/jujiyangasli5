@@ -105,24 +105,29 @@
 
 
 {#if sign && js}
-  <div bind:this={signElm} class="sign">{sign || 'Checking environment'}</div>
+  <div bind:this={signElm} class="sign">
+    <span>{sign || 'Checking environment'}</span>
+  </div>
 {/if}
 
 <style>
   .sign{
     position: fixed;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #1fc31f;
-    color: black;
-    padding: 0.5rem 1rem;
+    width: 100%;
+    text-align: center;
     opacity: 1;
-    display: inline-block;
     font-size: 0.9rem;
     transition: 
       opacity 500ms ease-out 6s
     ;
+
+    span{
+      background-color: #1fc31f;
+      color: black;
+      padding: 0.5rem 1rem;
+      display: inline-block;
+    }
 
     :global(&.fadeOut){
       opacity: 0;
