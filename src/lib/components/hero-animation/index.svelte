@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { globalState } from '$lib/modules/global.svelte';
 
   /* 
   for hero animation 
@@ -13,7 +14,6 @@
   let goodInterval = 1000 / 60 // 60 fps
   let windowSizeLimit = 1366
   let module: 'circular' | 'grainy-thing' | null = $state(null)
-  let sign: string = $state('')
   
   $effect(() => {
     if(module === 'circular'){
@@ -51,7 +51,7 @@
     if(Math.max(window.innerWidth, window.innerHeight) <= windowSizeLimit){
 
       if(module === 'circular') return;
-      sign = 'window size is small, using "circular"'
+      globalState.heroAnimationMessage = 'window size is small, using "circular"'
       module = 'circular'
       return;
 
@@ -60,7 +60,7 @@
     const safari = isSafariOrWebkit()
     if(safari.usesSafariWebKit || safari.isSafari || safari.isIOS){
       if(module === 'circular') return;
-      sign = 'browser detected, using "circular"'
+      globalState.heroAnimationMessage = 'browser detected, using "circular"'
       module = 'circular'
       return;
     }
@@ -71,12 +71,12 @@
       if(n <= goodInterval){
 
         if(module === 'grainy-thing') return;
-        sign = 'fps calc shows 💛, using "blob"'
+        globalState.heroAnimationMessage = 'fps calc shows 💛, using "blob"'
         module = 'grainy-thing'
 
       }else if(module !== 'circular'){
 
-        sign = 'fps calc done, using "circular"'
+        globalState.heroAnimationMessage = 'fps calc done, using "circular"'
         module = 'circular'
 
       }

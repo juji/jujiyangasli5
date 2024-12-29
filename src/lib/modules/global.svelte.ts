@@ -3,6 +3,7 @@ type GlobalState = {
   waitForAssets: null | Promise<null|void>
   loading: boolean
   fromWork?: string | null
+  heroAnimationMessage: string
 }
 
 
@@ -10,5 +11,6 @@ export const globalState: GlobalState = $state({
   viewTransitionDelay: 0,
   waitForAssets: null,
   loading: false,
-  fromWork: null
+  fromWork: null,
+  heroAnimationMessage: ''
 })
