@@ -73,7 +73,7 @@
       if(n <= goodInterval){
 
         if(module === 'grainy-thing') return;
-        showSign('fps is good, using "blob"')
+        showSign('fps is 👍🏿, using "blob"')
         module = 'grainy-thing'
 
       }else if(module !== 'circular'){
