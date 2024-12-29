@@ -64,7 +64,8 @@
   $effect(() => {
     
     const hMult = 1.2
-    const minimumOpacity = isSafariOrWebkit().usesSafariWebKit ? 0.1 : 0
+    const safari = isSafariOrWebkit()
+    const minimumOpacity = safari.usesSafariWebKit || safari.isSafari || safari.isIOS ? 0.1 : 0
 
     // scroll overlay's opacity
     const overlayCancel = scroll(animate(overlay,{

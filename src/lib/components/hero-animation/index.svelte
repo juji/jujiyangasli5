@@ -6,7 +6,7 @@
   and fps
   */
 
-  // import Sign from './sign.svelte';
+  import Sign from './sign.svelte';
   import { isSafariOrWebkit } from '$lib/modules/safari';
 
   let importPromise: Promise<any> | null = $state(null)
@@ -57,7 +57,8 @@
 
     }
 
-    if(isSafariOrWebkit().usesSafariWebKit){
+    const safari = isSafariOrWebkit()
+    if(safari.usesSafariWebKit || safari.isSafari || safari.isIOS){
       if(module === 'circular') return;
       sign = 'browser detected, using "circular"'
       module = 'circular'
@@ -109,5 +110,5 @@
   {/await}
 {/if}
 
-<!-- <Sign content={sign} /> -->
+<Sign content={sign} />
 
