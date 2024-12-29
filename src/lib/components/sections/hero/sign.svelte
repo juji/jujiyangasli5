@@ -12,20 +12,24 @@
 
 </script>
 
-{#if globalState.heroAnimationMessage}
-  <br /><br />
-  <div class="sign">{globalState.heroAnimationMessage}</div>
-{/if}
+<div class="sign">
+  {#if globalState.heroAnimationMessage}
+  <span>{globalState.heroAnimationMessage}</span>
+  {/if}
+</div>
 
 <style>
   .sign{
-    font-size: 0.9rem;
-
-    background-color: #1fc31f;
-    color: black;
-    padding: 0.5rem 1rem;
-    display: inline-block;
-    margin-top: 1rem;
+    
+    display: block;
+    margin-top: 2rem;
+    
+    span{
+      font-size: 0.9rem;
+      color: black;
+      background-color: #1fc31f;
+      padding: 0.5rem 1rem;
+    }
 
   }
 </style>

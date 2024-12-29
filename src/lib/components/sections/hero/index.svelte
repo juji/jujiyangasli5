@@ -2,7 +2,7 @@
   import Logo from './logo.svelte'
   import { sectionInView } from '$lib/modules/section-in-view';
 	import { animate, scroll } from 'motion';
-  // import Sign from './sign.svelte';
+  import Sign from './sign.svelte';
 
   let elm: HTMLElement
   let container: HTMLElement
@@ -67,7 +67,7 @@
       <a class="link" style="--delay:150ms" href="#contact">Contact</a>
       <a class="link outgoing" style="--delay:200ms" href="https://blog.jujiyangasli.com" target="_blank">Blog</a>
     </div>
-    <!-- <Sign /> -->
+    <Sign />
   </div>
 </div>
 
