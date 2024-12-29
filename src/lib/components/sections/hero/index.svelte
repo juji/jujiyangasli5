@@ -58,7 +58,7 @@
 
 </script>
 
-<!-- <svelte:window bind:innerHeight={innerHeight}></svelte:window> -->
+<svelte:window bind:innerHeight={innerHeight}></svelte:window>
 
 <div class="hero" id="home" bind:this={elm}>
   <div class="container" bind:this={container}>
