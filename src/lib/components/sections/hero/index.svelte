@@ -2,11 +2,8 @@
   import Logo from './logo.svelte'
   import { sectionInView } from '$lib/modules/section-in-view';
 	import { animate, scroll } from 'motion';
-  import { isSafariOrWebkit } from '$lib/modules/safari';
 
   let elm: HTMLElement
-  let hi: HTMLElement
-  let menu: HTMLElement
   let container: HTMLElement
 
   $effect(() => { 
@@ -14,9 +11,6 @@
 
     return () => {
       stop()
-      // hiCancel()
-      // menuCancel()
-      // elmCancel()
     }
   })
 
@@ -26,36 +20,29 @@
   let to = 0
   $effect(() => {
 
-
-    // this is bad in safari?
-    // if(isSafariOrWebkit().usesSafariWebKit) return;
-
     if(
       lastInnerHeight &&
       Math.abs(innerHeight - lastInnerHeight) < 100
     ) return;
 
     lastInnerHeight = innerHeight
+      
+    if(elmCancel) elmCancel()
 
-    if(to) clearTimeout(to)
-    to = setTimeout(() => {
-      if(elmCancel) elmCancel()
-
-      const elmHeight = container.getBoundingClientRect().height
-      const translateY = elmHeight >= innerHeight ? 0 : (innerHeight * .9) - elmHeight
-      elmCancel = scroll(animate(
-        container,
-        {
-          transform: [ 
-            `translateY(0px)`, 
-            `translateY(${translateY}px)`,
-          ]
-        }, { ease: 'linear' }
-      ),{
-        target: elm,
-        offset: [ 0.5, `100vh` ]
-      })
-    },10)
+    const elmHeight = container.getBoundingClientRect().height
+    const translateY = elmHeight >= innerHeight ? 0 : (innerHeight * .9) - elmHeight
+    elmCancel = scroll(animate(
+      container,
+      {
+        transform: [ 
+          `translateY(0px)`, 
+          `translateY(${translateY}px)`,
+        ]
+      }, { ease: 'linear' }
+    ),{
+      target: elm,
+      offset: [ 0, `100vh` ]
+    })
 
     return () => {
       elmCancel && elmCancel()
@@ -71,8 +58,8 @@
     <header>
       <Logo />
     </header>
-    <p class="webdev" bind:this={hi}>Hi, I'm a web&nbsp;developer</p>
-    <div class="menu-bottom" bind:this={menu}>
+    <p class="webdev">Hi, I'm a web&nbsp;developer</p>
+    <div class="menu-bottom">
       <a class="link" style="--delay:0ms" href="#works">Works</a>
       <a class="link" style="--delay:50ms" href="#play">Play</a>
       <a class="link" style="--delay:100ms" href="#techs">Techs</a>

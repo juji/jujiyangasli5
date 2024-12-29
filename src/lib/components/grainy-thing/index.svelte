@@ -170,7 +170,7 @@
   .grain{
     /* overflow: hidden; */
     filter: contrast(200%);
-    height: 200%;
+    height: 100%;
     background: 
       radial-gradient(circle at 50% 50%, rgba(0,0,0,.7), rgba(0,0,0,.6)),
       url("data:image/svg+xml,%3Csvg viewBox='0 0 277 277' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='10' numOctaves='6' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")
@@ -183,7 +183,7 @@
     filter: url(#goo);
     border: 3px solid salmon;
     position: absolute;
-    translate: var(--translateX,0) var(--translateY,0);
+    /* translate: var(--translateX,0) var(--translateY,0); */
   }
 
   @keyframes rushin{
@@ -227,8 +227,9 @@
     
     background: radial-gradient(circle at center, rgba(var(--color), 0.9) 0%, rgba(var(--color), 0) 100%) no-repeat;
     
-    top: 0%;
-    left: 0%;
+     
+    top: var(--translateX,0%);
+    left: var(--translateY,0%);
     translate: var(--pos-x) var(--pos-y);
     transform: translate3d(-50%, -50%, 0);
   }
