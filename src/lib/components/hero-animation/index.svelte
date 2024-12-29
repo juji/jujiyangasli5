@@ -112,7 +112,8 @@
   .sign{
     position: fixed;
     bottom: 0;
-    right: 0;
+    right: 50%;
+    transform: translateX(-50%);
     background-color: #1fc31f;
     color: black;
     padding: 0.5rem 1rem;
