@@ -2,18 +2,20 @@
 	import type { WorkSingle } from "$lib/data/works/types";
 	import { animate } from "motion/mini";
   import { noHover } from "$lib/modules/no-hover";
-  import { globalState } from "$lib/modules/global.svelte";
 
   let { 
-    work, inView, index,
-    fadeOut,
+    work, index,
     onThumbnailClick,
+    fadeOutSpeed,
+    fadeOut,
+    fromWork
   }: {
     work: WorkSingle
-    inView: boolean
     index: number 
+    fadeOutSpeed: number
     fadeOut: boolean
-    onThumbnailClick: () => void
+    fromWork: boolean
+    onThumbnailClick: ({ image }:{ image: string }) => void
   } = $props()
 
   let elm:HTMLDivElement;
@@ -124,37 +126,22 @@
     rect = null
   }
 
-  const viewTransitionDelay = 350
   function onClick(){
-    onThumbnailClick()
+    onThumbnailClick({ image: work.image.url })
     normalizeTransform()
     clicked = true
-    globalState.viewTransitionDelay = viewTransitionDelay
-    globalState.waitForAssets = new Promise((r) => {
-      const img = new Image()
-      img.onload = () => { r() }
-      img.src = work.image.url
-    })
   }
-
-  let fromWork = $state(false)
-  $effect(() => {
-    if(
-      globalState.fromWork &&
-      globalState.fromWork !== work.id
-    ) fromWork = true
-    else if(fromWork) fromWork = false
-  })
 
 </script>
 
 <div class="container" 
-  class:fadeOut 
+  class:clicked
+  class:fadeOut
   class:fromWork
   style={
-    `--viewTransitionDelay: ${viewTransitionDelay}ms;`
+    `--fadeOutSpeed: ${fadeOutSpeed}ms;`
   }>
-  <div class="work-thumb" id={work.id} class:inView 
+  <div class="work-thumb" id={work.id}
     bind:this={elm} 
     style={`--index:${index}`}
   >
@@ -193,36 +180,62 @@
 
 <style>
 
+    @keyframes cardFadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    @keyframes cardFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes workLogoIn{
+      from { 
+        opacity: 0; 
+        transform: translateZ(30px);
+      }
+      to { 
+        opacity: 1; 
+        transform: translateZ(0px);
+      }
+    }
+
+    @keyframes workLogoOut{
+      from { 
+        opacity: 1; 
+        transform: translateZ(0px);
+      }
+      to { 
+        opacity: 0; 
+        transform: translateZ(30px);
+      }
+    }
+
   .container{
 
-    --viewTransitionDelay: 200ms;
+    --fadeOutSpeed: 0ms;
 
     perspective: 1000px;
     z-index: 2;
-    transition: 
-      z-index 0ms 200ms,
-      opacity var(--viewTransitionDelay)
-    ;
-    opacity: 1;
+    transition: z-index 0ms 200ms;
     position: relative;
+    opacity: 0;
+    animation: cardFadeIn 500ms 500ms both;
     &:hover{ 
       transition: z-index 0ms 0ms;
       z-index: 20;
     }
 
     &.fromWork{
-      opacity: 0;
+      animation: cardFadeIn 0ms 0ms both;
     }
 
-    &.fadeOut{
-      opacity: 0;
-    }
   }
 
   .work-thumb{
 
     --index: 0;
-    --animInDelay: calc(100ms + calc(var(--index) * 100ms));
     --easeOutBounce: linear(
         0, 0.004, 0.016, 0.035, 0.063, 0.098, 0.141 13.6%, 0.25, 0.391, 0.563, 0.765,
         1, 0.891 40.9%, 0.848, 0.813, 0.785, 0.766, 0.754, 0.75, 0.754, 0.766, 0.785,
@@ -242,8 +255,7 @@
     translate: 0 0 0px;
     
     transition: 
-      translate 500ms var(--easeOutBounce),
-      opacity 300ms var(--animInDelay) ease-out
+      translate 500ms var(--easeOutBounce)
     ;
 
     min-width: 0px;
@@ -252,9 +264,7 @@
       aspect-ratio: 16 / 9;
       object-position: center top;
       object-fit: cover;
-      opacity: .8;
       opacity: 1;
-      transition: opacity 200ms 200ms;
       transform: translateZ(0px);
       min-width: 0px;
     }
@@ -271,11 +281,11 @@
       transform: translateZ(30px);
       pointer-events: none;
       z-index: 1;
-      opacity: 0;
-      translate: 0 21px 0;
+      opacity: 1;
+      translate: 0 0 0;
       transition: 
-        opacity 300ms calc(100ms * var(--index) + var(--view-transition-delay)),
-        translate 300ms calc(100ms * var(--index) + var(--view-transition-delay))
+        opacity 300ms calc(100ms * var(--index) + var(--fadeOutSpeed)),
+        translate 300ms calc(100ms * var(--index) + var(--fadeOutSpeed))
       ;
 
       img{
@@ -305,7 +315,7 @@
       width: 100%;
       height: 100%;
       z-index: 10;
-      opacity: 0;
+      opacity: 1;
       
       background: radial-gradient(
         circle at 50% 50%, 
@@ -313,35 +323,7 @@
         hsl(0 0% 0% / .1) 80%
       );
 
-      transition: opacity 500ms calc(100ms * var(--index) + var(--view-transition-delay));
-    }
-
-    &.inView{
-      .work-logo{
-        opacity: 1;
-        translate: 0 0px 0;
-      }
-      a{
-        opacity: 1;
-      }
-    }
-
-    :global(html.no-smooth) &.inView {
-
-      transform: rotateX(0rad) rotateY(0rad) !important;
-
-      .work-logo{
-        transition: 
-          opacity 300ms 0ms,
-          translate 300ms 0ms
-        ;
-        opacity: 0;
-        translate: 0 21px 0;
-      }
-      a{
-        transition: opacity 300ms 0ms;
-        opacity: 0;
-      }
+      transition: opacity 500ms calc(100ms * var(--index) + var(--fadeOutSpeed));
     }
 
     &:hover{
@@ -361,8 +343,32 @@
     }
 
     .work-logo.clicked{
-      transition: opacity var(--viewTransitionDelay) 0ms;
+      transition: opacity var(--fadeOutSpeed) 0ms;
       opacity: 0 !important;
     }
   }
+
+  .container.fadeOut:not(.clicked){
+    animation: cardFadeOut var(--fadeOutSpeed) 0s both;
+    .work-thumb{
+      transform: rotateX(0rad) rotateY(0rad) !important;
+  
+      .work-logo{
+        transition: 
+          opacity 300ms 0ms,
+          translate 300ms 0ms
+        ;
+        opacity: 0;
+        translate: 0 21px 0;
+      }
+  
+      a{
+        transition: opacity 300ms 0ms;
+        opacity: 0;
+      }
+  
+    }
+
+  }
+
 </style>

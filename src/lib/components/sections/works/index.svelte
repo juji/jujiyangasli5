@@ -7,34 +7,26 @@
   let elm: HTMLElement;
 
   let { works } = $props();
-  let inView = $state(false)
-  let fadeOut: null | {[key:string]: boolean} = $state(null)
-
-  $effect(() => { 
-    const stop = sectionInView( elm, () => { 
-      inView = true
-    }) 
-    return () => stop()
-  })
-
+  
+  const fadeOutDelay = 350
+  let fadeOut = $state(false)
   function onThumbnailClick(i: number){
-    return function(){
-      fadeOut = works.reduce((a: {[key:string]: boolean}, _:Work, idx:number) => {
-        if (idx === i) return a
-        a[`key${idx}`] = true
-        return a
-      },{})
+    return function({ image }:{ image: string }){
+      fadeOut = true
+      globalState.viewTransitionDelay = fadeOutDelay
+      globalState.waitForAssets = new Promise((r) => {
+        const img = new Image()
+        img.onload = () => { r() }
+        img.src = image
+      })
     }
   }
 
-  let lastWork = $state('');
   $effect(() => {
-    if(globalState.fromWork){
-      lastWork = globalState.fromWork
-      setTimeout(() => {
-        globalState.fromWork = null
-      },500)
-    }
+    if(globalState.fromWork)
+    setTimeout(() => {
+      globalState.fromWork = null
+    },1000)
   })
 
 </script>
@@ -44,9 +36,10 @@
   <div class="works">
     {#each works as work, index}<Thumbnail 
       onThumbnailClick={onThumbnailClick(index)}
-      fadeOut={fadeOut && fadeOut[`key${index}`] || false}
+      fromWork={globalState.fromWork === work.id}
+      fadeOutSpeed={fadeOutDelay}
+      fadeOut={fadeOut}
       work={work} 
-      inView={inView} 
       index={index} 
     />{/each}
   </div>
