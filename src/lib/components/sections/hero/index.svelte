@@ -29,8 +29,9 @@
       Math.abs(innerHeight - lastInnerHeight) < 100
     ) return;
 
-    if(!lastInnerHeight)
-      lastInnerHeight = innerHeight
+    if(!lastInnerHeight) return;
+
+    lastInnerHeight = innerHeight
 
     setTimeout(() => {
       if(elmCancel) elmCancel()
