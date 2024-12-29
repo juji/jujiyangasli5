@@ -35,14 +35,14 @@
     </div>
     <div class="icons">
       <div class="github icon">
-        <img src="/images/contact-logo/github.svg" alt="github" />
+        <img src="/images/contact-logo/github.svg" width="98" height="96" alt="github" />
         <a href="https://github.com/juji" 
           target="_blank" 
           rel="noreferrer noopener"
           aria-label="github link"></a>
       </div>
       <div class="npm icon">
-        <img src="/images/contact-logo/npm.svg" alt="npm" />
+        <img src="/images/contact-logo/npm.svg" width="540" height="210" alt="npm" />
         <a href="https://www.npmjs.com/~juji_" 
           target="_blank" 
           rel="noreferrer noopener"
