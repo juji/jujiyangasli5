@@ -4,21 +4,21 @@
   let { content = '' } = $props()
 
   let to = 0
-  $effect(() => {
-    if(!content) return;
-    if(to) clearTimeout(to)
-    to = setTimeout(() => {
-      content = ''
-    },5000)
-  })
+  // $effect(() => {
+  //   if(!content) return;
+  //   if(to) clearTimeout(to)
+  //   to = setTimeout(() => {
+  //     content = ''
+  //   },5000)
+  // })
 
 </script>
 
-{#if content}
+<!-- {#if content}
   <div class="sign" transition:fade>
     <span>{content}</span>
   </div>
-{/if}
+{/if} -->
 
 <style>
   .sign{
