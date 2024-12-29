@@ -29,8 +29,6 @@
       Math.abs(innerHeight - lastInnerHeight) < 100
     ) return;
 
-    if(!lastInnerHeight) return;
-
     lastInnerHeight = innerHeight
 
     setTimeout(() => {
