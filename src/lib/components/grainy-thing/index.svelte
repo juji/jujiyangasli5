@@ -9,8 +9,8 @@
 
   let width = 800
   let height = 520
-  let translateX = 300
-  let translateY = 120
+  let translateX = 500
+  let translateY = 220
 
   $effect(() => {
 
@@ -189,14 +189,16 @@
 
   @keyframes rushin{
     from {
-      scale: 0;
+      /* scale: 0; */
       /* opacity: 0; */
       /* translate: 50% 0 0; */
+      transform: translate3d(0%, 0%, 0);
     }
     to{
-      scale: 1;
+      /* scale: 1; */
       /* opacity: 1; */
       /* translate: 0% 0 0; */
+      transform: translate3d(-50%, -50%, 0);
     }
   }
 
@@ -235,7 +237,7 @@
       calc(var(--pos-x) + var(--translateX)) 
       calc(var(--pos-y) + var(--translateY))
     ;
-    transform: translate3d(-50%, -50%, 0);
+    /* transform: translate3d(-50%, -50%, 0); */
   }
 
   /* safari only */

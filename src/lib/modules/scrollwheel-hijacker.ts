@@ -5,6 +5,7 @@ type ScrollWheelHijackerParams = {
   elm?: HTMLElement | Window
   disableOnSmoothSroll?: boolean
   showWarning?: boolean
+  snapToTop?: number
 }
 
 // chat GiPiTi everybody!!
@@ -15,14 +16,20 @@ function getNormalizedScrollPosition(elm: HTMLElement | Window) {
     const clientHeight = document.documentElement.clientHeight; // Visible height of the viewport
 
     // Normalize scroll position
-    return Math.min(1, Math.max(0, scrollTop / (scrollHeight - clientHeight)));
+    return {
+      pixel: scrollTop,
+      normalized: Math.min(1, Math.max(0, scrollTop / (scrollHeight - clientHeight)))
+    };
   } else if (elm instanceof HTMLElement) {
     const scrollTop = elm.scrollTop; // Current vertical scroll position
     const scrollHeight = elm.scrollHeight; // Total height of the element's content
     const clientHeight = elm.clientHeight; // Visible height of the element
 
     // Normalize scroll position
-    return Math.min(1, Math.max(0, scrollTop / (scrollHeight - clientHeight)));
+    return {
+      pixel: scrollTop,
+      normalized: Math.min(1, Math.max(0, scrollTop / (scrollHeight - clientHeight)))
+    };
   } else {
     throw new Error("The parameter must be either a Window or an HTMLElement.");
   }
@@ -41,6 +48,7 @@ export class ScrollWheelHijacker {
   rafId: number = 0
   onMouseWheel: (() => void) | null = null
   isWindow = false
+  snapToTop = 0
 
   constructor( par? : ScrollWheelHijackerParams ){
 
@@ -49,7 +57,8 @@ export class ScrollWheelHijacker {
       minimumDelta = null,
       elm = window,
       disableOnSmoothSroll = true,
-      showWarning = false
+      showWarning = false,
+      snapToTop = 0.7
     } = par || {}
 
     if(
@@ -65,6 +74,7 @@ export class ScrollWheelHijacker {
     this.elm = elm
     this.minimumDelta = minimumDelta !== null ? minimumDelta : this.minimumDelta
     this.ease = ease !== null ? ease : this.ease
+    this.snapToTop = snapToTop
 
     this.isWindow = elm instanceof Window
 
@@ -101,7 +111,16 @@ export class ScrollWheelHijacker {
 
       let scrollPos = getNormalizedScrollPosition(this.elm)
 
-      if(scrollPos === 0 && this.deltaY < 0){
+      if(
+        scrollPos.pixel <= (this.snapToTop * window.innerHeight) &&
+        this.deltaY < 0
+      ){
+        // too fast
+        // this.deltaY -= window.innerHeight - scrollPos.pixel
+        this.deltaY -= (window.innerHeight - scrollPos.pixel) * this.ease
+      }
+
+      if(scrollPos.normalized === 0 && this.deltaY < 0){
         this.scrolling = false
         this.deltaY = 0
 
@@ -114,7 +133,7 @@ export class ScrollWheelHijacker {
         return;
       }
 
-      if(scrollPos === 1 && this.deltaY > 0){
+      if(scrollPos.normalized === 1 && this.deltaY > 0){
         this.scrolling = false
         this.deltaY = 0
 

@@ -15,14 +15,14 @@
 
   let colors: string[] = []
   let radiuses: number[] = []
-  let translateTopRatios: number[] = []
   let canvas: OffscreenCanvas
   let started = false
   let paused = false
   let bufferData:Float32Array
   let sal: number;
   let dpr: number
-  let translateTop: number = 0
+  let translateTop: number = 80
+  let translateLeft: number = 50
 
   function setupCanvas(){
     if(!canvas) throw new Error('no canvas')
@@ -58,10 +58,10 @@
       while(num--){
         context.beginPath();
         context.arc(
-          bufferData[ num * sal + 0 ],
+          bufferData[ num * sal + 0 ] + translateLeft,
           bufferData[ num * sal + 1 ]
            - (bufferData[ num * sal + 5 ] * canvas.height)
-           - (translateTopRatios[num] * translateTop / 9)
+           + translateTop
           ,
           radiuses[ num ], 
           0, 2 * Math.PI
@@ -164,9 +164,6 @@
     for(let i =0;i<num;i++){
       colors.push(randomColor())
       radiuses.push(randomSize())
-
-      // local parallax thing
-      translateTopRatios.push(1 + (Math.random() * .25))
     }
 
     sal = dataLength
