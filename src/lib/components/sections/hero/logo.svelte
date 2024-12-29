@@ -32,6 +32,7 @@
   svg{
     width: 210px;
     height: auto;
+    filter: var(--drop-shadow);
   }
 
   h1{

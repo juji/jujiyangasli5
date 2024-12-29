@@ -7,7 +7,7 @@
   --border-color: #353535;
   --active-link-color: #ffe700;
   --muted-color: #898989;
-  --text-shadow-color: rgb(36 36 36 / 0.8);
+  --text-shadow-color: rgb(36 36 36 / 0.6);
   --drop-shadow-color: rgb(36 36 36 / 0.8);
 
   --page-width: 1024px;
@@ -42,7 +42,7 @@
     --border-color: #353535;
     --active-link-color: #ffe700;
     --muted-color: #898989;
-    --text-shadow-color: rgb(36 36 36 / 0.8);
+    --text-shadow-color: rgb(36 36 36 / 0.6);
     --drop-shadow-color: rgb(36 36 36 / 0.8);
   }
 }
@@ -55,7 +55,7 @@
     --border-color: #353535;
     --active-link-color: #ffe700;
     --muted-color: #898989;
-    --text-shadow-color: rgb(36 36 36 / 0.8);
+    --text-shadow-color: rgb(36 36 36 / 0.6);
     --drop-shadow-color: rgb(36 36 36 / 0.8);
   }
 }
