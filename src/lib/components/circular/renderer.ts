@@ -76,7 +76,6 @@
 
   }
 
-  let lastScroll = 0
   self.onmessage = (e: MessageEvent) => {
 
     const { data } = e

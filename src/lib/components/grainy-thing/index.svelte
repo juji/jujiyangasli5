@@ -11,7 +11,6 @@
   let height = 520
   let translateX = 300
   let translateY = 120
-  let dt: Date = new Date()
 
   $effect(() => {
 
@@ -71,19 +70,6 @@
     { offset: [ 0, `${100 * hMult}vh` ]}
   )
 
-    // slooooow
-    // // scroll canvas paralax
-    // const canvasCancel = scroll(
-    //   animate(
-    //     wrapper,
-    //     { transform: [
-    //       'translateY(0)',
-    //       'translateY(-300px)'
-    //     ] }
-    //   ), 
-    //   { offset: [ 0, `${100 * hMult}vh` ]}
-    // )
-
     // is offscreen?
     const offscreenCancel = scroll((_, info) => {
       offscreen = info.y.current >= (window.innerHeight * hMult)
@@ -91,7 +77,6 @@
 
     return () => {
       offscreenCancel()
-      // canvasCancel()
       overlayCancel()
     }
 
