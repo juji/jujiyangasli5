@@ -2,6 +2,7 @@
   import { Ball } from "./ball";
   import { scroll, animate } from "motion";
   import { isSafariOrWebkit } from '$lib/modules/safari'
+  import { randomColor } from './randomColor'
   
   let dBalls: Ball[] = $state([]);
   let overlay: HTMLDivElement
@@ -27,9 +28,12 @@
     if(!dBalls.length){
       const jsBalls: Ball[] = []
       const balls = document.querySelectorAll('.ball')
-      balls.forEach(ball => {
+      const colors: string[] = []
+      balls.forEach(() => { colors.push(randomColor(colors)) })
+      balls.forEach((ball, i) => {
         const dball = new Ball(
           ball as HTMLDivElement,
+          colors[i],
           {
             width,
             height
@@ -143,7 +147,7 @@
     height: 100vh;
     top: 0;
     left: 0;
-    z-index: 0;
+    z-index: 1;
     opacity: 0;
     transition: opacity 500ms;
     background: rgba(0,0,0,1);
