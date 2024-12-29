@@ -228,9 +228,12 @@
     background: radial-gradient(circle at center, rgba(var(--color), 0.9) 0%, rgba(var(--color), 0) 100%) no-repeat;
     
      
-    top: var(--translateX,0%);
-    left: var(--translateY,0%);
-    translate: var(--pos-x) var(--pos-y);
+    top: 0%;
+    left: 0%;
+    translate: 
+      calc(var(--pos-x) + var(--translateX)) 
+      calc(var(--pos-y) + var(--translateY))
+    ;
     transform: translate3d(-50%, -50%, 0);
   }
 
