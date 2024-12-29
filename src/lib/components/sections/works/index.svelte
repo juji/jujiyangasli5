@@ -1,7 +1,5 @@
 <script lang="ts">
-	import type { Work } from '$lib/data/works/types';
 	import { globalState } from '$lib/modules/global.svelte';
-  import { sectionInView } from '$lib/modules/section-in-view';
   import Thumbnail from './thumbnail.svelte';
 
   let elm: HTMLElement;
