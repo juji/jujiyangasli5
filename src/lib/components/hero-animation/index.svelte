@@ -85,7 +85,8 @@
 
   // start
   $effect(() => {
-    debounceWindowResize()
+    // debounceWindowResize()
+    onWindowResize()
     window.addEventListener('resize', debounceWindowResize)
     return () => {
       window.removeEventListener('resize', debounceWindowResize)
