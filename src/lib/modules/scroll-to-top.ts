@@ -25,7 +25,7 @@ export class ScrollToTop {
   rootMarginTopPercent: number
 
   touched: boolean = false
-  handleTouch: boolean = false
+  hasIntersected: boolean = false
   raf: number = 0
 
   scrollSpeed: number = 0
@@ -44,6 +44,8 @@ export class ScrollToTop {
     this.rootMarginTopPercent = rootMarginTopPercent
 
     // append child to top
+    // this is the div that will trigger scroll
+    // with intersection observer
     const div = document.createElement('div')
     div.style.setProperty('position', 'absolute')
     div.style.setProperty('width', '1px')
@@ -59,6 +61,7 @@ export class ScrollToTop {
     }
 
     // intersection observer
+    //
     const callback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if(entry.isIntersecting){
@@ -75,6 +78,7 @@ export class ScrollToTop {
     this.observer.observe(div)
 
     // scroll listener
+    //
     this.scrollListener = (e: Event) => {
 
       // another gpt created code {
@@ -96,16 +100,16 @@ export class ScrollToTop {
       
       this.direction = deltaY < 0 ? -1 : 1
 
-      // handle
+      // handle touch
       if(
-        this.handleTouch &&
+        this.hasIntersected &&
         this.touched && 
         this.direction === -1 &&
         this.scrollSpeed > -1 &&
         window.scrollY > 1
       ){
         this.touched = false
-        this.handleTouch = false
+        this.hasIntersected = false
         this.elm.scrollTo({
           top: -333,
           left: 0,
@@ -115,6 +119,7 @@ export class ScrollToTop {
 
     }
 
+    // detect touch
     this.touchListener = (e:TouchEvent) => {
       this.touched = true
     }
@@ -126,7 +131,7 @@ export class ScrollToTop {
 
   isIntersecting(){
     if(this.direction !== -1) return;
-    this.handleTouch = true
+    this.hasIntersected = true
     document.dispatchEvent(new CustomEvent('_ScrollToTop_'))
   }
 
