@@ -1,31 +1,22 @@
 <script lang="ts">
-	import { globalState } from '$lib/modules/global.svelte';
   import Thumbnail from './thumbnail.svelte';
 
   let elm: HTMLElement;
 
-  let { works } = $props();
+  let { 
+    works, 
+    setTransition,
+    fadeOutDelay,
+    fromWork
+  } = $props();
   
-  const fadeOutDelay = 350
   let fadeOut = $state(false)
   function onThumbnailClick(i: number){
     return function({ image }:{ image: string }){
       fadeOut = true
-      globalState.viewTransitionDelay = fadeOutDelay
-      globalState.waitForAssets = new Promise((r) => {
-        const img = new Image()
-        img.onload = () => { r() }
-        img.src = image
-      })
+      setTransition(image)
     }
   }
-
-  $effect(() => {
-    if(globalState.fromWork)
-    setTimeout(() => {
-      globalState.fromWork = null
-    },1000)
-  })
 
 </script>
 
@@ -34,7 +25,7 @@
   <div class="works">
     {#each works as work, index}<Thumbnail 
       onThumbnailClick={onThumbnailClick(index)}
-      fromWork={globalState.fromWork === work.id}
+      fromWork={fromWork === work.id}
       fadeOutSpeed={fadeOutDelay}
       fadeOut={fadeOut}
       work={work} 

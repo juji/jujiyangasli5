@@ -3,12 +3,17 @@
   import type { Work } from "$lib/data/works/types";
   import { page } from '$app/state';
   import WorkDetails from "$lib/components/work-details/index.svelte";
+  import { globalState } from "$lib/modules/global.svelte";
 
   /** @type {{ data: import('./$types').PageData }} */
 	let { data }: { data: { 
     work: Work
     content: string 
   } } = $props();
+
+  function onBackButton(){
+    globalState.fromWork = data.work.id
+  }
 
 </script>
 
@@ -34,7 +39,10 @@
   {/each}
 </svelte:head>
 
-<WorkDetails data={data} />
+<WorkDetails 
+  data={data} 
+  onBackButton={onBackButton}
+/>
 
 <style>
   :root{

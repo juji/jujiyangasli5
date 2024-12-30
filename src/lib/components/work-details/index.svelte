@@ -6,14 +6,17 @@
 	import Slider from "./slider.svelte";
   import Text from './text/index.svelte'
 
-	let { data }: { data: { 
-    work: Work
-    content: string 
-  } } = $props();
+	let { data, onBackButton }: { 
+    data: { 
+      work: Work
+      content: string 
+    },
+    onBackButton: (work: Work) => void
+  } = $props();
 
 </script>
 
-<Header data={data} />
+<Header data={data} onBackButton={onBackButton} />
 <div style={`--gradient:${data.work.gradientColor}`} class="gradient"></div>
 <main>
   <Container>

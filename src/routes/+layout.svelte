@@ -78,4 +78,4 @@
 
 {@render children()}
 <Footer />
-<LoadingIndicator />
+<LoadingIndicator isLoading={globalState.loading} />

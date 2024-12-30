@@ -10,6 +10,7 @@
   import { page } from '$app/state';
   import { ScrollToTop } from '$lib/modules/scroll-to-top'
   import { globalState } from '$lib/modules/global.svelte.js'
+	import type { FpsMonitorListenerParams } from '$lib/modules/fps-monitor.js';
 
   let js = $state(false)
   $effect(() => { if(!js) js = true })
@@ -17,6 +18,8 @@
   /** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
 
+
+  // force scroll to top
   $effect(() => {
     let scrollToTop = new ScrollToTop({
       onScrollStart: () => {
@@ -34,6 +37,41 @@
     return () => {
       scrollToTop.destroy()
     }
+  })
+
+  // add fps listener
+  let fps: FpsMonitorListenerParams | null = $state(null)
+  $effect(() => {
+
+    const listener = (e: Event) => {
+      const ev = e as CustomEvent<FpsMonitorListenerParams>
+      fps = ev.detail
+    }
+
+    globalState.fpsEvent.addEventListener('fps', listener)
+    return () => {
+      globalState.fpsEvent.removeEventListener('fps', listener)
+    }
+
+  })
+
+  // work transition delay
+  const fadeOutDelay = 350
+  function setWorksTransition(image: string){
+    globalState.viewTransitionDelay = fadeOutDelay
+    globalState.waitForAssets = new Promise((r) => {
+      const img = new Image()
+      img.onload = () => { r() }
+      img.src = image
+    })
+  }
+
+  // if this comes from work page
+  $effect(() => {
+    if(globalState.fromWork)
+    setTimeout(() => {
+      globalState.fromWork = null
+    },1000)
   })
 
 </script>
@@ -59,13 +97,18 @@
 
 <Menu />
 <main>
-  <HeroAnimation />
+  <HeroAnimation fps={fps} />
   <Container>
     <Hero />
   </Container>
   <div class="nojs-overlay" class:js>
     <Container>
-      <Works works={data.works} />
+      <Works 
+        works={data.works} 
+        setTransition={setWorksTransition} 
+        fadeOutDelay={fadeOutDelay}
+        fromWork={globalState.fromWork}
+      />
       <Play play={data.play} />
       <Techs techs={data.techs} />
     </Container>

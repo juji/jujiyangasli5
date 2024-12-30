@@ -1,16 +1,18 @@
 <script lang="ts">
   import Container from "../container.svelte";
   import type { Work } from "$lib/data/works/types";
-	import { globalState } from "$lib/modules/global.svelte";
 
-  let { data }: { data: { 
-    work: Work
-    content: string 
-  } } = $props();
+  let { data, onBackButton }: { 
+    data: { 
+      work: Work
+      content: string 
+    },
+    onBackButton: (work: Work) => void
+  } = $props();
 
-  function onBackButton(ev: MouseEvent){
+  function onBackButtonLocal(ev: MouseEvent){
     ev.preventDefault()
-    globalState.fromWork = data.work.id
+    onBackButton(data.work)
     history.back()
   }
 
@@ -25,7 +27,7 @@
       </div>
       <div class="back-button">
         <a 
-          onclick={onBackButton}
+          onclick={onBackButtonLocal}
           href={`/#${data.work.id}`}>◀ Back</a>
       </div>
     </div>

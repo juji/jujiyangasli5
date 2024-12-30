@@ -1,9 +1,9 @@
 <script lang="ts">
 
-  import { globalState } from '$lib/modules/global.svelte';
-
   let loading = $state(false)
   let end = $state(false)
+
+  let { isLoading } = $props()
 
   $effect(() => {
     if(end) setTimeout(() => {
@@ -13,11 +13,11 @@
   })
 
   $effect(() => {
-    if(globalState.loading && !loading){
+    if(isLoading && !loading){
       loading = true
     }
 
-    if(!globalState.loading && loading){
+    if(!isLoading && loading){
       end = true
     }
   })

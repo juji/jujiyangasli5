@@ -1,7 +1,4 @@
 <script lang="ts">
-  // LCP issues by displaying log
-  // removing log instead
-	// import { globalState } from '$lib/modules/global.svelte';
 
   /* 
   for hero animation 
@@ -11,12 +8,13 @@
 
   // import Sign from './sign.svelte';
   import { isSafariOrWebkit } from '$lib/modules/safari';
-  import { globalState } from '$lib/modules/global.svelte';
   import type { FpsMonitorListenerParams } from '$lib/modules/fps-monitor';
 
   let importPromise: Promise<any> | null = $state(null)
   let windowSizeLimit = 1366
   let module: 'circular' | 'grainy-thing' | null = $state(null)
+
+  let { fps }:{ fps: FpsMonitorListenerParams | null } = $props()
   
   $effect(() => {
     if(module === 'circular'){
@@ -24,22 +22,6 @@
     }else if(module === 'grainy-thing'){
       importPromise = import('$lib/components/grainy-thing/index.svelte')
     }
-  })
-
-  // add fps listener
-  let fps: FpsMonitorListenerParams | null = null
-  $effect(() => {
-
-    const listener = (e: Event) => {
-      const ev = e as CustomEvent<FpsMonitorListenerParams>
-      fps = ev.detail
-    }
-
-    globalState.fpsEvent.addEventListener('fps', listener)
-    return () => {
-      globalState.fpsEvent.removeEventListener('fps', listener)
-    }
-
   })
 
   function onWindowResize(){
