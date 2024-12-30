@@ -77,6 +77,18 @@ html, body{
   position:relative;
 }
 
+body{
+  /* 
+  INVESTIGATE
+  WHY SHOULD I DO THIS?
+  i prefer not to do this
+
+  but this actually makes the width bound clear to the browser
+  remember GIPIDI
+  */
+  overflow-x: hidden;
+}
+
 @media (prefers-reduced-motion) {
 	::view-transition-group(*),
 	::view-transition-old(*),
