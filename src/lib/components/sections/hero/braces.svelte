@@ -7,7 +7,7 @@
 <style>
 
   span{
-    text-shadow: var(--text-shadow);
+    filter: var(--drop-shadow);
   }
 
   @keyframes anim {

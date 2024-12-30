@@ -1,8 +1,7 @@
 <script lang="ts">
   import Logo from './logo.svelte'
   import { sectionInView } from '$lib/modules/section-in-view';
-	import { animate, scroll, cubicBezier } from 'motion';
-  // import Sign from './sign.svelte';
+	import { animate, scroll } from 'motion';
 
   let elm: HTMLElement
   let container: HTMLElement
@@ -12,8 +11,24 @@
   let juji: HTMLElement
   let menu: HTMLElement
 
+  let colors = [
+    '#bfe600',
+    '#00dee6',
+    '#fb0',
+    '#ff67e9',
+    '#57bcff',
+    '#fcf122' 
+  ]
+
+  // "web developer" color
+  const webDevColor = [ ...colors, ...colors, ...colors ][
+    Math.floor(Math.random() * colors.length * 3)
+  ]
+
   $effect(() => { 
     const stop = sectionInView( elm ) 
+
+    
 
     return () => {
       stop()
@@ -73,7 +88,7 @@
       <Logo />
     </header>
     <div class="webdev">
-      <p class="hi" bind:this={hi}>Hi, I'm a <span>web&nbsp;developer</span>.</p>
+      <p class="hi" bind:this={hi}>Hi, I'm a <span style={`color:${webDevColor}`}>web&nbsp;developer</span>.</p>
       <p class="smaller second" bind:this={name}>My name is <span>Tri&nbsp;Rahmat&nbsp;Gunadi,</span></p>
       <p class="smaller third" bind:this={juji}>But people call me juji..</p>
     </div>
@@ -84,7 +99,6 @@
       <a class="link" style="--delay:150ms" href="#contact">Contact</a>
       <a class="link outgoing" style="--delay:200ms" href="https://blog.jujiyangasli.com" target="_blank">Blog</a>
     </div>
-    <!-- <Sign /> -->
   </div>
 </div>
 
@@ -105,6 +119,8 @@
     height: 100vh;
     transform-origin: left bottom;
     perspective: 1000px;
+    /* DO NOT REMOVE, for debuggin */
+    /* background-color: rgba(255,255,255,0.8); */
 
     .container{
       display: inline-block;
@@ -115,12 +131,12 @@
       padding: 1rem 0;
       display: flex;
       justify-content: space-between;
-      /* background-color: white; */
 
     }
 
     .webdev{
-      text-shadow: var(--text-shadow);
+
+      filter: var(--drop-shadow);
       margin-top: 2rem;
       margin-bottom: 2rem;
 
@@ -214,8 +230,8 @@
         animation-fill-mode: both;
         animation-timing-function: ease-out;
         animation-delay: calc(700ms + var(--delay));
-        text-shadow: var(--text-shadow);
         font-weight: 600;
+        filter: var(--drop-shadow);
       }
     }
 

@@ -129,7 +129,7 @@
     position: absolute;
     z-index: 2;
 
-    filter: var(--drop-shadow);
+    filter: drop-shadow(1px 1px 1px var(--shadow-color));
     scale: 1;
     transition: scale 1000ms var(--rubbery);
 
