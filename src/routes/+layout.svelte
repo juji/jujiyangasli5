@@ -44,12 +44,12 @@
         )
         
         // change hijacker's speed multipler 
-        if(res.isGoodInterval && hijacker && hijacker.speedMultiplier === 2){
+        if(res.isGoodInterval && hijacker && hijacker.speedMultiplier !== 1){
           // good fps, faster speed, so multiplier is 1
           hijacker.speedMultiplier = 1
         }
 
-        if(!res.isGoodInterval && hijacker && hijacker.speedMultiplier === 1){
+        if(!res.isGoodInterval && hijacker && hijacker.speedMultiplier !== 2){
           // bad fps, lower speed, so multiplier is 2
           hijacker.speedMultiplier = 2
         }
