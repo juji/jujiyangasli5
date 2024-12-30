@@ -141,11 +141,11 @@
       margin-bottom: 2rem;
 
       p{
-        animation-name: webdev;
+        /* animation-name: webdev;
         animation-duration: 200ms;
         animation-fill-mode: both;
         animation-timing-function: ease-out;
-        animation-delay: 500ms;
+        animation-delay: 500ms; */
       }
 
       .hi{
