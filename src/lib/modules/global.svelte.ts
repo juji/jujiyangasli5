@@ -7,7 +7,6 @@ type GlobalState = {
   loading: boolean
   fromWork?: string | null
   scrollWheelHijacker?: ScrollWheelHijacker | null
-  lastFps: FpsMonitorListenerParams | null
   fpsEvent: EventTarget
 }
 
@@ -18,6 +17,5 @@ export const globalState: GlobalState = $state({
   loading: false,
   fromWork: null,
   scrollWheelHijacker: null,
-  fpsEvent: new EventTarget(),
-  lastFps: null
+  fpsEvent: new EventTarget()
 })

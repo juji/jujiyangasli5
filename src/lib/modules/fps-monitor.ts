@@ -33,7 +33,7 @@ export class FpsMonitor {
     this.#lastWindowWidth = window.innerWidth
     this.#goodFps = goodFps
     this.#repaintIntervalNum = repaintIntervalNum
-
+    
     // when changing monitor
     // width and height is the same
     // but on resize event triggers
@@ -49,7 +49,9 @@ export class FpsMonitor {
       this.#lastWindowWidth = window.innerWidth
     }
 
-    this.#start()
+    // start first
+    this.#onResize()
+    window.addEventListener('resize', this.#onResize)
 
   }
 
@@ -64,14 +66,6 @@ export class FpsMonitor {
   setRepaintIntervalNum(n: number){
     this.#repaintIntervalNum = n
   }
-
-  #start(){
-    window.addEventListener('resize', this.#onResize)
-
-    // start first
-    this.#onResize()
-  }
-
 
   // https://stackoverflow.com/a/66167211/1058374
   #getRepaintInterval(){

@@ -38,9 +38,12 @@
   $effect(() => {
     const fpsMonitor = new FpsMonitor({
       onChange: ( res: FpsMonitorListenerParams ) => {
-        globalState.lastFps = res
+
         globalState.fpsEvent.dispatchEvent(
-          new CustomEvent<FpsMonitorListenerParams>('fps', { detail: res })
+          new CustomEvent<FpsMonitorListenerParams>(
+            'fps', 
+            { detail : res }
+          )
         )
         
         // change hijacker's speed multipler 

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { FpsMonitorListenerParams } from '$lib/modules/fps-monitor';
 
   /* 
   for hero animation 
@@ -12,7 +13,11 @@
   let windowSizeLimit = 1366
   let module: 'circular' | 'grainy-thing' | null = $state(null)
 
-  let { hasGoodFps }:{ hasGoodFps: boolean | null } = $props()
+  let { 
+    hasGoodFps 
+  }:{ 
+    hasGoodFps: boolean | null
+  } = $props()
   
   $effect(() => {
     if(module === 'circular'){
@@ -21,6 +26,20 @@
       importPromise = import('$lib/components/grainy-thing/index.svelte')
     }
   })
+
+  async function getFpsValue(){
+    return new Promise(r => {
+      let i = 0;
+      if(hasGoodFps === null){
+        i = setInterval(() => {
+          if(hasGoodFps === null) return;
+          clearInterval(i)
+          r(hasGoodFps)
+        },300)
+      } 
+      else r(hasGoodFps)
+    })
+  }
 
   function onWindowResize(){
 
@@ -42,17 +61,15 @@
     // maybe wait for fps?
     // local testing says i don't have to
     // but still
-    let int = setInterval(() => {
-      if(hasGoodFps === null) return;
-      clearInterval(int)
-
-      if(hasGoodFps){
+    getFpsValue().then(isGoodFps => {
+      if(isGoodFps){
         if(module === 'grainy-thing') return;
         module = 'grainy-thing'
       }else if(module !== 'circular'){
         module = 'circular'
       }
-    }, 300 )
+
+    })
 
   }
 

@@ -23,8 +23,10 @@
   $effect(() => {
     let scrollToTop = new ScrollToTop({
       onScrollStart: () => {
+
         const isScrolling = globalState.scrollWheelHijacker?.isScrolling()
         if(isScrolling) globalState.scrollWheelHijacker?.scrollToTop()
+
         return !(isScrolling)
       }
     })
