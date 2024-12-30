@@ -42,6 +42,15 @@
         globalState.fpsEvent.dispatchEvent(
           new CustomEvent<FpsMonitorListenerParams>('fps', { detail: res })
         )
+        
+        // tambah jelek, ga jadi
+        // if(res.isGoodInterval && hijacker && !hijacker.active){
+        //   hijacker.activate()
+        // }
+
+        // if(!res.isGoodInterval && hijacker?.active){
+        //   hijacker.deactivate()
+        // }
       }
     })
 

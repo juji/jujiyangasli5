@@ -25,6 +25,8 @@ export class ScrollWheelHijacker {
   snapToTop = false
   stopped = false
 
+  active = true
+
   constructor( par? : ScrollWheelHijackerParams ){
 
     const {
@@ -85,12 +87,28 @@ export class ScrollWheelHijacker {
     this.stopped = true
   }
 
+  deactivate(){
+    this.active = false
+    // @ts-expect-error
+    this.elm.removeEventListener('wheel',this.listener)
+  }
+
+  activate(){
+    this.active = true
+    // @ts-expect-error
+    this.elm.addEventListener('wheel',this.listener,{ passive: false })
+  }
+
   scroll(){
+    if(!this.active) return;
     this.scrolling = true
     
     const scrollBy = () => {
 
-      if(this.stopped) {
+      if(
+        this.stopped ||
+        !this.active
+      ) {
         this.stopped = false
         this.scrolling = false
         this.deltaY = 0
