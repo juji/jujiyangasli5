@@ -74,7 +74,7 @@ export class ScrollWheelHijacker {
     }
 
     // @ts-expect-error
-    this.elm.addEventListener('wheel',this.listener,{ passive: false })
+    this.#elm.addEventListener('wheel',this.#listener,{ passive: false })
 
   }
 
