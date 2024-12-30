@@ -99,12 +99,6 @@ export class FpsMonitor {
 
     const avgFps = 1000 / await this.#avgRepaintInterval()
 
-    console.log({
-      avgFps,
-      goodFps: this.#goodFps,
-      isGoodFps: avgFps >= this.#goodFps
-    })
-
     return {
       avgFps,
       goodFps: this.#goodFps,
