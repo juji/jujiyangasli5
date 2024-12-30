@@ -15,7 +15,7 @@ export class ScrollWheelHijacker {
   #elm: HTMLElement | Window
   #deltaY = 0
   #scrolling = false
-  #listener: (e: WheelEvent) => void
+  #listener: (e: Event) => void
   #listening = false
   #ease = 0.05
   #speedMultiplier = 1
@@ -52,28 +52,29 @@ export class ScrollWheelHijacker {
     this.#ease = ease !== null ? ease : this.#ease
     this.#speedMultiplier = speedMultiplier
 
-    this.#listener = (e: WheelEvent) => {
+    this.#listener = (e: Event) => {
 
+      const ev = e as WheelEvent
+      
       // smooth scrolling detected
       // no need for this
-      if(Math.abs(e.deltaY) < 2 && !this.#listening && disableOnSmoothSroll) {
+      if(Math.abs(ev.deltaY) < 2 && !this.#listening && disableOnSmoothSroll) {
 
         if(showWarning)
           console.warn('ScrollWheelHijacker: smooth scrolling detected, will now quit')
 
-        // @ts-expect-error
-        this.elm.removeEventListener('wheel', this.listener)
+
+        this.#elm.removeEventListener('wheel', this.#listener)
         
         return;
       }
       
       this.#listening = true
       e.preventDefault()
-      this.#deltaY += e.deltaY
+      this.#deltaY += ev.deltaY
       if(!this.#scrolling) this.#scroll()
     }
 
-    // @ts-expect-error
     this.#elm.addEventListener('wheel',this.#listener,{ passive: false })
 
   }
@@ -181,8 +182,6 @@ export class ScrollWheelHijacker {
 
   destroy(){
     if(this.#rafId) cancelAnimationFrame(this.#rafId)
-
-    // @ts-expect-error
     this.#elm.removeEventListener('wheel',this.#listener)
   }
 
