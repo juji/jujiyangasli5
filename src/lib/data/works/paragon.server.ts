@@ -8,14 +8,14 @@ export const paragon: Work = {
   url: 'https://soloparagonhotel.com',
   gradientColor: 'rgba(207,27,14,0.5)',
   logo: {
-    url: '/images/works-logo/paragon.png',
+    url: '/images/works-logo/paragon.avif',
     width: 580,
     height: 571
   },
   images: [
     {
-      thumbnail: '/images/thumb/paragon1-700.webp',
-      url: '/images/works/paragon1.webp',
+      thumbnail: '/images/thumb/paragon1-700.avif',
+      url: '/images/works/paragon1.avif',
       dimension: {
         thumb: {
           width: 700,
@@ -29,8 +29,8 @@ export const paragon: Work = {
       title: 'Home'
     },
     {
-      thumbnail: '/images/thumb/paragon2-700.webp',
-      url: '/images/works/paragon2.webp',
+      thumbnail: '/images/thumb/paragon2-700.avif',
+      url: '/images/works/paragon2.avif',
       dimension: {
         thumb: {
           width: 700,
@@ -44,8 +44,8 @@ export const paragon: Work = {
       title: 'About'
     },
     {
-      thumbnail: '/images/thumb/paragon3-700.webp',
-      url: '/images/works/paragon3.webp',
+      thumbnail: '/images/thumb/paragon3-700.avif',
+      url: '/images/works/paragon3.avif',
       dimension: {
         thumb: {
           width: 700,
@@ -59,8 +59,8 @@ export const paragon: Work = {
       title: 'Location'
     },
     {
-      thumbnail: '/images/thumb/paragon5-700.webp',
-      url: '/images/works/paragon5.webp',
+      thumbnail: '/images/thumb/paragon5-700.avif',
+      url: '/images/works/paragon5.avif',
       dimension: {
         thumb: {
           width: 700,
@@ -74,8 +74,8 @@ export const paragon: Work = {
       title: 'Image View'
     },
     {
-      thumbnail: '/images/thumb/paragon6-700.webp',
-      url: '/images/works/paragon6.webp',
+      thumbnail: '/images/thumb/paragon6-700.avif',
+      url: '/images/works/paragon6.avif',
       dimension: {
         thumb: {
           width: 700,

@@ -21,3 +21,8 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+/image-factory/**/*.jpeg
+/image-factory/**/*.jpg
+/image-factory/**/*.webp
+/image-factory/**/*.avif

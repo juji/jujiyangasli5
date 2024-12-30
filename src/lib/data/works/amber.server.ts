@@ -8,14 +8,14 @@ export const amber: Work = {
   url: 'https://www.linkedin.com/company/ambervideo',
   gradientColor: 'rgb(255 147 0 / 50%)',
   logo: {
-    url: '/images/works-logo/amber.jpeg',
+    url: '/images/works-logo/amber.avif',
     width: 200,
     height: 200
   },
   images: [
     {
-      thumbnail: '/images/thumb/amber-app-700.webp',
-      url: '/images/works/amber-app.webp',
+      thumbnail: '/images/thumb/amber-app-700.avif',
+      url: '/images/works/amber-app.avif',
       dimension: {
         thumb: {
           width: 700,
@@ -29,8 +29,8 @@ export const amber: Work = {
       title: 'Home'
     },
     {
-      thumbnail: '/images/thumb/amber-videos-700.webp',
-      url: '/images/works/amber-videos.webp',
+      thumbnail: '/images/thumb/amber-videos-700.avif',
+      url: '/images/works/amber-videos.avif',
       dimension: {
         thumb: {
           width: 700,
@@ -44,8 +44,8 @@ export const amber: Work = {
       title: 'Videos'
     },
     {
-      thumbnail: '/images/thumb/amber-video-700.webp',
-      url: '/images/works/amber-video.webp',
+      thumbnail: '/images/thumb/amber-video-700.avif',
+      url: '/images/works/amber-video.avif',
       dimension: {
         thumb: {
           width: 700,

@@ -1,0 +1,16 @@
+{
+  "name": "image-factory",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx ts-node resize.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "sharp": "^0.33.5",
+    "tsx": "^4.19.2"
+  }
+}

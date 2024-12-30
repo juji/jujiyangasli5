@@ -8,14 +8,14 @@ export const bridestory: Work = {
   url: 'https://careers.bridestory.com',
   gradientColor: 'rgb(255 118 107 / 52%)',
   logo: {
-    url: '/images/works-logo/bridestory.webp',
+    url: '/images/works-logo/bridestory.avif',
     width: 112,
     height: 27
   },
   images: [
     {
-      thumbnail: '/images/thumb/bridestory-careers-700.webp',
-      url: '/images/works/bridestory-careers.webp',
+      thumbnail: '/images/thumb/bridestory-careers-700.avif',
+      url: '/images/works/bridestory-careers.avif',
       dimension: {
         thumb: {
           width: 700,
@@ -29,8 +29,8 @@ export const bridestory: Work = {
       title: 'Home'
     },
     {
-      thumbnail: '/images/thumb/bridestory1-700.webp',
-      url: '/images/works/bridestory1.webp',
+      thumbnail: '/images/thumb/bridestory1-700.avif',
+      url: '/images/works/bridestory1.avif',
       dimension: {
         thumb: {
           width: 700,
@@ -44,8 +44,8 @@ export const bridestory: Work = {
       title: 'Home full page'
     },
     {
-      thumbnail: '/images/thumb/bridestory2-700.webp',
-      url: '/images/works/bridestory2.webp',
+      thumbnail: '/images/thumb/bridestory2-700.avif',
+      url: '/images/works/bridestory2.avif',
       dimension: {
         thumb: {
           width: 700,
