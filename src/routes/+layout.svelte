@@ -52,7 +52,7 @@
         }
 
         if(!res.isGoodInterval && hijacker && hijacker.speedMultiplier !== 3){
-          // bad fps, lower speed, so multiplier is 2
+          // bad fps, lower speed, so multiplier is 3, just trial and error
           hijacker.speedMultiplier = 3
         }
       }
