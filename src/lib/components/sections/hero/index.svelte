@@ -140,13 +140,14 @@
       margin-top: 2rem;
       margin-bottom: 2rem;
 
-      p{
-        /* animation-name: webdev;
+      /* animation in the LCP is bad */
+      /* p{
+        animation-name: webdev;
         animation-duration: 200ms;
         animation-fill-mode: both;
         animation-timing-function: ease-out;
-        animation-delay: 500ms; */
-      }
+        animation-delay: 500ms;
+      } */
 
       .hi{
         margin-bottom: 1.6rem;
