@@ -35,6 +35,9 @@
 
   $effect(() => {
     if(!hijacker) hijacker = new ScrollWheelHijacker()
+    document.addEventListener('_ScrollToTop_', () => {
+      hijacker && hijacker.scrollToTop()
+    })
     return () => {
       if(hijacker) hijacker.destroy()
       hijacker = null

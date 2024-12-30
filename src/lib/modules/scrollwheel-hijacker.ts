@@ -7,7 +7,6 @@ type ScrollWheelHijackerParams = {
   elm?: HTMLElement | Window
   disableOnSmoothSroll?: boolean
   showWarning?: boolean
-  snapToTop?: number
 }
 
 export class ScrollWheelHijacker {
@@ -23,7 +22,7 @@ export class ScrollWheelHijacker {
   rafId: number = 0
   onMouseWheel: (() => void) | null = null
   isWindow = false
-  snapToTop = 0
+  snapToTop = false
 
   constructor( par? : ScrollWheelHijackerParams ){
 
@@ -33,7 +32,6 @@ export class ScrollWheelHijacker {
       elm = window,
       disableOnSmoothSroll = true,
       showWarning = false,
-      snapToTop = 0.7
     } = par || {}
 
     if(
@@ -49,7 +47,6 @@ export class ScrollWheelHijacker {
     this.elm = elm
     this.minimumDelta = minimumDelta !== null ? minimumDelta : this.minimumDelta
     this.ease = ease !== null ? ease : this.ease
-    this.snapToTop = snapToTop
 
     this.isWindow = elm instanceof Window
 
@@ -79,6 +76,10 @@ export class ScrollWheelHijacker {
 
   }
 
+  scrollToTop(){
+    this.snapToTop = true
+  }
+
   scroll(){
     this.scrolling = true
     
@@ -86,19 +87,16 @@ export class ScrollWheelHijacker {
 
       let scrollPos = getNormalizedScrollPosition(this.elm)
 
-      // this is not for all page
-      // if(
-      //   scrollPos.pixel <= (this.snapToTop * window.innerHeight) &&
-      //   this.deltaY < 0
-      // ){
-      //   // too fast
-      //   // this.deltaY -= window.innerHeight - scrollPos.pixel
-      //   this.deltaY -= (window.innerHeight - scrollPos.pixel) * this.ease
-      // }
+      if(
+        this.snapToTop && this.deltaY < 0
+      ){
+        this.deltaY -= (window.innerHeight - scrollPos.pixel) * this.ease
+      }
 
       if(scrollPos.normalized === 0 && this.deltaY < 0){
         this.scrolling = false
         this.deltaY = 0
+        this.snapToTop = false
 
         // somehow, this is needed
         this.elm.scrollBy({
@@ -112,6 +110,7 @@ export class ScrollWheelHijacker {
       if(scrollPos.normalized === 1 && this.deltaY > 0){
         this.scrolling = false
         this.deltaY = 0
+        this.snapToTop = false // just to be safe
 
         // so we set this up
         // just to be safe
