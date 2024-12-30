@@ -55,7 +55,7 @@ export class ScrollWheelHijacker {
     this.#listener = (e: Event) => {
 
       const ev = e as WheelEvent
-      
+
       // smooth scrolling detected
       // no need for this
       if(Math.abs(ev.deltaY) < 2 && !this.#listening && disableOnSmoothSroll) {
@@ -63,9 +63,7 @@ export class ScrollWheelHijacker {
         if(showWarning)
           console.warn('ScrollWheelHijacker: smooth scrolling detected, will now quit')
 
-
-        this.#elm.removeEventListener('wheel', this.#listener)
-        
+        this.#elm.removeEventListener('wheel', this.#listener)        
         return;
       }
       
