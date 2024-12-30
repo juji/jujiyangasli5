@@ -22,11 +22,11 @@
       onScrollStart: () => {
 
         if(
-          globalState.scrollWheelHijacker.scrolling
+          globalState.scrollWheelHijacker?.scrolling
         ) globalState.scrollWheelHijacker.scrollToTop()
 
         return !(
-          globalState.scrollWheelHijacker.scrolling
+          globalState.scrollWheelHijacker?.scrolling
         )
       }
     })

@@ -7,6 +7,7 @@ type ScrollWheelHijackerParams = {
   elm?: HTMLElement | Window
   disableOnSmoothSroll?: boolean
   showWarning?: boolean
+  speedMultiplier?: number
 }
 
 export class ScrollWheelHijacker {
@@ -18,6 +19,7 @@ export class ScrollWheelHijacker {
   listener: (e: WheelEvent) => void
   listening = false
   ease = 0.05
+  speedMultiplier = 1
   minimumDelta = 1
   rafId: number = 0
   onMouseWheel: (() => void) | null = null
@@ -35,6 +37,7 @@ export class ScrollWheelHijacker {
       elm = window,
       disableOnSmoothSroll = true,
       showWarning = false,
+      speedMultiplier = 1
     } = par || {}
 
     if(
@@ -50,6 +53,7 @@ export class ScrollWheelHijacker {
     this.elm = elm
     this.minimumDelta = minimumDelta !== null ? minimumDelta : this.minimumDelta
     this.ease = ease !== null ? ease : this.ease
+    this.speedMultiplier = speedMultiplier
 
     this.isWindow = elm instanceof Window
 
@@ -153,7 +157,7 @@ export class ScrollWheelHijacker {
         return;
       }
 
-      let delta = this.deltaY * this.ease
+      let delta = this.deltaY * this.ease * this.speedMultiplier
       if(Math.abs(delta) < this.minimumDelta){
         delta = this.minimumDelta * Math.abs(delta) / delta
       }

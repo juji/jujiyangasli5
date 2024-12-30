@@ -43,14 +43,16 @@
           new CustomEvent<FpsMonitorListenerParams>('fps', { detail: res })
         )
         
-        // tambah jelek, ga jadi
-        // if(res.isGoodInterval && hijacker && !hijacker.active){
-        //   hijacker.activate()
-        // }
+        // change hijacker's speed multipler 
+        if(res.isGoodInterval && hijacker && hijacker.speedMultiplier === 2){
+          // good fps, faster speed, so multiplier is 1
+          hijacker.speedMultiplier = 1
+        }
 
-        // if(!res.isGoodInterval && hijacker?.active){
-        //   hijacker.deactivate()
-        // }
+        if(!res.isGoodInterval && hijacker && hijacker.speedMultiplier === 1){
+          // bad fps, lower speed, so multiplier is 2
+          hijacker.speedMultiplier = 2
+        }
       }
     })
 
