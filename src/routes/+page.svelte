@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 
   import HeroAnimation from '$lib/components/hero-animation/index.svelte'
   import Hero from '$lib/components/sections/hero/index.svelte'
@@ -8,13 +8,21 @@
   import Container from '$lib/components/container.svelte'
   import Menu from '$lib/components/menu/index.svelte'
   import { page } from '$app/state';
-  // import { browser } from '$app/environment';
+  import { ScrollToTop } from '$lib/modules/scroll-to-top'
 
   let js = $state(false)
   $effect(() => { if(!js) js = true })
 
   /** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
+
+  $effect(() => {
+    let scrollToTop = new ScrollToTop()
+
+    return () => {
+      scrollToTop.destroy()
+    }
+  })
 
 </script>
 

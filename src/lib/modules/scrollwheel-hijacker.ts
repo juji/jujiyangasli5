@@ -1,4 +1,6 @@
 
+import { getNormalizedScrollPosition } from './normalized-scroll-position'
+
 type ScrollWheelHijackerParams = {
   ease?: number
   minimumDelta?: number
@@ -6,33 +8,6 @@ type ScrollWheelHijackerParams = {
   disableOnSmoothSroll?: boolean
   showWarning?: boolean
   snapToTop?: number
-}
-
-// chat GiPiTi everybody!!
-function getNormalizedScrollPosition(elm: HTMLElement | Window) {
-  if (elm instanceof Window) {
-    const scrollTop = elm.scrollY; // Current vertical scroll position
-    const scrollHeight = document.documentElement.scrollHeight; // Total height of the document
-    const clientHeight = document.documentElement.clientHeight; // Visible height of the viewport
-
-    // Normalize scroll position
-    return {
-      pixel: scrollTop,
-      normalized: Math.min(1, Math.max(0, scrollTop / (scrollHeight - clientHeight)))
-    };
-  } else if (elm instanceof HTMLElement) {
-    const scrollTop = elm.scrollTop; // Current vertical scroll position
-    const scrollHeight = elm.scrollHeight; // Total height of the element's content
-    const clientHeight = elm.clientHeight; // Visible height of the element
-
-    // Normalize scroll position
-    return {
-      pixel: scrollTop,
-      normalized: Math.min(1, Math.max(0, scrollTop / (scrollHeight - clientHeight)))
-    };
-  } else {
-    throw new Error("The parameter must be either a Window or an HTMLElement.");
-  }
 }
 
 export class ScrollWheelHijacker {
@@ -111,14 +86,15 @@ export class ScrollWheelHijacker {
 
       let scrollPos = getNormalizedScrollPosition(this.elm)
 
-      if(
-        scrollPos.pixel <= (this.snapToTop * window.innerHeight) &&
-        this.deltaY < 0
-      ){
-        // too fast
-        // this.deltaY -= window.innerHeight - scrollPos.pixel
-        this.deltaY -= (window.innerHeight - scrollPos.pixel) * this.ease
-      }
+      // this is not for all page
+      // if(
+      //   scrollPos.pixel <= (this.snapToTop * window.innerHeight) &&
+      //   this.deltaY < 0
+      // ){
+      //   // too fast
+      //   // this.deltaY -= window.innerHeight - scrollPos.pixel
+      //   this.deltaY -= (window.innerHeight - scrollPos.pixel) * this.ease
+      // }
 
       if(scrollPos.normalized === 0 && this.deltaY < 0){
         this.scrolling = false
