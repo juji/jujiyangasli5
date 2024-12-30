@@ -11,8 +11,6 @@ export type FpsMonitorParams = {
   goodFps?: number
 }
 
-
-
 export class FpsMonitor {
 
   onChange: (par: FpsMonitorListenerParams) => void

@@ -44,14 +44,17 @@
         )
         
         // change hijacker's speed multipler 
-        if(res.isGoodFps && hijacker && hijacker.speedMultiplier !== 1){
-          // good fps, faster speed, so multiplier is 1
-          hijacker.speedMultiplier = 1
-        }
-
-        if(!res.isGoodFps && hijacker && hijacker.speedMultiplier !== 3){
-          // bad fps, lower speed, so multiplier is calculated
-          hijacker.speedMultiplier = Math.round(res.goodFps / res.avgFps)
+        const speedMultiplier = hijacker?.getSpeedMultiplier()
+        if(speedMultiplier){
+          if(res.isGoodFps && speedMultiplier !== 1){
+            // good fps, faster speed, so multiplier is 1
+            hijacker?.setSpeedMultiplier(1)
+          }
+  
+          if(!res.isGoodFps && speedMultiplier !== 3){
+            // bad fps, lower speed, so multiplier is calculated
+            hijacker?.setSpeedMultiplier( Math.round(res.goodFps / res.avgFps) )
+          }
         }
       }
     })
