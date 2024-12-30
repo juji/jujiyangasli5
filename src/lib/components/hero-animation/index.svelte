@@ -83,8 +83,7 @@
 
   // start
   $effect(() => {
-    // set timeout to let fps counter finishes
-    setTimeout(() => onWindowResize(),500)
+    onWindowResize()
     window.addEventListener('resize', debounceWindowResize)
     return () => {
       window.removeEventListener('resize', debounceWindowResize)
