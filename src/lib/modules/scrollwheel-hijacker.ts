@@ -91,18 +91,6 @@ export class ScrollWheelHijacker {
     this.stopped = true
   }
 
-  deactivate(){
-    this.active = false
-    // @ts-expect-error
-    this.elm.removeEventListener('wheel',this.listener)
-  }
-
-  activate(){
-    this.active = true
-    // @ts-expect-error
-    this.elm.addEventListener('wheel',this.listener,{ passive: false })
-  }
-
   scroll(){
     if(!this.active) return;
     this.scrolling = true

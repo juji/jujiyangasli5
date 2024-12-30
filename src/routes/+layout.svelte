@@ -42,6 +42,8 @@
         globalState.fpsEvent.dispatchEvent(
           new CustomEvent<FpsMonitorListenerParams>('fps', { detail: res })
         )
+
+        console.log(res)
         
         // change hijacker's speed multipler 
         if(res.isGoodInterval && hijacker && hijacker.speedMultiplier !== 1){
@@ -49,9 +51,9 @@
           hijacker.speedMultiplier = 1
         }
 
-        if(!res.isGoodInterval && hijacker && hijacker.speedMultiplier !== 2){
+        if(!res.isGoodInterval && hijacker && hijacker.speedMultiplier !== 3){
           // bad fps, lower speed, so multiplier is 2
-          hijacker.speedMultiplier = 2
+          hijacker.speedMultiplier = 3
         }
       }
     })
