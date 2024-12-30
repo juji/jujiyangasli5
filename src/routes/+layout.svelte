@@ -51,7 +51,7 @@
 
         if(!res.isGoodFps && hijacker && hijacker.speedMultiplier !== 3){
           // bad fps, lower speed, so multiplier is calculated
-          hijacker.speedMultiplier = res.goodFps / res.avgFps
+          hijacker.speedMultiplier = Math.round(res.goodFps / res.avgFps)
         }
       }
     })
