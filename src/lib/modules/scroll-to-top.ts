@@ -113,11 +113,7 @@ export class ScrollToTop {
       ){
         this.touched = false
         this.hasIntersected = false
-        this.elm.scrollTo({
-          top: -333,
-          left: 0,
-          behavior: 'smooth'
-        })
+        this.scrollTillZero(this.scrollSpeed)
       }
 
     }
@@ -130,6 +126,31 @@ export class ScrollToTop {
     window.addEventListener('touchstart', this.touchListener,{ passive: true })
     window.addEventListener('scroll', this.scrollListener,{ passive: true })
 
+  }
+
+  scrollTillZero(lastSpeed: number){
+
+    if(!window.scrollY) {
+      this.elm.scrollTo({
+        top: -333,
+        left: 0,
+        behavior: 'smooth'
+      })
+      return;
+    }
+
+    // increasing speed
+    const speed = lastSpeed * 1.05
+    this.elm.scrollBy({
+      top: speed,
+      left: 0,
+      behavior: 'instant'
+    })
+
+    this.raf = requestAnimationFrame(() => {
+      this.scrollTillZero(speed)
+      this.raf = 0
+    })
   }
 
   isIntersecting(){
@@ -145,6 +166,7 @@ export class ScrollToTop {
     window.removeEventListener('touchstart', this.touchListener)
     window.removeEventListener('scroll', this.scrollListener)
     this.observer.disconnect()
+    if(this.raf) cancelAnimationFrame(this.raf)
   }
 
 }
