@@ -148,8 +148,8 @@ export class ScrollToTop {
     })
 
     this.raf = requestAnimationFrame(() => {
-      this.scrollTillZero(speed)
       this.raf = 0
+      this.scrollTillZero(speed)
     })
   }
 
