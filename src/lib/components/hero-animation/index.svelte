@@ -6,15 +6,13 @@
   and fps
   */
 
-  // import Sign from './sign.svelte';
   import { isSafariOrWebkit } from '$lib/modules/safari';
-  import type { FpsMonitorListenerParams } from '$lib/modules/fps-monitor';
 
   let importPromise: Promise<any> | null = $state(null)
   let windowSizeLimit = 1366
   let module: 'circular' | 'grainy-thing' | null = $state(null)
 
-  let { fps }:{ fps: FpsMonitorListenerParams | null } = $props()
+  let { hasGoodFps }:{ hasGoodFps: boolean | null } = $props()
   
   $effect(() => {
     if(module === 'circular'){
@@ -44,8 +42,11 @@
     // maybe wait for fps?
     // local testing says i don't have to
     // but still
-    setTimeout(() => {
-      if(fps?.isGoodFps){
+    let int = setInterval(() => {
+      if(hasGoodFps === null) return;
+      clearInterval(int)
+
+      if(hasGoodFps){
         if(module === 'grainy-thing') return;
         module = 'grainy-thing'
       }else if(module !== 'circular'){

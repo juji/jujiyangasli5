@@ -97,7 +97,7 @@
 
 <Menu />
 <main>
-  <HeroAnimation fps={fps} />
+  <HeroAnimation hasGoodFps={fps ? fps.isGoodFps : null} />
   <Container>
     <Hero />
   </Container>
