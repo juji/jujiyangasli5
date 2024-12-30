@@ -132,6 +132,9 @@ export class ScrollToTop {
   isIntersecting(){
     if(this.direction !== -1) return;
     this.hasIntersected = true
+
+    // dispatch event to other scroll controller
+    // in this case, the hijacker
     document.dispatchEvent(new CustomEvent('_ScrollToTop_'))
   }
 
