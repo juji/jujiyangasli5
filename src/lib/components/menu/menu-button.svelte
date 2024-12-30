@@ -81,8 +81,9 @@
 
 </script>
 
-<button aria-label="menu" 
+<button 
   bind:this={button}
+  aria-label="menu" 
   class:isOpen
   onmouseenter={normalizeStyle}
   onmouseleave={onMouseLeave}
