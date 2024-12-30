@@ -77,7 +77,7 @@ export class ScrollWheelHijacker {
   }
 
   scrollToTop(){
-    this.snapToTop = true
+    if(this.scrolling) this.snapToTop = true
   }
 
   scroll(){

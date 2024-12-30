@@ -66,6 +66,8 @@ export class ScrollToTop {
       entries.forEach((entry) => {
         if(entry.isIntersecting){
           this.isIntersecting()
+        }else{
+          this.hasIntersected = false
         }
       });
     };
@@ -106,6 +108,7 @@ export class ScrollToTop {
         this.touched && 
         this.direction === -1 &&
         this.scrollSpeed > -1 &&
+        window.scrollY < window.innerHeight &&
         window.scrollY > 1
       ){
         this.touched = false
