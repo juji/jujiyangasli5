@@ -9,6 +9,7 @@
   import Menu from '$lib/components/menu/index.svelte'
   import { page } from '$app/state';
   import { ScrollToTop } from '$lib/modules/scroll-to-top'
+  import { globalState } from '$lib/modules/global.svelte.js'
 
   let js = $state(false)
   $effect(() => { if(!js) js = true })
@@ -17,7 +18,18 @@
 	let { data } = $props();
 
   $effect(() => {
-    let scrollToTop = new ScrollToTop()
+    let scrollToTop = new ScrollToTop({
+      onScrollStart: () => {
+
+        if(
+          globalState.scrollWheelHijacker.scrolling
+        ) globalState.scrollWheelHijacker.scrollToTop()
+
+        return !(
+          globalState.scrollWheelHijacker.scrolling
+        )
+      }
+    })
 
     return () => {
       scrollToTop.destroy()

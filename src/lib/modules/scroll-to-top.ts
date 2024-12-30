@@ -3,6 +3,8 @@
 type ScrollToTopParams = {
   elm?: HTMLElement | Window
   rootMarginTopPercent?: number
+  scrollToTopSpeedFactor?: number
+  onScrollStart?: () => boolean
 }
 
 
@@ -15,8 +17,6 @@ export class ScrollToTop {
   elm: HTMLElement | Window
 
   scrollListener: ( e: Event ) => void
-  touchListener: ( e: TouchEvent ) => void
-  // lastPos: null | number = null
   direction: null | -1 | 1 = null
   
   scrolled = false
@@ -32,16 +32,26 @@ export class ScrollToTop {
   lastScrollY: number = 0
   lastScrollTime: number = Date.now()
 
+  onScrollStart: () => boolean
+
+  observedElm: HTMLDivElement
+  scrollToTopSpeedFactor: number
+
   constructor( par? : ScrollToTopParams ){
     
     const {
       elm = window,
-      rootMarginTopPercent = 45
+      rootMarginTopPercent = 45,
+      scrollToTopSpeedFactor = 1.05,
+      onScrollStart = () => true,
     } = par || {}
 
     // this should have relative position
     this.elm = elm
+
     this.rootMarginTopPercent = rootMarginTopPercent
+    this.onScrollStart = onScrollStart
+    this.scrollToTopSpeedFactor = scrollToTopSpeedFactor
 
     // append child to top
     // this is the div that will trigger scroll
@@ -60,6 +70,8 @@ export class ScrollToTop {
       (this.elm as HTMLElement).prepend(div)
     }
 
+    this.observedElm = div
+
     // intersection observer
     //
     const callback = (entries: IntersectionObserverEntry[]) => {
@@ -74,10 +86,10 @@ export class ScrollToTop {
 
     this.observer = new IntersectionObserver(callback, {
       root: this.elm === window ? document : this.elm as HTMLElement,
-      rootMargin: `${this.rootMarginTopPercent}% 0% 0% 0%`
+      rootMargin: `${this.rootMarginTopPercent}% 0% -1% 0%` // bottom: -1 to be safe
     });
 
-    this.observer.observe(div)
+    this.observer.observe(this.observedElm)
 
     // scroll listener
     //
@@ -92,7 +104,7 @@ export class ScrollToTop {
         const deltaTime = currentTime - this.lastScrollTime;
 
         if (deltaTime > 0) {
-          this.scrollSpeed = deltaY / deltaTime; // Calculate momentum (speed)
+          this.scrollSpeed = deltaY / deltaTime; // Calculate speed
         }
 
         // Update the last values
@@ -102,35 +114,30 @@ export class ScrollToTop {
       
       this.direction = deltaY < 0 ? -1 : 1
 
-      // handle touch
+      // handle scroll
       if(
         this.hasIntersected &&
-        this.touched && 
         this.direction === -1 &&
         this.scrollSpeed > -1 &&
         window.scrollY < window.innerHeight &&
         window.scrollY > 1
       ){
-        this.touched = false
         this.hasIntersected = false
         this.scrollTillZero(this.scrollSpeed)
       }
 
     }
 
-    // detect touch
-    this.touchListener = (e:TouchEvent) => {
-      this.touched = true
-    }
-
-    window.addEventListener('touchstart', this.touchListener,{ passive: true })
     window.addEventListener('scroll', this.scrollListener,{ passive: true })
 
   }
 
+  
+
   scrollTillZero(lastSpeed: number){
 
-    if(!window.scrollY) {
+    const topPos = (this.elm as HTMLElement).scrollTop || (this.elm as Window).scrollY
+    if(!topPos) {
       this.elm.scrollTo({
         top: -333,
         left: 0,
@@ -140,7 +147,7 @@ export class ScrollToTop {
     }
 
     // increasing speed
-    const speed = lastSpeed * 1.05
+    const speed = lastSpeed * this.scrollToTopSpeedFactor
     this.elm.scrollBy({
       top: speed,
       left: 0,
@@ -155,18 +162,17 @@ export class ScrollToTop {
 
   isIntersecting(){
     if(this.direction !== -1) return;
-    this.hasIntersected = true
 
-    // dispatch event to other scroll controller
-    // in this case, the hijacker
-    document.dispatchEvent(new CustomEvent('_ScrollToTop_'))
+    // allowing others to take the scroll
+    this.hasIntersected = this.onScrollStart()
+
   }
 
   destroy(){
-    window.removeEventListener('touchstart', this.touchListener)
     window.removeEventListener('scroll', this.scrollListener)
     this.observer.disconnect()
     if(this.raf) cancelAnimationFrame(this.raf)
+    if(this.observedElm) this.observedElm.remove()
   }
 
 }

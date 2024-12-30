@@ -23,6 +23,7 @@ export class ScrollWheelHijacker {
   onMouseWheel: (() => void) | null = null
   isWindow = false
   snapToTop = false
+  stopped = false
 
   constructor( par? : ScrollWheelHijackerParams ){
 
@@ -80,10 +81,22 @@ export class ScrollWheelHijacker {
     if(this.scrolling) this.snapToTop = true
   }
 
+  stop(){
+    this.stopped = true
+  }
+
   scroll(){
     this.scrolling = true
     
     const scrollBy = () => {
+
+      if(this.stopped) {
+        this.stopped = false
+        this.scrolling = false
+        this.deltaY = 0
+        this.snapToTop = false
+        return;
+      }
 
       let scrollPos = getNormalizedScrollPosition(this.elm)
 
