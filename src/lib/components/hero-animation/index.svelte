@@ -63,7 +63,7 @@
     // local testing says i don't have to
     // but still
     setTimeout(() => {
-      if(fps?.isGoodInterval){
+      if(fps?.isGoodFps){
         if(module === 'grainy-thing') return;
         module = 'grainy-thing'
       }else if(module !== 'circular'){

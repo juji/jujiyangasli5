@@ -1,14 +1,14 @@
 
 export type FpsMonitorListenerParams = {
-  avgInterval: number
-  goodInterval: number
-  isGoodInterval: boolean
+  avgFps: number,
+  goodFps: number,
+  isGoodFps: boolean
 }
 
 export type FpsMonitorParams = {
   onChange: (par: FpsMonitorListenerParams) => void
   repaintIntervalNum?: number
-  goodInterval?: number
+  goodFps?: number
 }
 
 
@@ -19,21 +19,21 @@ export class FpsMonitor {
   #onResize: () => void
   #lastWindowWidth: number | null = null
   #lastWindowHeight: number | null = null
-  #goodInterval = 1000 / 60
+  #goodFps = 60
   #repaintIntervalNum = 5
 
   constructor(par: FpsMonitorParams){
 
     const {
       onChange,
-      goodInterval = 1000 / 60,
+      goodFps = 60,
       repaintIntervalNum = 5
     } = par
 
     this.onChange = onChange
     this.#lastWindowHeight = window.innerHeight
     this.#lastWindowWidth = window.innerWidth
-    this.#goodInterval = goodInterval
+    this.#goodFps = goodFps
     this.#repaintIntervalNum = repaintIntervalNum
 
     // when changing monitor
@@ -59,8 +59,8 @@ export class FpsMonitor {
     window.removeEventListener('resize', this.#onResize)
   }
 
-  setGoodInterval(n: number){
-    this.#goodInterval = n
+  setGoodFps(n: number){
+    this.#goodFps = n
   }
 
   setRepaintIntervalNum(n: number){
@@ -97,12 +97,18 @@ export class FpsMonitor {
 
   async #checkFps(){
 
-    const avgInterval = await this.#avgRepaintInterval()
+    const avgFps = 1000 / await this.#avgRepaintInterval()
+
+    console.log({
+      avgFps,
+      goodFps: this.#goodFps,
+      isGoodFps: avgFps >= this.#goodFps
+    })
 
     return {
-      avgInterval,
-      goodInterval: this.#goodInterval,
-      isGoodInterval: avgInterval <= this.#goodInterval
+      avgFps,
+      goodFps: this.#goodFps,
+      isGoodFps: avgFps >= this.#goodFps
     }
 
   }
