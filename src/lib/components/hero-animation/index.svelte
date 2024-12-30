@@ -11,9 +11,10 @@
 
   // import Sign from './sign.svelte';
   import { isSafariOrWebkit } from '$lib/modules/safari';
+  import { globalState } from '$lib/modules/global.svelte';
+  import type { FpsMonitorListenerParams } from '$lib/modules/fps-monitor';
 
   let importPromise: Promise<any> | null = $state(null)
-  let goodInterval = 1000 / 60 // 60 fps
   let windowSizeLimit = 1366
   let module: 'circular' | 'grainy-thing' | null = $state(null)
   
@@ -25,35 +26,27 @@
     }
   })
 
-  const getRepaintInterval = () => {
-    const p: Promise<number> = new Promise((resolve) => {
-      requestAnimationFrame((t1) => {
-        requestAnimationFrame((t2) => {
-          resolve(t2 - t1);
-        });
-      });
-    })
-    return p
-  };
+  // add fps listener
+  let fps: FpsMonitorListenerParams | null = null
+  $effect(() => {
 
-  // get average repaint interval
-  async function calcRepaintInterval(){
-    const r1 = await getRepaintInterval()
-    const r2 = await getRepaintInterval()
-    const r3 = await getRepaintInterval()
-    const r4 = await getRepaintInterval()
-    const r5 = await getRepaintInterval()
-    return (r1 + r2 + r3 + r4 + r5) / 5
-  }
+    const listener = (e: Event) => {
+      const ev = e as CustomEvent<FpsMonitorListenerParams>
+      fps = ev.detail
+    }
+
+    globalState.fpsEvent.addEventListener('fps', listener)
+    return () => {
+      globalState.fpsEvent.removeEventListener('fps', listener)
+    }
+
+  })
 
   function onWindowResize(){
-    
-    console.log('calculating window size and fps')
 
     if(Math.max(window.innerWidth, window.innerHeight) <= windowSizeLimit){
 
       if(module === 'circular') return;
-      // globalState.heroAnimationMessage = 'window size is small, using "circular"'
       module = 'circular'
       return;
 
@@ -62,28 +55,22 @@
     const safari = isSafariOrWebkit()
     if(safari.usesSafariWebKit || safari.isSafari || safari.isIOS){
       if(module === 'circular') return;
-      // globalState.heroAnimationMessage = 'browser detected, using "circular"'
       module = 'circular'
       return;
     }
 
-    calcRepaintInterval().then((n: number) => {
-
-      console.log('repaint interval', n)
-      if(n <= goodInterval){
-
+    // maybe wait for fps?
+    // local testing says i don't have to
+    // but still
+    setTimeout(() => {
+      if(fps?.isGoodInterval){
         if(module === 'grainy-thing') return;
-        // globalState.heroAnimationMessage = 'fps calc shows 💛, using "blob"'
         module = 'grainy-thing'
-
       }else if(module !== 'circular'){
-
-        // globalState.heroAnimationMessage = 'fps calc done, using "circular"'
         module = 'circular'
-
       }
+    }, 300 )
 
-    })
   }
 
   let to: number = 0
@@ -96,8 +83,8 @@
 
   // start
   $effect(() => {
-    // debounceWindowResize()
-    onWindowResize()
+    // set timeout to let fps counter finishes
+    setTimeout(() => onWindowResize(),500)
     window.addEventListener('resize', debounceWindowResize)
     return () => {
       window.removeEventListener('resize', debounceWindowResize)

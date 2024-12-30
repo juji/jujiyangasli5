@@ -1,9 +1,10 @@
 import { onNavigate, beforeNavigate, afterNavigate } from '$app/navigation';
 import { globalState } from './global.svelte';
 
-const wait = (timeout: number) => new Promise(r => setTimeout(r,timeout))
 
 export function viewTransition(){
+  
+  const wait = (timeout: number) => new Promise(r => setTimeout(r,timeout))
 
   beforeNavigate(() => {
     document.querySelector('html')?.classList.add('loading')

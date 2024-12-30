@@ -18,6 +18,7 @@
 
   import { ScrollWheelHijacker } from '$lib/modules/scrollwheel-hijacker'
   import { globalState } from '$lib/modules/global.svelte';
+  import { FpsMonitor, type FpsMonitorListenerParams } from '$lib/modules/fps-monitor';
 
   let { children } = $props();
   let hijacker: ScrollWheelHijacker | null = null
@@ -31,6 +32,21 @@
       if(hijacker) hijacker.destroy()
       globalState.scrollWheelHijacker = null
       hijacker = null
+    }
+  })
+
+  $effect(() => {
+    const fpsMonitor = new FpsMonitor({
+      onChange: ( res: FpsMonitorListenerParams ) => {
+        globalState.lastFps = res
+        globalState.fpsEvent.dispatchEvent(
+          new CustomEvent<FpsMonitorListenerParams>('fps', { detail: res })
+        )
+      }
+    })
+
+    return () => {
+      fpsMonitor.destroy()
     }
   })
 

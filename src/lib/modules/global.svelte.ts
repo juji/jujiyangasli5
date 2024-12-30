@@ -1,5 +1,5 @@
-import type { ScrollWheelHijacker } from "$lib/functions/scrollwheel-hijacker"
-
+import type { ScrollWheelHijacker } from "$lib/modules/scrollwheel-hijacker"
+import type { FpsMonitorListenerParams } from "./fps-monitor"
 
 type GlobalState = {
   viewTransitionDelay: number
@@ -7,6 +7,8 @@ type GlobalState = {
   loading: boolean
   fromWork?: string | null
   scrollWheelHijacker?: ScrollWheelHijacker | null
+  lastFps: FpsMonitorListenerParams | null
+  fpsEvent: EventTarget
 }
 
 
@@ -15,5 +17,7 @@ export const globalState: GlobalState = $state({
   waitForAssets: null,
   loading: false,
   fromWork: null,
-  scrollWheelHijacker: null
+  scrollWheelHijacker: null,
+  fpsEvent: new EventTarget(),
+  lastFps: null
 })
