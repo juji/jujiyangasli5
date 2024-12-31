@@ -36,22 +36,6 @@
     }
   })
 
-  // add fps listener
-  let fps: FpsMonitorListenerParams | null = $state(null)
-  $effect(() => {
-
-    const listener = (e: Event) => {
-      const ev = e as CustomEvent<FpsMonitorListenerParams>
-      fps = ev.detail
-    }
-
-    globalState.fpsEvent.addEventListener('fps', listener)
-    return () => {
-      globalState.fpsEvent.removeEventListener('fps', listener)
-    }
-
-  })
-
   // work transition delay
   const fadeOutDelay = 350
   function setWorksTransition(image: string){
@@ -94,7 +78,7 @@
 
 <Menu />
 <main>
-  <HeroAnimation hasGoodFps={fps ? fps.isGoodFps : null} />
+  <HeroAnimation hasGoodFps={globalState.isGoodFpsPromise} />
   <Container>
     <Hero />
   </Container>

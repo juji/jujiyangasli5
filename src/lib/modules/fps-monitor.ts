@@ -6,6 +6,7 @@ export type FpsMonitorListenerParams = {
 }
 
 export type FpsMonitorParams = {
+  onBeforeCount?: (() => void) | null
   onChange: (par: FpsMonitorListenerParams) => void
   repaintIntervalNum?: number
   goodFps?: number
@@ -13,6 +14,7 @@ export type FpsMonitorParams = {
 
 export class FpsMonitor {
 
+  onBeforeCount: (() => void) | null
   onChange: (par: FpsMonitorListenerParams) => void
   #onResize: () => void
   #lastWindowWidth: number | null = null
@@ -23,12 +25,14 @@ export class FpsMonitor {
   constructor(par: FpsMonitorParams){
 
     const {
+      onBeforeCount,
       onChange,
       goodFps = 60,
       repaintIntervalNum = 5
     } = par
 
     this.onChange = onChange
+    this.onBeforeCount = onBeforeCount || null
     this.#lastWindowHeight = window.innerHeight
     this.#lastWindowWidth = window.innerWidth
     this.#goodFps = goodFps
@@ -42,6 +46,7 @@ export class FpsMonitor {
         window.innerHeight === this.#lastWindowHeight &&
         window.innerWidth === this.#lastWindowWidth
       ) {
+        this.onBeforeCount && this.onBeforeCount()
         const fps = await this.#checkFps()
         this.onChange(fps)
       }

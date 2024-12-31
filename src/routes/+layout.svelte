@@ -37,14 +37,14 @@
 
   $effect(() => {
     const fpsMonitor = new FpsMonitor({
+      onBeforeCount: () => {
+        globalState.isGoodFpsPromise = new Promise(r => {
+          globalState.fpsResolve = r
+        })
+      },
       onChange: ( res: FpsMonitorListenerParams ) => {
 
-        globalState.fpsEvent.dispatchEvent(
-          new CustomEvent<FpsMonitorListenerParams>(
-            'fps', 
-            { detail : res }
-          )
-        )
+        globalState.fpsResolve(res.isGoodFps)
         
         // change hijacker's speed multipler 
         const speedMultiplier = hijacker?.getSpeedMultiplier()

@@ -7,7 +7,8 @@ type GlobalState = {
   loading: boolean
   fromWork?: string | null
   scrollWheelHijacker?: ScrollWheelHijacker | null
-  fpsEvent: EventTarget
+  fpsResolve: ( isGoodFps: boolean ) => void
+  isGoodFpsPromise: Promise<boolean>
 }
 
 
@@ -17,5 +18,6 @@ export const globalState: GlobalState = $state({
   loading: false,
   fromWork: null,
   scrollWheelHijacker: null,
-  fpsEvent: new EventTarget()
+  fpsResolve: ( isGoodFps: boolean ) => {},
+  isGoodFpsPromise: new Promise(() => {}),
 })
