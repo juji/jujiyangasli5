@@ -42,7 +42,7 @@ export class ScrollToTop {
     const {
       elm = window,
       rootMarginTopPercent = 45,
-      scrollToTopSpeedFactor = 1.05,
+      scrollToTopSpeedFactor = 1.2,
       onScrollStart = () => true,
     } = par || {}
 

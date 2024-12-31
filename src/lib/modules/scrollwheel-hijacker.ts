@@ -158,6 +158,7 @@ export class ScrollWheelHijacker {
       if(
         this.#snapToTop && this.#deltaY < 0
       ){
+        
         this.#deltaY -= (window.innerHeight - scrollPos.pixel) * this.#ease * this.#speedMultiplier
       }
 

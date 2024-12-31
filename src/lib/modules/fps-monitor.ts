@@ -39,6 +39,7 @@ export class FpsMonitor {
   static #beforeObserver = new Observer<boolean>()
   static #afterObserver = new Observer<FpsMonitorResult>()
   static #i = 0
+  static #onResize = () => {}
 
   static start(par?: FpsMonitorParams){
 
@@ -55,6 +56,17 @@ export class FpsMonitor {
     if(goodFps) this.#goodFps = goodFps
     if(repaintIntervalNum) this.#repaintIntervalNum = repaintIntervalNum
     if(debounce) this.#debounce = debounce
+
+    // should be here, since it will modify #i in closure
+    this.#onResize = () => {
+      if(this.#i) clearTimeout(this.#i)
+      this.#i = setTimeout(async () => {
+        this.#i = 0
+        this.#beforeObserver.notify(true)
+        const fps = await this.#checkFps()
+        this.#afterObserver.notify(fps)
+      }, this.#debounce)
+    }
     
     // start first
     this.#onResize()
@@ -95,16 +107,6 @@ export class FpsMonitor {
 
   static setDebounce(n: number){
     this.#debounce = n
-  }
-
-  static #onResize(){
-    if(this.#i) clearTimeout(this.#i)
-    this.#i = setTimeout(async () => {
-      this.#i = 0
-      this.#beforeObserver.notify(true)
-      const fps = await this.#checkFps()
-      this.#afterObserver.notify(fps)
-    }, this.#debounce)
   }
 
   // https://stackoverflow.com/a/66167211/1058374
