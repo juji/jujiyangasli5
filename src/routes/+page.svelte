@@ -10,7 +10,6 @@
   import { page } from '$app/state';
   import { ScrollToTop } from '$lib/modules/scroll-to-top'
   import { globalState } from '$lib/modules/global.svelte.js'
-	import type { FpsMonitorListenerParams } from '$lib/modules/fps-monitor.js';
 
   let js = $state(false)
   $effect(() => { if(!js) js = true })
