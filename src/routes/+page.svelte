@@ -18,24 +18,6 @@
   /** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
 
-
-  // force scroll to top
-  $effect(() => {
-    
-    let scrollToTop = new ScrollToTop({
-      onScrollStart: () => {
-        const isScrolling = globalState.scrollWheelHijacker?.isScrolling()
-        if(isScrolling) globalState.scrollWheelHijacker?.scrollToTop()
-
-        return !(isScrolling)
-      }
-    })
-
-    return () => {
-      scrollToTop.destroy()
-    }
-  })
-
   // work transition delay
   const fadeOutDelay = 350
   function setWorksTransition(image: string){
@@ -62,6 +44,16 @@
 
   $effect(() => {
     
+    // force scroll to top
+    let scrollToTop = new ScrollToTop({
+      onScrollStart: () => {
+        const isScrolling = globalState.scrollWheelHijacker?.isScrolling()
+        if(isScrolling) globalState.scrollWheelHijacker?.scrollToTop()
+        return !(isScrolling)
+      }
+    })
+
+    // fps monitor
     const onBeforeCount = () => {
       hasGoodFpsPromise = new Promise((r) => {
         hasGoodFpsResult = r
@@ -70,7 +62,11 @@
 
     const onAfterCount = (p: FpsMonitorResult) => {
       hasGoodFpsResult(p.isGoodFps)
+      if(!p.isGoodFps){
+        scrollToTop.scrollToTopFpsFactor = .8 * p.goodFps / p.avgFps
+      }
     }
+
 
     FpsMonitor.onBeforeCount(onBeforeCount)
     FpsMonitor.onAfterCount(onAfterCount)
@@ -78,6 +74,7 @@
     return () => {
       FpsMonitor.removeOnAfterCount(onAfterCount)
       FpsMonitor.removeOnBeforeCount(onBeforeCount)
+      scrollToTop.destroy()
     }
   })
 

@@ -3,7 +3,8 @@
 type ScrollToTopParams = {
   elm?: HTMLElement | Window
   rootMarginTopPercent?: number
-  scrollToTopSpeedFactor?: number
+  scrollToTopSpeed?: number
+  scrollToTopFpsFactor?: number
   onScrollStart?: () => boolean
 }
 
@@ -35,14 +36,16 @@ export class ScrollToTop {
   onScrollStart: () => boolean
 
   observedElm: HTMLDivElement
-  scrollToTopSpeedFactor: number
+  scrollToTopSpeed: number
+  scrollToTopFpsFactor: number
 
   constructor( par? : ScrollToTopParams ){
     
     const {
       elm = window,
       rootMarginTopPercent = 45,
-      scrollToTopSpeedFactor = 1.2,
+      scrollToTopSpeed = 1.15,
+      scrollToTopFpsFactor = 1,
       onScrollStart = () => true,
     } = par || {}
 
@@ -51,7 +54,8 @@ export class ScrollToTop {
 
     this.rootMarginTopPercent = rootMarginTopPercent
     this.onScrollStart = onScrollStart
-    this.scrollToTopSpeedFactor = scrollToTopSpeedFactor
+    this.scrollToTopSpeed = scrollToTopSpeed
+    this.scrollToTopFpsFactor = scrollToTopFpsFactor
 
     // append child to top
     // this is the div that will trigger scroll
@@ -123,7 +127,7 @@ export class ScrollToTop {
         window.scrollY > 1
       ){
         this.hasIntersected = false
-        this.scrollTillZero(this.scrollSpeed)
+        this.scrollTillZero(-1)
       }
 
     }
@@ -131,8 +135,6 @@ export class ScrollToTop {
     window.addEventListener('scroll', this.scrollListener,{ passive: true })
 
   }
-
-  
 
   scrollTillZero(lastSpeed: number){
 
@@ -147,7 +149,7 @@ export class ScrollToTop {
     }
 
     // increasing speed
-    const speed = lastSpeed * this.scrollToTopSpeedFactor
+    const speed = lastSpeed * this.scrollToTopSpeed * this.scrollToTopFpsFactor
     this.elm.scrollBy({
       top: speed,
       left: 0,
