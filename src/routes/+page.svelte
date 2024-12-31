@@ -67,6 +67,8 @@
       }
     }
 
+    const lastValue = FpsMonitor.getLastValue()
+    if(lastValue) hasGoodFpsResult(lastValue.isGoodFps)
 
     FpsMonitor.onBeforeCount(onBeforeCount)
     FpsMonitor.onAfterCount(onAfterCount)

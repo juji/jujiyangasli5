@@ -39,6 +39,7 @@ export class FpsMonitor {
   static #beforeObserver = new Observer<boolean>()
   static #afterObserver = new Observer<FpsMonitorResult>()
   static #i = 0
+  static #lastValue: FpsMonitorResult | null = null
   static #onResize = () => {}
 
   static start(par?: FpsMonitorParams){
@@ -63,8 +64,8 @@ export class FpsMonitor {
       this.#i = setTimeout(async () => {
         this.#i = 0
         this.#beforeObserver.notify(true)
-        const fps = await this.#checkFps()
-        this.#afterObserver.notify(fps)
+        this.#lastValue = await this.#checkFps()
+        this.#afterObserver.notify(this.#lastValue)
       }, this.#debounce)
     }
     
@@ -107,6 +108,10 @@ export class FpsMonitor {
 
   static setDebounce(n: number){
     this.#debounce = n
+  }
+
+  static getLastValue(){
+    return this.#lastValue
   }
 
   // https://stackoverflow.com/a/66167211/1058374
