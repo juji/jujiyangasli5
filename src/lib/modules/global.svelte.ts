@@ -1,5 +1,4 @@
 import type { ScrollWheelHijacker } from "$lib/modules/scrollwheel-hijacker"
-import { FpsMonitor as FPSMon, type FpsMonitor } from "./fps-monitor"
 
 type GlobalState = {
   viewTransitionDelay: number
