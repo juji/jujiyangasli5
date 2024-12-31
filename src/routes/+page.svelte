@@ -63,7 +63,7 @@
     const onAfterCount = (p: FpsMonitorResult) => {
       hasGoodFpsResult(p.isGoodFps)
       if(!p.isGoodFps){
-        scrollToTop.scrollToTopFpsFactor = .8 * p.goodFps / p.avgFps
+        scrollToTop.setFpsFactor( .8 * p.goodFps / p.avgFps )
       }
     }
 
