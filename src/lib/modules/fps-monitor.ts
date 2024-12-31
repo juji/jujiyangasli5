@@ -82,6 +82,7 @@ export class FpsMonitor {
     window.removeEventListener('resize', this.#onResize)
     this.#afterObserver.destroy()
     this.#beforeObserver.destroy()
+    if(this.#i) clearTimeout(this.#i)
   }
 
   static setGoodFps(n: number){
