@@ -90,7 +90,7 @@
     <div class="webdev">
       <p class="hi" bind:this={hi}>Hi, I'm a <span style={`color:${webDevColor}`}>web&nbsp;developer</span>.</p>
       <p class="smaller second" bind:this={name}>My name is <span>Tri&nbsp;Rahmat&nbsp;Gunadi,</span></p>
-      <p class="smaller third" bind:this={juji}>But people call me juji..</p>
+      <p class="smaller third" bind:this={juji}>but people call me juji..</p>
     </div>
     <div class="menu-bottom" bind:this={menu}>
       <a class="link" style="--delay:0ms" href="#works">Works</a>
