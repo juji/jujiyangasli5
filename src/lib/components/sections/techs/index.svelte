@@ -171,22 +171,25 @@
         }
       }
 
-      @media screen and (hover: hover) {
-        .item:hover{
-          transition: 
-            transform 200ms ease-out,
-            opacity 200ms ease-out calc(var(--in-delay) * var(--delay-mult)),
-            background 0ms,
-            border 0ms
-          ;
+      .item:hover, .item:has(a:focus) {
+        transition: 
+          transform 200ms ease-out,
+          opacity 200ms ease-out calc(var(--in-delay) * var(--delay-mult)),
+          background 0ms,
+          border 0ms
+        ;
 
-          border: 1px solid hsl(from var(--background-color) h s calc(l + 42));
+        border: 1px solid hsl(from var(--background-color) h s calc(l + 42));
 
-          img{
-            scale: 1;
-          }
-        } 
+        img{
+          scale: 1;
+        }
       }
+
+      .item:has(a:focus){
+        outline: 1px solid var(--active-link-color);
+      }
+
     }
   }
 </style>

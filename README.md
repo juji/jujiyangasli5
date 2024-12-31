@@ -4,4 +4,6 @@
 
 WIP.
 
-https://jujiyangasli5.vercel.app/
+https://jujiyangasli.com
+
+Deployed in [vercel](https://vercel.com/)

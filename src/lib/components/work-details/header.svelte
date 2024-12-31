@@ -44,8 +44,8 @@
     top: 0;
     z-index: 20;
     background: rgb(from var(--background-color) r g b / 0.2);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
 
     @media screen and (max-width: 1023px){
       background: radial-gradient(
@@ -63,7 +63,7 @@
       .heading{
         display: flex;
         align-items: center;
-        text-shadow: var(--text-shadow);
+        text-shadow: 1px 1px 1px var(--shadow-color);
 
         .work-title{
           background-color: rgba(0,0,0,0.8);

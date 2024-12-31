@@ -1,14 +1,54 @@
 <script lang="ts">
 	import type { Play } from '$lib/data/play/types';
-
-
   import { sectionInView } from '$lib/modules/section-in-view';
+	import { animate, stagger } from 'motion';
 
   let { play } : { play: Play[] } = $props()
   let elm: HTMLElement
   $effect(() => { 
     const stop = sectionInView( elm ) 
     return () => stop()
+  })
+
+  let grid: HTMLElement;
+  $effect(() => {
+
+    // motion's inView is broken
+    const io = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          animate(
+            '.playitem', 
+            { transform: `scale(1)` }, 
+            { 
+              type: "spring", 
+              stiffness: 1676,
+              damping: 29,
+              mass: 3.6,
+              delay: stagger(0.1) 
+            }
+          )    
+        }else{
+          animate(
+            '.playitem', 
+            { transform: `scale(0.8)` }, 
+            { 
+              type: "spring", 
+              stiffness: 1676,
+              damping: 42,
+              mass: 3.6,
+              delay: stagger(0.1) 
+            }
+          )
+        }
+      })
+    })
+
+    io.observe(grid)
+
+    return () => {
+      io.disconnect()
+    }
   })
 
 </script>
@@ -26,9 +66,9 @@
       href="https://jujiplay.com">https://jujiplay.com</a>
   </p>
   <br /><br />
-  <div class="grid">
+  <div class="grid" bind:this={grid}>
     {#each play as item}
-      <div class="item">
+      <div class="item playitem">
         <img src={item.image} 
           alt={item.title} 
           width={item.width} 
@@ -121,12 +161,14 @@
         grid-template-columns: repeat(3, 1fr);
       }
 
+      
       .item{
-
+        
         aspect-ratio: 16 / 9;
         overflow: hidden;
         background-color: black;
         position: relative;
+        outline: 2px solid #333333;
 
         p{
           position: absolute;
@@ -152,18 +194,18 @@
           object-fit: cover;
           object-position: center center;
           scale: 1.1;
-          transition: scale 300ms;
+          transition: scale 1000ms var(--rubbery);
         }
         
-        &:hover{
-          outline: 2px solid var(--link-color);
+        &:hover, &:focus, &:has(a:focus){
+          outline: 2px solid var(--active-link-color);
           img{
             scale: 1.5
           }
         }
 
         &:active{
-          outline: 2px solid var(--active-link-color);
+          outline: 2px solid var(--link-color);
           img{
             scale: 1
           }

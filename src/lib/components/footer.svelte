@@ -38,7 +38,7 @@
     window.addEventListener('touchstart', (init: TouchEvent) => {
       if(
         window.scrollY <
-        (document.body.offsetHeight - window.innerHeight - 100) // 100 is topbar
+        (document.body.offsetHeight - window.innerHeight - 200) // 200 is est. adressbar
       ) return;
 
       const initY = init.touches[0].clientY
@@ -55,29 +55,6 @@
       window.addEventListener('touchcancel', onPointerUp)
     })
   })
-  
-
-  // $effect(() => {
-
-  //   const listenToScroll = (e: CustomEvent) => {
-  //     const { deltaY } = e.detail
-  //     if(
-  //       deltaY < 0 || 
-  //       window.scrollY <
-  //       (document.body.offsetHeight - window.innerHeight)
-  //     ) return;
-  //     addOffset()
-  //   }
-  //   // @ts-expect-error
-  //   window.addEventListener('hijacked-scroll', listenToScroll)
-    
-  //   return () => {
-  //     // @ts-expect-error
-  //     window.removeEventListener('hijacked-scroll', listenToScroll)
-  //     if(vars.started) vars.started = false
-  //   }
-    
-  // })
 
   let rid:number | null = null;
   function start(){

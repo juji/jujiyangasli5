@@ -5,11 +5,11 @@
 
   let elm: HTMLElement
   let container: HTMLElement
-  let logo: HTMLElement
-  let hi: HTMLElement
-  let name: HTMLElement
-  let juji: HTMLElement
-  let menu: HTMLElement
+  // let logo: HTMLElement
+  // let hi: HTMLElement
+  // let name: HTMLElement
+  // let juji: HTMLElement
+  // let menu: HTMLElement
 
   let colors = [
     '#bfe600',
@@ -27,9 +27,6 @@
 
   $effect(() => { 
     const stop = sectionInView( elm ) 
-
-    
-
     return () => {
       stop()
     }
@@ -47,12 +44,12 @@
       container,
       {
         transform: [ 
-          `translateY(0px) rotateX(0deg) rotateY(0deg)`, 
-          `translateY(${translateY}px) rotateX(20deg) rotateY(-30deg)`,
+          `translateY(0px) rotateX(0deg) rotateY(0deg) scale(1)`, 
+          `translateY(${translateY/2}px) rotateX(20deg) rotateY(-20deg) scale(1.05)`, 
+          `translateY(${translateY}px) rotateX(-10deg) rotateY(-30deg) scale(1.1)`,
         ]
       }, { ease: 'easeOut' }
     ),{
-      target: elm,
       offset: [ 0, `100vh` ]
     })
   }
@@ -84,21 +81,26 @@
 
 <div class="hero" id="home" bind:this={elm}>
   <div class="container" bind:this={container}>
-    <header class="logo" bind:this={logo}>
+    <header class="logo">
       <Logo />
     </header>
     <div class="webdev">
-      <p class="hi" bind:this={hi}>Hi, I'm a <span style={`color:${webDevColor}`}>web&nbsp;developer</span>.</p>
-      <p class="smaller second" bind:this={name}>My name is <span>Tri&nbsp;Rahmat&nbsp;Gunadi,</span></p>
-      <p class="smaller third" bind:this={juji}>but people call me juji..</p>
+      <p class="hi">Hi, I'm a <span style={`color:${webDevColor}`}>web&nbsp;developer</span>.</p>
+      <p class="smaller second">My name is <span>Tri&nbsp;Rahmat&nbsp;Gunadi,</span></p>
+      <p class="smaller third">but people call me juji..</p>
     </div>
-    <div class="menu-bottom" bind:this={menu}>
+    <div class="menu-bottom">
       <a class="link" style="--delay:0ms" href="#works">Works</a>
       <a class="link" style="--delay:50ms" href="#play">Play</a>
       <a class="link" style="--delay:100ms" href="#techs">Techs</a>
       <a class="link" style="--delay:150ms" href="#contact">Contact</a>
       <a class="link outgoing" style="--delay:200ms" href="https://blog.jujiyangasli.com" target="_blank">Blog</a>
     </div>
+    <p class="code">
+      <a class="outgoing" target="_blank" 
+        rel="noreferrer noopener"
+        href="https://github.com/juji/jujiyangasli5">Checkout the code to this site</a>
+    </p>
   </div>
 </div>
 
@@ -233,6 +235,19 @@
         animation-delay: calc(700ms + var(--delay));
         font-weight: 600;
         filter: var(--drop-shadow);
+      }
+    }
+
+    .code{
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      a {
+        color: var(--text-color);
+        text-decoration: none;
+
+        &:hover{
+          text-decoration: underline;
+        }
       }
     }
 
