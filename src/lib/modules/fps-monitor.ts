@@ -1,5 +1,5 @@
 
-export type FpsMonitorListenerParams = {
+export type FpsMonitorResult = {
   avgFps: number,
   goodFps: number,
   isGoodFps: boolean
@@ -7,73 +7,107 @@ export type FpsMonitorListenerParams = {
 
 export type FpsMonitorParams = {
   onBeforeCount?: (() => void) | null
-  onChange: (par: FpsMonitorListenerParams) => void
+  onAfterCount?: (par: FpsMonitorResult) => void
   repaintIntervalNum?: number
   goodFps?: number
+  debounce?: number
 }
+
+// simple observer, by chat gpt
+class Observer<T> {
+  private observers: Array<(data: T) => void> = []; 
+  subscribe(observer: (data: T) => void): void {
+    this.observers.push(observer);
+  }
+  unsubscribe(observer: (data: T) => void): void {
+    this.observers = this.observers.filter(obs => obs !== observer);
+  }
+  destroy(){
+    this.observers = []
+  }
+  notify(data: T): void {
+    this.observers.forEach(observer => observer(data));
+  }
+}
+
 
 export class FpsMonitor {
 
-  onBeforeCount: (() => void) | null
-  onChange: (par: FpsMonitorListenerParams) => void
-  #onResize: () => void
-  #lastWindowWidth: number | null = null
-  #lastWindowHeight: number | null = null
-  #goodFps = 60
-  #repaintIntervalNum = 5
+  private static goodFps = 60
+  private static repaintIntervalNum = 5
+  private static debounce = 300
+  private static beforeObserver = new Observer<boolean>()
+  private static afterObserver = new Observer<FpsMonitorResult>()
+  private static i = 0
 
-  constructor(par: FpsMonitorParams){
+  static start(par?: FpsMonitorParams){
 
     const {
       onBeforeCount,
-      onChange,
-      goodFps = 60,
-      repaintIntervalNum = 5
-    } = par
+      onAfterCount,
+      goodFps,
+      repaintIntervalNum,
+      debounce
+    } = par || {}
 
-    this.onChange = onChange
-    this.onBeforeCount = onBeforeCount || null
-    this.#lastWindowHeight = window.innerHeight
-    this.#lastWindowWidth = window.innerWidth
-    this.#goodFps = goodFps
-    this.#repaintIntervalNum = repaintIntervalNum
+    if(onBeforeCount) this.beforeObserver.subscribe(onBeforeCount)
+    if(onAfterCount) this.afterObserver.subscribe(onAfterCount)
+    if(goodFps) this.goodFps = goodFps
+    if(repaintIntervalNum) this.repaintIntervalNum = repaintIntervalNum
+    if(debounce) this.debounce = debounce
     
-    // when changing monitor
-    // width and height is the same
-    // but on resize event triggers
-    this.#onResize = async () => {
-      if(
-        window.innerHeight === this.#lastWindowHeight &&
-        window.innerWidth === this.#lastWindowWidth
-      ) {
-        this.onBeforeCount && this.onBeforeCount()
-        const fps = await this.#checkFps()
-        this.onChange(fps)
-      }
-      this.#lastWindowHeight = window.innerHeight
-      this.#lastWindowWidth = window.innerWidth
-    }
-
     // start first
-    this.#onResize()
-    window.addEventListener('resize', this.#onResize)
+    this.onResize()
+    window.addEventListener('resize', this.onResize)
 
   }
 
-  destroy(){
-    window.removeEventListener('resize', this.#onResize)
+  static onBeforeCount(fn: () => void){
+    this.beforeObserver.subscribe(fn)
   }
 
-  setGoodFps(n: number){
-    this.#goodFps = n
+  static removeOnBeforeCount(fn: () => void){
+    this.beforeObserver.unsubscribe(fn)
   }
 
-  setRepaintIntervalNum(n: number){
-    this.#repaintIntervalNum = n
+  static onAfterCount(fn: (data: FpsMonitorResult) => void){
+    this.afterObserver.subscribe(fn)
+  }
+
+  static removeOnAfterCount(fn: (data: FpsMonitorResult) => void){
+    this.afterObserver.unsubscribe(fn)
+  }
+
+  static destroy(){
+    window.removeEventListener('resize', this.onResize)
+    this.afterObserver.destroy()
+    this.beforeObserver.destroy()
+  }
+
+  static setGoodFps(n: number){
+    this.goodFps = n
+  }
+
+  static setRepaintIntervalNum(n: number){
+    this.repaintIntervalNum = n
+  }
+
+  static setDebounce(n: number){
+    this.debounce = n
+  }
+
+  private static onResize(){
+    if(this.i) clearTimeout(this.i)
+    this.i = setTimeout(async () => {
+      this.i = 0
+      this.beforeObserver.notify(true)
+      const fps = await this.checkFps()
+      this.afterObserver.notify(fps)
+    }, this.debounce)
   }
 
   // https://stackoverflow.com/a/66167211/1058374
-  #getRepaintInterval(){
+  private static getRepaintInterval(){
     const p: Promise<number> = new Promise((resolve) => {
       requestAnimationFrame((t1) => {
         requestAnimationFrame((t2) => {
@@ -85,21 +119,21 @@ export class FpsMonitor {
   };
 
   // get average repaint interval
-  async #avgRepaintInterval(){
+  private static async avgRepaintInterval(){
     let num = 0
-    for(let i = 0; i<this.#repaintIntervalNum; i++ )
-      num += await this.#getRepaintInterval()
-    return num / this.#repaintIntervalNum
+    for(let i = 0; i<this.repaintIntervalNum; i++ )
+      num += await this.getRepaintInterval()
+    return num / this.repaintIntervalNum
   }
 
-  async #checkFps(){
+  private static async checkFps(){
 
-    const avgFps = 1000 / await this.#avgRepaintInterval()
+    const avgFps = 1000 / await this.avgRepaintInterval()
 
     return {
       avgFps,
-      goodFps: this.#goodFps,
-      isGoodFps: avgFps >= this.#goodFps
+      goodFps: this.goodFps,
+      isGoodFps: avgFps >= this.goodFps
     }
 
   }

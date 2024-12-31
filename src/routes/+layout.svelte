@@ -18,7 +18,7 @@
 
   import { ScrollWheelHijacker } from '$lib/modules/scrollwheel-hijacker'
   import { globalState } from '$lib/modules/global.svelte';
-  import { FpsMonitor, type FpsMonitorListenerParams } from '$lib/modules/fps-monitor';
+  import { FpsMonitor, type FpsMonitorResult } from '$lib/modules/fps-monitor';
 
   let { children } = $props();
   let hijacker: ScrollWheelHijacker | null = null
@@ -36,34 +36,27 @@
   })
 
   $effect(() => {
-    const fpsMonitor = new FpsMonitor({
-      onBeforeCount: () => {
-        globalState.isGoodFpsPromise = new Promise(r => {
-          globalState.fpsResolve = r
-        })
-      },
-      onChange: ( res: FpsMonitorListenerParams ) => {
+    FpsMonitor.start({
+      onAfterCount: (data: FpsMonitorResult) => {
 
-        globalState.fpsResolve(res.isGoodFps)
-        
         // change hijacker's speed multipler 
         const speedMultiplier = hijacker?.getSpeedMultiplier()
         if(speedMultiplier){
-          if(res.isGoodFps && speedMultiplier !== 1){
+          if(data.isGoodFps && speedMultiplier !== 1){
             // good fps, faster speed, so multiplier is 1
             hijacker?.setSpeedMultiplier(1)
           }
-  
-          if(!res.isGoodFps && speedMultiplier !== 3){
+
+          if(!data.isGoodFps && speedMultiplier !== 3){
             // bad fps, lower speed, so multiplier is calculated
-            hijacker?.setSpeedMultiplier( Math.round(res.goodFps / res.avgFps) )
+            hijacker?.setSpeedMultiplier( Math.round(data.goodFps / data.avgFps) )
           }
         }
       }
     })
 
     return () => {
-      fpsMonitor.destroy()
+      FpsMonitor.destroy()
     }
   })
 

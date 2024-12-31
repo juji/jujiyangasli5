@@ -10,6 +10,7 @@
   import { page } from '$app/state';
   import { ScrollToTop } from '$lib/modules/scroll-to-top'
   import { globalState } from '$lib/modules/global.svelte.js'
+  import { FpsMonitor, type FpsMonitorResult } from '$lib/modules/fps-monitor.js'
 
   let js = $state(false)
   $effect(() => { if(!js) js = true })
@@ -54,6 +55,32 @@
     },1000)
   })
 
+  let hasGoodFpsResult = (value: boolean) => {}
+  let hasGoodFpsPromise: Promise<boolean> = $state(
+    new Promise(r => { hasGoodFpsResult = r })
+  )
+
+  $effect(() => {
+    
+    const onBeforeCount = () => {
+      hasGoodFpsPromise = new Promise((r) => {
+        hasGoodFpsResult = r
+      })
+    }
+
+    const onAfterCount = (p: FpsMonitorResult) => {
+      hasGoodFpsResult(p.isGoodFps)
+    }
+
+    FpsMonitor.onBeforeCount(onBeforeCount)
+    FpsMonitor.onAfterCount(onAfterCount)
+
+    return () => {
+      FpsMonitor.removeOnAfterCount(onAfterCount)
+      FpsMonitor.removeOnBeforeCount(onBeforeCount)
+    }
+  })
+
 </script>
 
 <svelte:head>
@@ -77,7 +104,7 @@
 
 <Menu />
 <main>
-  <HeroAnimation hasGoodFps={globalState.isGoodFpsPromise} />
+  <HeroAnimation hasGoodFps={hasGoodFpsPromise} />
   <Container>
     <Hero />
   </Container>
