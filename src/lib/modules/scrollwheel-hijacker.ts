@@ -2,12 +2,24 @@
 
 
 type ScrollWheelHijackerParams = {
-  ease?: number
-  minimumDelta?: number
-  elm?: HTMLElement | Window
-  disableOnSmoothSroll?: boolean
-  showWarning?: boolean
+  // ease factor in scrolling
+  ease?: number 
+  
+  // ease factor multiplier
   speedMultiplier?: number
+  
+  // minimum scroll speed
+  minimumDelta?: number
+  
+  // the scrollable element
+  elm?: HTMLElement | Window
+  
+  // phones and other smooth scrolling devices
+  // example: https://www.smoothscroll.net/mac/
+  disableOnSmoothSroll?: boolean
+  
+  // yagitudeh 
+  showWarning?: boolean
 }
 
 export function getNormalizedScrollPosition(elm: HTMLElement | Window) {
@@ -146,7 +158,7 @@ export class ScrollWheelHijacker {
       if(
         this.#snapToTop && this.#deltaY < 0
       ){
-        this.#deltaY -= (window.innerHeight - scrollPos.pixel) * this.#ease
+        this.#deltaY -= (window.innerHeight - scrollPos.pixel) * this.#ease * this.#speedMultiplier
       }
 
       if(scrollPos.normalized === 0 && this.#deltaY < 0){
