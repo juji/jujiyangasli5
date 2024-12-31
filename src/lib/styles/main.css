@@ -165,3 +165,7 @@ h2.section-title.funny{
     padding-top: 4rem;
   }
 }
+
+*:focus{
+  outline: 2px solid var(--active-link-color);
+}
