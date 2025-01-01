@@ -139,6 +139,8 @@
   let container: HTMLElement
   let clientHeight = $state(0)
 
+  // stacking card anim on scroll
+  // on small width
   $effect(() => {
 
     let animRotate;
@@ -179,7 +181,7 @@
         `${((clientHeight + gap) * ((index * .5) + 1))}px`, 
         `${((clientHeight + gap) * ((index * .5) + 2))}px`, 
       ]}
-      
+
     }
 
     // @ts-ignore
