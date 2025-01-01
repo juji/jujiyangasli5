@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Play } from '$lib/data/play/types';
   import { sectionInView } from '$lib/modules/section-in-view';
-	import { animate, stagger } from 'motion';
+	import { animate, stagger, inView } from 'motion';
 
   let { play } : { play: Play[] } = $props()
   let elm: HTMLElement
@@ -15,37 +15,35 @@
 
     const opt = { 
       type: "spring", 
-      stiffness: 1210,
-      damping: 76,
-      mass: 4.5,
+      stiffness: 1494,
+      damping: 31,
+      mass: 2.9,
       delay: stagger(0.1) 
     }
 
-    // motion's inView is broken
-    const io = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          animate(
-            '.playitem', 
-            // @ts-ignore
-            { transform: `scale(1)` }, 
-            opt
-          )    
-        }else{
-          animate(
-            '.playitem', 
-            // @ts-ignore
-            { transform: `scale(0.8)` }, 
-            opt
-          )
-        }
-      })
+    const stop = inView(grid, () => {
+
+      animate(
+        '.playitem', 
+        // @ts-ignore
+        { transform: `scale(1)` }, 
+        opt
+      )
+
+      return () => {
+        animate(
+          '.playitem', 
+          // @ts-ignore
+          { transform: `scale(.9)` }, 
+          opt
+        )
+      }
+    },{
+      margin: '500px 0px -50px 0px'
     })
 
-    io.observe(grid)
-
     return () => {
-      io.disconnect()
+      stop()
     }
   })
 
