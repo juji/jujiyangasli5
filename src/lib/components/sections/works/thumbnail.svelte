@@ -1,17 +1,20 @@
 <script lang="ts">
 	import type { WorkSingle } from "$lib/data/works/types";
-	import { animate } from "motion/mini";
   import { noHover } from "$lib/modules/no-hover";
+  import {animate} from 'motion/mini'
+	import { scroll, cubicBezier } from "motion";
 
   let { 
     work, index,
+    indexLength,
     onThumbnailClick,
     fadeOutSpeed,
     fadeOut,
-    fromWork
+    fromWork,
   }: {
     work: WorkSingle
     index: number 
+    indexLength: number
     fadeOutSpeed: number
     fadeOut: boolean
     fromWork: boolean
@@ -132,9 +135,70 @@
     clicked = true
   }
 
+  let innerWidth = $state(0)
+  let container: HTMLElement
+  let clientHeight = $state(0)
+
+  $effect(() => {
+
+    let animRotate;
+    let animRotateOpt;
+    let animTranslate;
+    let animTranslateOpt;
+    const gap = 72
+
+    if(innerWidth >= 800) {
+
+      animRotate = animate(container, { rotate: ['x 0deg', 'x 0deg']});
+      animRotateOpt = { offset: [0,1] };
+      animTranslate = animate(container, { translate: ['0 0 0', '0 0 0']});
+      animTranslateOpt = { offset: [0,1] };
+
+    }else{
+
+      animRotate = animate(container, { rotate: [
+        `x ${-10 * (index + 1)}deg`,
+        `x ${-10 * (index + 1)}deg`,
+        `x 0deg`
+      ]})
+
+      animRotateOpt = { offset: [ 
+        0, 
+        `${(clientHeight + gap) * index}px`, 
+        `${(clientHeight + gap) * (index + 1)}px` 
+      ]}
+
+      animTranslate = animate(container, { translate: [
+        `0 ${clientHeight - gap}px 0`,
+        `0 ${clientHeight - gap}px 0`,
+        `0 0 0`,
+      ]})
+
+      animTranslateOpt = { offset: [ 
+        0, 
+        `${((clientHeight + gap) * ((index * .5) + 1))}px`, 
+        `${((clientHeight + gap) * ((index * .5) + 2))}px`, 
+      ]}
+      
+    }
+
+    // @ts-ignore
+    const rotate = scroll(animRotate, animRotateOpt)
+    // @ts-ignore
+    const translate = scroll(animTranslate, animTranslateOpt)
+
+    return () => {
+      rotate()
+      translate()
+    }
+  })
+
 </script>
 
+<svelte:window bind:innerWidth={innerWidth}></svelte:window>
+
 <div class="container" 
+  bind:this={container}
   class:clicked
   class:fadeOut
   class:fromWork
@@ -143,6 +207,7 @@
   }>
   <div class="work-thumb" id={work.id}
     bind:this={elm} 
+    bind:clientHeight={clientHeight}
     style={`--index:${index}`}
   >
     <img 
@@ -222,6 +287,10 @@
     position: relative;
     opacity: 0;
     animation: cardFadeIn 500ms 500ms both;
+    position: sticky;
+    bottom: 0;
+
+
     &:hover{ 
       transition: z-index 0ms 0ms;
       z-index: 20;
@@ -230,6 +299,12 @@
     &.fromWork{
       animation: cardFadeIn 0ms 0ms both;
     }
+
+    @media screen and (min-width: 800px) {
+      position: static;
+      bottom: unset;
+    }
+
 
   }
 
@@ -330,7 +405,7 @@
       transition: 
         translate 300ms ease-out 0ms
       ;
-      translate: 0 0 100px;
+      translate: 0 0 50px;
 
       img.work-image{
         transition: opacity 0ms;

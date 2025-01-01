@@ -99,7 +99,7 @@ self.onmessage = (e: MessageEvent) => {
   }
 
   if(!num) {
-    console.log(e.data)
+    console.log('e.data:', e.data)
     throw new Error('num is gone')
   }
   if(!sab) throw new Error('sharedBufferBuffer is gone')

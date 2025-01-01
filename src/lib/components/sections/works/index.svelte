@@ -49,14 +49,14 @@
       [
         worksContainer,{
           transform: [ 
-            `translateY(150px)`, 
+            `translateY(0px)`, 
             `translateY(0px)`,
           ]
         }, { ease: 'linear' }
       ]
     ]
 
-    const offset = innerWidth >= 800 ? [ 0, .3, .7 ] : [ 0, 0.2 ]
+    const offset = innerWidth >= 800 ? [ 0, .3, .7 ] : [ 0, 1 ]
     
     const animInCancel = scroll(
       // @ts-ignore
@@ -82,7 +82,8 @@
       fadeOutSpeed={fadeOutDelay}
       fadeOut={fadeOut}
       work={work} 
-      index={index} 
+      index={index}
+      indexLength={works.length}
     />{/each}
   </div>
 </section>
@@ -90,18 +91,22 @@
 <style>
 
   section{
-    perspective: 1000px;
+    @media screen and (min-width: 800px) {
+      perspective: 1000px;
+    }
   }
 
   .works{
+    perspective: 1000px;
+    
     display: grid;
-
     grid-template-columns: 1fr;
     grid-gap: 0.1rem;
     margin-bottom: 4rem;
 
     @media screen and (min-width: 800px) {
       grid-template-columns: 1fr 1fr;
+      perspective: unset;
     }
 
   }
