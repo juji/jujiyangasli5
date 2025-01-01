@@ -255,7 +255,7 @@
     translate: 0 0 0px;
     
     transition: 
-      translate 500ms var(--easeOutBounce)
+      translate 500ms var(--easeOutBounce) 0ms
     ;
 
     min-width: 0px;
@@ -327,7 +327,10 @@
     }
 
     &:hover{
-      translate: 0 0 50px;
+      transition: 
+        translate 300ms ease-out 0ms
+      ;
+      translate: 0 0 100px;
 
       img.work-image{
         transition: opacity 0ms;

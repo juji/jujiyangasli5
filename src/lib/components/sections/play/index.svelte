@@ -39,7 +39,7 @@
         )
       }
     },{
-      margin: '500px 0px -50px 0px'
+      margin: '5000px 0px -50px 0px'
     })
 
     return () => {
@@ -166,6 +166,7 @@
         position: relative;
         outline: 2px solid #333333;
         border-radius: 5px;
+        transform: scale(.9);
 
         p{
           position: absolute;
@@ -191,7 +192,7 @@
           object-fit: cover;
           object-position: center center;
           scale: 1.1;
-          transition: scale 1000ms var(--rubbery);
+          transition: scale 2000ms var(--rubbery);
         }
         
         &:hover, &:focus, &:has(a:focus){

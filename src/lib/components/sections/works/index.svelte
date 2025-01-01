@@ -28,8 +28,8 @@
         worksContainer,
         {
           transform: [ 
-            `rotateX(-50deg) scale(0.8)`, 
-            `rotateX(0deg) scale(1)`, 
+            `rotateX(-20deg) scale(0.9) translateY(150px)`, 
+            `rotateX(0deg) scale(1) translateY(0px)`, 
           ]
         }, { ease: 'easeOut' }
       ],
@@ -42,7 +42,7 @@
       [
         worksContainer,
         {
-          transform: [ `scale(1)`, `scale(0.8)`,]
+          transform: [ `scale(1)`, `scale(0.9)`, `translateY(150px)`]
         }, { ease: 'easeOut' }
       ]
     ] : [
