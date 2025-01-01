@@ -120,6 +120,7 @@
     width: 3rem;
     height: 3rem;
     display: block;
+    border-radius: 50%;
     
     animation-delay: 1500ms;
     animation-name: buttonAnim;

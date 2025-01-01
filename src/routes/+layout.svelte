@@ -19,6 +19,9 @@
   import { ScrollWheelHijacker } from '$lib/modules/scrollwheel-hijacker'
   import { globalState } from '$lib/modules/global.svelte';
   import { FpsMonitor, type FpsMonitorResult } from '$lib/modules/fps-monitor';
+  import focusableSelectors from 'focusable-selectors'
+	import { afterNavigate } from '$app/navigation';
+
 
   let { children } = $props();
   let hijacker: ScrollWheelHijacker | null = null
@@ -58,6 +61,22 @@
     return () => {
       FpsMonitor.destroy()
     }
+  })
+
+  afterNavigate(() => {
+    const selector = focusableSelectors.join(',')
+    const elms = document.querySelectorAll(selector)
+    elms.forEach(elm => {
+      elm.addEventListener('mouseover',(e: Event) => {
+        const el = e.target as HTMLElement
+        el.classList.add('mouse')
+      })
+      elm.addEventListener('mouseout',(e: Event) => {
+        const el = e.target as HTMLElement
+        el.classList.remove('mouse')
+      })
+    })
+
   })
 
 </script>

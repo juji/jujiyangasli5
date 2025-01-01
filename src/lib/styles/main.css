@@ -167,5 +167,10 @@ h2.section-title.funny{
 }
 
 *:focus{
+  border-radius: 5px;
   outline: 2px solid var(--active-link-color);
+}
+
+.mouse:focus{
+  outline: 0px solid var(--active-link-color);
 }

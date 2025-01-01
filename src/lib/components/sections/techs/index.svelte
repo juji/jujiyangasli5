@@ -70,7 +70,7 @@
       gap: 3px;
       
       
-      --delay-mult: 90ms;
+      --delay-mult: 50ms;
       
       .item-container{
         perspective: 500px;
@@ -139,8 +139,8 @@
       &:global(.visible){
         .item{
           transition: 
-            transform 400ms ease-out calc(var(--in-delay) * var(--delay-mult)),
-            opacity 200ms ease-out calc(var(--in-delay) * var(--delay-mult)),
+            transform 200ms ease-out calc(var(--in-delay) * var(--delay-mult)),
+            opacity 100ms ease-out calc(var(--in-delay) * var(--delay-mult)),
             background 1000ms 500ms,
             border 2000ms 500ms
           ;

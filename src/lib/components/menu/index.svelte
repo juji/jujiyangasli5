@@ -14,7 +14,7 @@
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <div class="menu-container" class:open onclick={() => {open = !open}} tabindex="0" role="button">
     <nav class="menu-content">
-      <a style="--link-delay-in: 0ms" class="link" href="#home">Home</a>
+      <a style="--link-delay-in: 0ms" tabindex="0" class="link" href="#home">Home</a>
       <a style="--link-delay-in: 100ms" class="link" href="#works">Works</a>
       <a style="--link-delay-in: 200ms" class="link" href="#play">Play</a>
       <a style="--link-delay-in: 300ms" class="link" href="#techs">Techs</a>

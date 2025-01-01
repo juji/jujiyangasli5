@@ -13,32 +13,30 @@
   let grid: HTMLElement;
   $effect(() => {
 
+    const opt = { 
+      type: "spring", 
+      stiffness: 1210,
+      damping: 76,
+      mass: 4.5,
+      delay: stagger(0.1) 
+    }
+
     // motion's inView is broken
     const io = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
       entries.forEach(entry => {
         if(entry.isIntersecting){
           animate(
             '.playitem', 
+            // @ts-ignore
             { transform: `scale(1)` }, 
-            { 
-              type: "spring", 
-              stiffness: 1676,
-              damping: 29,
-              mass: 3.6,
-              delay: stagger(0.1) 
-            }
+            opt
           )    
         }else{
           animate(
             '.playitem', 
+            // @ts-ignore
             { transform: `scale(0.8)` }, 
-            { 
-              type: "spring", 
-              stiffness: 1676,
-              damping: 42,
-              mass: 3.6,
-              delay: stagger(0.1) 
-            }
+            opt
           )
         }
       })
@@ -155,7 +153,7 @@
 
     .grid{
       display: grid;
-      gap: 3px;
+      gap: 21px;
       grid-template-columns: repeat(1, 1fr);
       @media screen and (min-width: 768px) {
         grid-template-columns: repeat(3, 1fr);
@@ -169,6 +167,7 @@
         background-color: black;
         position: relative;
         outline: 2px solid #333333;
+        border-radius: 5px;
 
         p{
           position: absolute;

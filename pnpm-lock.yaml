@@ -11,6 +11,9 @@ importers:
 
   .:
     dependencies:
+      focusable-selectors:
+        specifier: ^0.8.4
+        version: 0.8.4
       minireset.css:
         specifier: ^0.0.7
         version: 0.0.7
@@ -959,6 +962,9 @@ packages:
 
   flatted@3.3.2:
     resolution: {integrity: sha512-AiwGJM8YcNOaobumgtng+6NHuOqC3A7MixFeDafM3X9cIUM+xUXoS5Vfgf+OihAYe20fxqNM9yPBXJzRtZ/4eA==}
+
+  focusable-selectors@0.8.4:
+    resolution: {integrity: sha512-0XxbkD0KhOnX10qmnfF9U8DkDD8N/e4M77wMYw2Itoi4vdcoRjSkqXLZFIzkrLIOxzmzCGy88fNG1EbeXMD/zw==}
 
   foreground-child@3.3.0:
     resolution: {integrity: sha512-Ld2g8rrAyMYFXBhEqMz8ZAHBi4J4uS1i/CxGMDnjyFWddMXLVcDp051DZfu+t7+ab7Wv6SMqpWmyFIj5UbfFvg==}
@@ -2403,6 +2409,8 @@ snapshots:
       keyv: 4.5.4
 
   flatted@3.3.2: {}
+
+  focusable-selectors@0.8.4: {}
 
   foreground-child@3.3.0:
     dependencies:
