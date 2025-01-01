@@ -1,4 +1,4 @@
-
+import { isSafariOrWebkit } from "./safari"
 
 type ScrollToTopParams = {
   elm?: HTMLElement | Window
@@ -15,13 +15,13 @@ type ScrollToTopParams = {
 
 export class ScrollToTop {
 
-  elm: HTMLElement | Window
+  elm: HTMLElement | Window = window
 
-  #scrollListener: ( e: Event ) => void
+  #scrollListener: ( e: Event ) => void = () => {}
   #direction: null | -1 | 1 = null
   
-  #observer: IntersectionObserver
-  #rootMarginTopPercent: number
+  #observer: IntersectionObserver | null = null
+  #rootMarginTopPercent: number = 0
 
   #hasIntersected: boolean = false
   #raf: number = 0
@@ -30,11 +30,11 @@ export class ScrollToTop {
   #lastScrollY: number = 0
   #lastScrollTime: number = Date.now()
  
-  #observedElm: HTMLDivElement
-  #scrollToTopSpeed: number
-  #scrollToTopFpsFactor: number
+  #observedElm: HTMLDivElement | null = null
+  #scrollToTopSpeed: number = 1.15
+  #scrollToTopFpsFactor: number = 1
 
-  onScrollStart: () => boolean
+  onScrollStart: () => boolean = () => false
 
   constructor( par? : ScrollToTopParams ){
     
@@ -45,6 +45,10 @@ export class ScrollToTop {
       scrollToTopFpsFactor = 1,
       onScrollStart = () => true,
     } = par || {}
+
+    if(isSafariOrWebkit().isIOS){
+      return;
+    }
 
     // this should have relative position
     this.elm = elm
@@ -173,7 +177,7 @@ export class ScrollToTop {
 
   destroy(){
     window.removeEventListener('scroll', this.#scrollListener)
-    this.#observer.disconnect()
+    this.#observer && this.#observer.disconnect()
     if(this.#raf) cancelAnimationFrame(this.#raf)
     if(this.#observedElm) this.#observedElm.remove()
   }
