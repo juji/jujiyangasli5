@@ -418,7 +418,7 @@
     &:active{
       translate: 0 0 10px;
       @media (hover: none) {
-        translate: 0 0 -10px;
+        translate: 0 0 0px;
       } 
     }
 
