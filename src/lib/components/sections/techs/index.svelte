@@ -22,7 +22,7 @@
         info.target.classList.remove('visible')
       }
     },{
-      margin: '999% 0% 0% 0%',
+      margin: '999% 0% -89px 0%',
       amount: 'some'
     })
 

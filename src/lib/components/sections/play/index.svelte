@@ -11,10 +11,17 @@
   })
 
   let grid: HTMLElement;
+  let innerWidth = $state(0)
 
   // this is making my stomach feel bad
-  /* 
+  // in phone, seems to be okay
+  // only do this for width < 768
   $effect(() => {
+
+    if(innerWidth >= 768){
+      return;
+    }
+
     const opt = { 
       type: "spring", 
       stiffness: 1494,
@@ -48,10 +55,11 @@
       stop()
     }
   }) 
-    */
+
 
 </script>
 
+<svelte:window bind:innerWidth={innerWidth}></svelte:window>
 
 <section class="container" id="play" bind:this={elm}>
   <h2 class="section-title funny">Play</h2>
@@ -154,7 +162,7 @@
 
     .grid{
       display: grid;
-      gap: 21px;
+      gap: 2rem;
       grid-template-columns: repeat(1, 1fr);
       @media screen and (min-width: 768px) {
         grid-template-columns: repeat(3, 1fr);
@@ -192,23 +200,24 @@
         img{
           display: block;
           height: 100%;
+          width: 100%;
           object-fit: cover;
           object-position: center center;
-          scale: 1.1;
+          scale: 1.3; /*  to make the image in frame when bouncing, we use 1.3 */
           transition: scale 2000ms var(--rubbery);
         }
         
         &:hover, &:focus, &:has(a:focus){
           outline: 2px solid var(--active-link-color);
           img{
-            scale: 1.5
+            scale: 1.9;
           }
         }
 
         &:active{
           outline: 2px solid var(--link-color);
           img{
-            scale: 1
+            scale: 1.3;
           }
         }
 
