@@ -70,7 +70,7 @@
       gap: 3px;
       
       
-      --delay-mult: 50ms;
+      --delay-mult: 80ms;
       
       .item-container{
         perspective: 500px;
@@ -109,16 +109,16 @@
         a{
           position: absolute;
           top: 0;
-          left: 0;
-          width: 350%;
+          right: 0;
+          width: 400%;
           height: 100%;
           background: linear-gradient(
             111deg, 
               rgb(0 0 0 / 0) 0%,
-              rgb(0 0 0 / 0) 38%,
-              rgb(255 255 255 / .3) 40%,
-              rgb(255 255 255 / .3) 60%,
-              rgb(0 0 0 / 0) 62%,
+              rgb(0 0 0 / 0) 40%,
+              rgb(255 255 255 / .3) 41%,
+              rgb(255 255 255 / .3) 59%,
+              rgb(0 0 0 / 0) 60%,
               rgb(0 0 0 / 0) 100%
           );
         }
@@ -132,14 +132,14 @@
         }
 
         a{
-          transform: translateX(-200%);
+          transform: translateX(0%);
         }
       }
 
       &:global(.visible){
         .item{
           transition: 
-            transform 200ms ease-out calc(var(--in-delay) * var(--delay-mult)),
+            transform 400ms ease-out calc(var(--in-delay) * var(--delay-mult)),
             opacity 100ms ease-out calc(var(--in-delay) * var(--delay-mult)),
             background 1000ms 500ms,
             border 2000ms 500ms
@@ -149,23 +149,11 @@
 
           a{
             transition: transform 400ms ease-out calc(var(--in-delay) * var(--delay-mult));
-            transform: translateX(0%);
+            transform: translateX(75%);
           }
 
           @media screen and (hover: none) {
-
             --delay-mult: 40ms;
-
-            transition: 
-              transform 200ms ease-out calc(var(--in-delay) * var(--delay-mult)),
-              opacity 200ms ease-out calc(var(--in-delay) * var(--delay-mult)),
-              background 1000ms 500ms,
-              border 2000ms 500ms
-            ;
-
-            a{
-              transition: transform 800ms ease-out calc(var(--in-delay) * var(--delay-mult));
-            }
           }
 
         }
