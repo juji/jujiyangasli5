@@ -103,6 +103,7 @@ body{
   /* 
   WHY SHOULD I DO THIS?
   this actually makes the width bound clear to the browser
+  when a child's width is 100%, it doesn't go offscreen
   */
   overflow-x: hidden;
 }
