@@ -11,41 +11,44 @@
   })
 
   let grid: HTMLElement;
-  // $effect(() => {
 
-  //   const opt = { 
-  //     type: "spring", 
-  //     stiffness: 1494,
-  //     damping: 31,
-  //     mass: 2.9,
-  //     delay: stagger(0.1) 
-  //   }
-
-  //   const stop = inView(grid, () => {
-
-  //     animate(
-  //       '.playitem', 
-  //       // @ts-ignore
-  //       { transform: `scale(1)` }, 
-  //       opt
-  //     )
-
-  //     return () => {
-  //       animate(
-  //         '.playitem', 
-  //         // @ts-ignore
-  //         { transform: `scale(.9)` }, 
-  //         opt
-  //       )
-  //     }
-  //   },{
-  //     margin: '5000px 0px -50px 0px'
-  //   })
-
-  //   return () => {
-  //     stop()
-  //   }
-  // })
+  // this is making my stomach feel bad
+  /* 
+  $effect(() => {
+    const opt = { 
+      type: "spring", 
+      stiffness: 1494,
+      damping: 31,
+      mass: 2.9,
+      delay: stagger(0.1) 
+    }
+  
+    const stop = inView(grid, () => {
+  
+      animate(
+        '.playitem', 
+        // @ts-ignore
+        { transform: `scale(1)` }, 
+        opt
+      )
+  
+      return () => {
+        animate(
+          '.playitem', 
+          // @ts-ignore
+          { transform: `scale(.9)` }, 
+          opt
+        )
+      }
+    },{
+      margin: '5000px 0px -50px 0px'
+    })
+  
+    return () => {
+      stop()
+    }
+  }) 
+    */
 
 </script>
 
