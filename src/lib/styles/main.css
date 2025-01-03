@@ -101,12 +101,8 @@ html, body{
 
 body{
   /* 
-  INVESTIGATE
   WHY SHOULD I DO THIS?
-  i prefer not to do this
-
-  but this actually makes the width bound clear to the browser
-  remember GIPIDI
+  this actually makes the width bound clear to the browser
   */
   overflow-x: hidden;
 }
