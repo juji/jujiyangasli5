@@ -143,51 +143,35 @@
   // on small width
   $effect(() => {
 
-    let animRotate;
-    let animRotateOpt;
-    let animTranslate;
-    let animTranslateOpt;
     const gap = 72
 
     if(innerWidth >= 800) {
 
-      animRotate = animate(container, { rotate: ['x 0deg', 'x 0deg']});
-      animRotateOpt = { offset: [0,1] };
-      animTranslate = animate(container, { translate: ['0 0 0', '0 0 0']});
-      animTranslateOpt = { offset: [0,1] };
-
-    }else{
-
-      animRotate = animate(container, { rotate: [
-        `x ${-10 * (index + 1)}deg`,
-        `x ${-10 * (index + 1)}deg`,
-        `x 0deg`
-      ]})
-
-      animRotateOpt = { offset: [ 
-        0, 
-        `${(clientHeight + gap) * index}px`, 
-        `${(clientHeight + gap) * (index + 1)}px` 
-      ]}
-
-      animTranslate = animate(container, { translate: [
-        `0 ${clientHeight - gap}px 0`,
-        `0 ${clientHeight - gap}px 0`,
-        `0 0 0`,
-      ]})
-
-      animTranslateOpt = { offset: [ 
-        0, 
-        `${((clientHeight + gap) * ((index * .5) + 1))}px`, 
-        `${((clientHeight + gap) * ((index * .5) + 2))}px`, 
-      ]}
+      animate(container, { rotate: ['x 0deg', 'x 0deg']}, { duration: 0 });
+      animate(container, { translate: ['0 0 0', '0 0 0']}, { duration: 0 });
+      return () => {}
 
     }
 
-    // @ts-ignore
-    const rotate = scroll(animRotate, animRotateOpt)
-    // @ts-ignore
-    const translate = scroll(animTranslate, animTranslateOpt)
+    const rotate = scroll(animate(container, { rotate: [
+      `x ${-10 * (index + 1)}deg`,
+      `x ${-10 * (index + 1)}deg`,
+      `x 0deg`
+    ]}), { offset: [ 
+      0, 
+      `${(clientHeight + gap) * index}px`, 
+      `${(clientHeight + gap) * (index + 1)}px` 
+    ]})
+
+    const translate = scroll(animate(container, { translate: [
+      `0 ${clientHeight - gap}px 0`,
+      `0 ${clientHeight - gap}px 0`,
+      `0 0 0`,
+    ]}), { offset: [ 
+      0, 
+      `${((clientHeight + gap) * ((index * .5) + 1))}px`, 
+      `${((clientHeight + gap) * ((index * .5) + 2))}px`, 
+    ]})
 
     return () => {
       rotate()
