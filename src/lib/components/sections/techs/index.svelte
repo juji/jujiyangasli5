@@ -91,7 +91,7 @@
           style={`--in-delay:${animDelay++};--mask-image:url(${item.image})`} 
           onmouseenter={onMouseEnter}>
           <img src={item.image} alt={item.title} loading="lazy" />
-          <span class={'metalic'}></span>
+          <span class={'metalic matte'}></span>
           <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.title}></a>
         </div>
       </div>
@@ -178,7 +178,6 @@
             background-position: center center;
             background-size: calc(100% - calc(var(--image-padding) * 2));
             opacity: 0.3;
-
           }
 
           &:after{
@@ -191,11 +190,23 @@
             transform: translateX(calc(var(--relative-mouse-x) * 75%));
             transition: transform 0ms ease-out;
           }
-          
+
           /* 
             so, these are something.. 
-            spotuv and metallic
+            matte, spotuv and metallic
+            I'm just gonna keep this
           */
+
+          &:global(.matte:before){
+            /* light should make thing bigger */
+            top: -2px;
+            left: -2px;
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            /* give some blur */
+            filter: blur(2px);
+          }
+          
           &:global(.spotuv:after){
             background: linear-gradient(
               111deg, 
