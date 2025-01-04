@@ -303,24 +303,16 @@
         }
       }
 
-      /* .item:hover:before{
-        transition: transform 200ms ease-out 0ms;
-        transform: translateX(75%);
-      } */
-
       .item:hover, .item:has(a:focus) {
         transition: 
-          transform 200ms ease-out,
-          opacity 200ms ease-out calc(var(--in-delay) * var(--delay-mult)),
+          transform 0ms,
+          opacity 0ms,
           background 0ms,
           border 0ms
         ;
 
         border: 1px solid hsl(from var(--background-color) h s calc(l + 42));
 
-        img{
-          scale: 1;
-        }
       }
 
       .item:has(a:focus){
