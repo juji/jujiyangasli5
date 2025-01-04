@@ -41,8 +41,8 @@
 
     const div = e.target as HTMLDivElement
     const bound = div.getBoundingClientRect()
-    console.log('div', div)
-    // use height, since width has children
+
+    // use height, since we have overflown children
     // it's a square
     let relativeMouseX = (e.x - bound.x) / bound.height
     div.style.setProperty('--relative-mouse-x', relativeMouseX+'')
