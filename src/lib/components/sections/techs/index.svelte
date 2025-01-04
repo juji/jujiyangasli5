@@ -205,6 +205,7 @@
 
         /* Some images are SpeCialEr than others */
         /* Yeah, i'm pissed. Maybe i should find new images */
+        /*  */
         &#tech-svelte span:before{
           background-size: calc(100% - 3rem);
         }
