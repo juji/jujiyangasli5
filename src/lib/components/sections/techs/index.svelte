@@ -68,11 +68,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" class="hidden">
   <filter id="gootech">
     <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="blurtech" />
-    <feColorMatrix in="SourceGraphic" type="matrix" 
+    <feColorMatrix in="blurtech" type="matrix" 
       values="1 0 0 0 0  
               0 1 0 0 0  
               0 0 1 0 0  
-              0 0 0 4 -1" />
+              0 0 0 7 -2" />
 
   </filter>
 </svg>
@@ -194,17 +194,17 @@
           /* 
             so, these are something.. 
             matte, spotuv and metallic
-            I'm just gonna keep this
+            I'm just gonna keep these
           */
 
           &:global(.matte:before){
             /* light should make thing bigger */
-            top: -2px;
-            left: -2px;
-            width: calc(100% + 4px);
-            height: calc(100% + 4px);
+            top: -1px;
+            left: -1px;
+            width: calc(100% + 2px);
+            height: calc(100% + 2px);
             /* give some blur */
-            filter: blur(2px);
+            filter: blur(1px);
           }
           
           &:global(.spotuv:after){
