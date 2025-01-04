@@ -200,7 +200,7 @@
           */
 
           &:global(.matte:before){
-            /* light should make thing bigger */
+            /* light should make things bigger */
             top: -2px;
             left: -2px;
             width: calc(100% + 4px);
