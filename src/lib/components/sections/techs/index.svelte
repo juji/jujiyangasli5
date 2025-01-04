@@ -67,12 +67,12 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" class="hidden">
   <filter id="gootech">
-    <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blurtech" />
-    <feColorMatrix in="blurtech" type="matrix" 
+    <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="blurtech" />
+    <feColorMatrix in="SourceGraphic" type="matrix" 
       values="1 0 0 0 0  
               0 1 0 0 0  
               0 0 1 0 0  
-              0 0 0 3 -1" />
+              0 0 0 4 -1" />
 
   </filter>
 </svg>
@@ -86,7 +86,8 @@
     {#each techrow as item}
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div class="item-container">
-        <div class="item" 
+        <div class="item"
+          id={`tech-${item.id}`} 
           style={`--in-delay:${animDelay++};--mask-image:url(${item.image})`} 
           onmouseenter={onMouseEnter}>
           <img src={item.image} alt={item.title} loading="lazy" />
@@ -125,6 +126,7 @@
       --delay-mult: 80ms;
       --relative-mouse-x: 0;
       --mask-image: url(unknown.svg);
+      --image-padding: 1.2rem;
       
       .item-container{
         perspective: 500px;
@@ -154,7 +156,7 @@
           height: 100%;
           object-position: center center;
           object-fit: contain;
-          padding: 1.2rem;
+          padding: var(--image-padding);
         }
 
         span{
@@ -168,14 +170,15 @@
           &:before{
             content: '';
             position: absolute;
-            top: 0;
-            right: 0;
+            top: 0px;
+            left: 0px;
             width: 100%;
             height: 100%;
             background-image: var(--mask-image);
             background-position: center center;
-            background-size: calc(100% - 2.4rem);
+            background-size: calc(100% - calc(var(--image-padding) * 2));
             opacity: 0.3;
+
           }
 
           &:after{
@@ -190,13 +193,24 @@
             background: linear-gradient(
               111deg, 
                 rgb(0 0 0 / 0) 0%,
-                rgb(0 0 0 / 0) 40%,
+                rgb(0 0 0 / 0) 30%,
+                rgb(255 255 255 / .2) 31%,
                 rgb(255 255 255 / .3) 41%,
-                rgb(255 255 255 / .3) 59%,
+                rgb(255 255 255 / .2) 59%,
                 rgb(0 0 0 / 0) 60%,
                 rgb(0 0 0 / 0) 100%
             );
           }
+        }
+
+        /* Some images are SpeCialEr than others */
+        /* Yeah, i'm pissed. Maybe i should find new images */
+        &#tech-svelte span:before{
+          background-size: calc(100% - 3rem);
+        }
+
+        &#tech-s3 span:before{
+          background-size: calc(100% - 3rem);
         }
 
         
