@@ -91,7 +91,8 @@
         <div class="item"
           id={`tech-${item.id}`} 
           style={`--in-delay:${animDelay++};--mask-image:url(${item.image})`} 
-          onmouseenter={onMouseEnter}>
+          onmouseenter={onMouseEnter}
+        >
           <img src={item.image} alt={item.title} loading="lazy" />
           <span class={'metalic matte'}></span>
           <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.title}></a>
@@ -103,6 +104,18 @@
 </section>
 
 <style>
+
+  /* 
+  really wanted to use this, 
+  but it doesn't look good with keyframes
+  mousemove gives more "HUH?" factor
+  *//* 
+  @property --relative-mouse-x {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+  */
 
   svg.hidden{
     height: 0;
