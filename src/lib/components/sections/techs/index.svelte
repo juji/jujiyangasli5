@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { TechItem } from '$lib/data/techs/types';
+	import { noHover } from '$lib/modules/no-hover';
   import { sectionInView } from '$lib/modules/section-in-view';
 	import { inView } from 'motion';
 
@@ -34,9 +35,47 @@
   // svelte-ignore (non_reactive_update)
   let animDelay = 0
 
+  function onMouseEnter(e: MouseEvent){
+
+    if(noHover()) return true;
+
+    const div = e.target as HTMLDivElement
+    const bound = div.getBoundingClientRect()
+    console.log('div', div)
+    // use height, since width has children
+    // it's a square
+    let relativeMouseX = (e.x - bound.x) / bound.height
+    div.style.setProperty('--relative-mouse-x', relativeMouseX+'')
+    function onMove(mouse: MouseEvent){
+      relativeMouseX = (mouse.x - bound.x) / bound.height
+      div.style.setProperty('--relative-mouse-x', relativeMouseX+'')
+    }
+    
+    function onOut(mouse: MouseEvent){
+      const relativeMouse = (mouse.x - bound.x) / bound.height
+      if(relativeMouse < 0.5) div.style.setProperty('--relative-mouse-x', '0')
+      else div.style.setProperty('--relative-mouse-x', '1')
+      window.removeEventListener('mousemove', onMove)
+      div.removeEventListener('mouseleave',onOut)
+    }
+
+    window.addEventListener('mousemove', onMove)
+    div.addEventListener('mouseleave',onOut)
+  }
+
 </script>
 
+<svg xmlns="http://www.w3.org/2000/svg" class="hidden">
+  <filter id="gootech">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blurtech" />
+    <feColorMatrix in="blurtech" type="matrix" 
+      values="1 0 0 0 0  
+              0 1 0 0 0  
+              0 0 1 0 0  
+              0 0 0 3 -1" />
 
+  </filter>
+</svg>
 <section class="container" id="techs" bind:this={elm}>
   <h2 class="section-title">
     Techs
@@ -45,9 +84,13 @@
   <div class="grid" class:js role="complementary">
     {#each techs as techrow}
     {#each techrow as item}
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div class="item-container">
-        <div class="item" style={`--in-delay:${animDelay++}`}>
+        <div class="item" 
+          style={`--in-delay:${animDelay++};--mask-image:url(${item.image})`} 
+          onmouseenter={onMouseEnter}>
           <img src={item.image} alt={item.title} loading="lazy" />
+          <span></span>
           <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.title}></a>
         </div>
       </div>
@@ -57,12 +100,21 @@
 </section>
 
 <style>
+
+  svg.hidden{
+    height: 0;
+    width: 0;
+    position: absolute;
+  }
+
   .container{
 
     margin-bottom: 8rem;
     
     .grid{
+      display: -webkit-grid;
       display: grid;
+      height: auto;
       
       /* https://css-tricks.com/a-responsive-grid-layout-with-no-media-queries/ */
       grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
@@ -71,6 +123,8 @@
       
       
       --delay-mult: 80ms;
+      --relative-mouse-x: 0;
+      --mask-image: url(unknown.svg);
       
       .item-container{
         perspective: 500px;
@@ -92,7 +146,6 @@
         ;
         opacity: 1;
         transform: rotateY(0deg);
-        transform-origin: 0px;
         overflow: hidden;
 
         img{
@@ -102,9 +155,51 @@
           object-position: center center;
           object-fit: contain;
           padding: 1.2rem;
-          scale: 1;
-          transition: scale 300ms;
         }
+
+        span{
+          filter: url(#gootech);
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 100%;
+          height: 100%;
+
+          &:before{
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-image: var(--mask-image);
+            background-position: center center;
+            background-size: calc(100% - 2.4rem);
+            opacity: 0.3;
+          }
+
+          &:after{
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 400%;
+            height: 100%;
+            transform: translateX(calc(var(--relative-mouse-x) * 75%));
+            transition: transform 0ms ease-out;
+            background: linear-gradient(
+              111deg, 
+                rgb(0 0 0 / 0) 0%,
+                rgb(0 0 0 / 0) 40%,
+                rgb(255 255 255 / .3) 41%,
+                rgb(255 255 255 / .3) 59%,
+                rgb(0 0 0 / 0) 60%,
+                rgb(0 0 0 / 0) 100%
+            );
+          }
+        }
+
+        
 
         a{
           position: absolute;
@@ -112,6 +207,7 @@
           right: 0;
           width: 400%;
           height: 100%;
+          z-index: 2;
           background: linear-gradient(
             111deg, 
               rgb(0 0 0 / 0) 0%,
@@ -158,6 +254,11 @@
 
         }
       }
+
+      /* .item:hover:before{
+        transition: transform 200ms ease-out 0ms;
+        transform: translateX(75%);
+      } */
 
       .item:hover, .item:has(a:focus) {
         transition: 

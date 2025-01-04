@@ -112,6 +112,7 @@ export class ScrollWheelHijacker {
       if(!this.#scrolling) this.#scroll()
     }
 
+    // return;
     this.#elm.addEventListener('wheel',this.#listener,{ passive: false })
 
   }
@@ -210,7 +211,19 @@ export class ScrollWheelHijacker {
       
       if(this.#deltaY) {
         this.#rafId = requestAnimationFrame(scrollBy)
-      } else { this.#scrolling = false }
+      } else { 
+        this.#scrolling = false 
+
+        // there's a bug in safari that makes grid elements
+        // loses it's y position when we don't do this
+        // the display stays the same, 
+        // but the bounding box for calculation changes
+        this.#elm.scrollBy({
+          top: delta < 0 ? -1 : 1,
+          left: 0,
+          behavior: 'smooth'
+        })
+      }
         
     }
 
