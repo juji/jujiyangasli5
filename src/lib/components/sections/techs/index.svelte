@@ -91,7 +91,7 @@
           style={`--in-delay:${animDelay++};--mask-image:url(${item.image})`} 
           onmouseenter={onMouseEnter}>
           <img src={item.image} alt={item.title} loading="lazy" />
-          <span></span>
+          <span class={'metalic'}></span>
           <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.title}></a>
         </div>
       </div>
@@ -190,6 +190,13 @@
             height: 100%;
             transform: translateX(calc(var(--relative-mouse-x) * 75%));
             transition: transform 0ms ease-out;
+          }
+          
+          /* 
+            so, these are something.. 
+            spotuv and metallic
+          */
+          &:global(.spotuv:after){
             background: linear-gradient(
               111deg, 
                 rgb(0 0 0 / 0) 0%,
@@ -201,11 +208,24 @@
                 rgb(0 0 0 / 0) 100%
             );
           }
+          
+          &:global(.metalic:after){
+            background: linear-gradient(
+              111deg, 
+                rgb(0 0 0 / 0) 0%,
+                rgb(0 0 0 / 0) 30%,
+                rgb(255 255 255 / .2) 39%,
+                rgb(255 255 255 / .3) 41%,
+                rgb(255 255 255 / .2) 43%,
+                rgb(0 0 0 / 0) 60%,
+                rgb(0 0 0 / 0) 100%
+            );
+          }
         }
 
+
         /* Some images are SpeCialEr than others */
-        /* Yeah, i'm pissed. Maybe i should find new images */
-        /*  */
+        /* Yeah, i'm pissed. maybe find new image */
         &#tech-svelte span:before{
           background-size: calc(100% - 3rem);
         }
