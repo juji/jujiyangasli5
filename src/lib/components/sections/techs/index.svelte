@@ -72,8 +72,10 @@
       values="1 0 0 0 0  
               0 1 0 0 0  
               0 0 1 0 0  
-              0 0 0 6 -2" />
-
+              0 0 0 7 -2" 
+      />
+      <!-- 0 0 0 6 -2 is realistic -->
+      <!-- 0 0 0 7 -2 is more dreamy -->
   </filter>
 </svg>
 <section class="container" id="techs" bind:this={elm}>
@@ -185,7 +187,7 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 400%;
+            width: 400%; /* this just feels right. width = speed */
             height: 100%;
             transform: translateX(calc(var(--relative-mouse-x) * 75%));
             transition: transform 0ms ease-out;
@@ -199,12 +201,12 @@
 
           &:global(.matte:before){
             /* light should make thing bigger */
-            top: -1px;
-            left: -1px;
-            width: calc(100% + 2px);
-            height: calc(100% + 2px);
-            /* give some blur */
-            filter: blur(1px);
+            top: -2px;
+            left: -2px;
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            /* give some blur for the matte effect */
+            filter: blur(2px);
           }
           
           &:global(.spotuv:after){
