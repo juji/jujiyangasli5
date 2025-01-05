@@ -290,6 +290,7 @@
 
         a{
           transform: translateX(0%);
+          will-change: transform;
         }
       }
 
@@ -311,6 +312,17 @@
 
           @media screen and (hover: none) {
             --delay-mult: 40ms;
+
+            transition: 
+              transform 0ms,
+              opacity 200ms ease-out calc(var(--in-delay) * var(--delay-mult)),
+              background 1000ms 500ms,
+              border 2000ms 500ms
+            ;
+
+            /* a{
+              transform: translateX(0%);
+            } */
           }
 
         }
