@@ -209,6 +209,10 @@
       scale: 0.9;
     }
 
+    &:focus{
+      outline: none;
+    }
+
     @media screen and (min-width: 380px) {
       width: 4rem;
       height: 4rem;
