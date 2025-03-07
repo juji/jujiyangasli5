@@ -52,7 +52,7 @@
   </div>
 
   <p class="copy">
-    @ 2024 by Tri Rahmat Gunadi
+    @ {new Date().getFullYear()} by Tri Rahmat Gunadi
   </p>
   <p class="made">
     Made with <span class="red">♥️</span> + <a href="https://svelte.dev/" 
