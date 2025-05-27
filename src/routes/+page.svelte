@@ -22,20 +22,31 @@
   const fadeOutDelay = 350
   function setWorksTransition(image: string){
     globalState.viewTransitionDelay = fadeOutDelay
-    globalState.waitForAssets = new Promise((r) => {
+    globalState.waitForAssets = new Promise((resolve) => { // Changed r to resolve for clarity
       const img = new Image()
-      img.onload = () => { r() }
+      img.onload = () => { resolve(undefined) } // Resolve with undefined for clarity
+      img.onerror = () => {
+        console.warn(`[setWorksTransition] Failed to preload image: ${image}`);
+        resolve(undefined); // Resolve even on error to not block transition
+      }
       img.src = image
     })
   }
 
   // if this comes from work page
   $effect(() => {
-    if(globalState.fromWork)
-    setTimeout(() => {
-      globalState.fromWork = null
-    },1000)
-  })
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    if (globalState.fromWork) {
+      timeoutId = setTimeout(() => {
+        globalState.fromWork = null;
+      }, 1000);
+    }
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  });
 
   let hasGoodFpsResult = (value: boolean) => {}
   let hasGoodFpsPromise: Promise<boolean> = $state(
@@ -61,9 +72,24 @@
     }
 
     const onAfterCount = (p: FpsMonitorResult) => {
-      hasGoodFpsResult(p.isGoodFps)
-      if(!p.isGoodFps){
-        scrollToTop.setFpsFactor( .8 * p.goodFps / p.avgFps )
+      hasGoodFpsResult(p.isGoodFps);
+      if (!p.isGoodFps) {
+        let scrollFactorAdjustment = 0.8; // Base adjustment for less-than-good FPS
+
+        if (p.goodFps > 0 && p.avgFps > 0) {
+          // Calculate a factor based on the ratio of current avg FPS to good FPS
+          // This value will be < 1 if avgFps < goodFps
+          scrollFactorAdjustment *= (p.avgFps / p.goodFps);
+        } else if (p.avgFps <= 0) {
+          // If average FPS is extremely low or zero, use a very conservative factor
+          scrollFactorAdjustment = 0.1; // Drastically reduce scroll animation intensity
+        }
+        // Clamp the factor to ensure it's within a sensible range (e.g., 0.1 to 0.8)
+        const finalFactor = Math.max(0.1, Math.min(scrollFactorAdjustment, 0.8));
+        scrollToTop.setFpsFactor(finalFactor);
+      } else {
+        // FPS is good, ensure scroll factor is optimal (assuming 1.0 is optimal)
+        scrollToTop.setFpsFactor(1.0); // Reset to default/optimal factor
       }
     }
 
