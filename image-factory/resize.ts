@@ -15,7 +15,7 @@ async function resize(
   
 
   const sharp = Sharp(file)
-  const res = await sharp.avif().toFile(f.join('.'))
+  const res = await sharp.avif().resize({ width: 600, kernel: Sharp.kernel.lanczos3 }).toFile(f.join('.'))
   console.log(res)
 
 }

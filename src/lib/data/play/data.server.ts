@@ -5,7 +5,7 @@ export const play:Play[] = [
   {
     title: 'Balance',
     id: 'balance',
-    image: '/images/play/balance-600.avif',
+    image: '/images/play/balance.avif',
     width: 600,
     height: 230,
     url: 'https://balance.jujiplay.com/'
