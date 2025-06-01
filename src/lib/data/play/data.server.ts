@@ -3,6 +3,14 @@ import type { Play } from './types'
 
 export const play:Play[] = [
   {
+    title: 'Balance',
+    id: 'balance',
+    image: '/images/play/balance-600.avif',
+    width: 600,
+    height: 230,
+    url: 'https://balance.jujiplay.com/'
+  },
+  {
     title: 'Grainy Thing',
     id: 'grainy-thing',
     image: '/images/play/grainy-600.avif',
@@ -26,10 +34,20 @@ export const play:Play[] = [
     height: 276,
     url: 'https://wallpaper.jujiplay.com/'
   },
-  // {
-  //   title: 'Circular Orbit',
-  //   id: 'CircularOrbit',
-  //   image: 'https://jujiplay.com/circular-600.avif',
-  //   url: 'https://circular.jujiplay.com/'
-  // },
+  {
+    title: 'Circular Orbit',
+    id: 'CircularOrbit',
+    image: '/images/play/circular-600.avif',
+    width: 600,
+    height: 276,
+    url: 'https://circular.jujiplay.com/'
+  },
+  {
+    title: 'Attractors',
+    id: 'Attractors',
+    image: '/images/play/attractor-600.avif',
+    width: 600,
+    height: 338,
+    url: 'https://attractors.jujiplay.com//'
+  }
 ]

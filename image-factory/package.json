@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx ts-node resize.ts"
+    "start": "npx tsx ./resize.ts"
   },
   "keywords": [],
   "author": "",
