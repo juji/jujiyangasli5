@@ -156,13 +156,9 @@
         background: rgb( from var(--tech-color) r g b / 0);
         border-radius: 3px;
         transition: 
-          transform 100ms ease-out,
-          opacity 100ms ease-out,
           background 1000ms 500ms,
           border 2000ms 500ms
         ;
-        opacity: 1;
-        transform: rotateY(0deg);
         overflow: hidden;
 
         img{
@@ -283,11 +279,6 @@
       }
 
       &.js{
-        .item{
-          opacity: 0;
-          transform: rotateY(45deg);
-        }
-
         a{
           transform: translateX(0%);
           will-change: transform;
@@ -297,13 +288,9 @@
       &:global(.visible){
         .item{
           transition: 
-            transform 400ms ease-out calc(var(--in-delay) * var(--delay-mult)),
-            opacity 100ms ease-out calc(var(--in-delay) * var(--delay-mult)),
             background 1000ms 500ms,
             border 2000ms 500ms
           ;
-          transform: rotateY(0deg);
-          opacity: 1;
 
           a{
             transition: transform 400ms ease-out calc(var(--in-delay) * var(--delay-mult));
@@ -315,14 +302,9 @@
 
             transition: 
               transform 0ms,
-              opacity 200ms ease-out calc(var(--in-delay) * var(--delay-mult)),
               background 1000ms 500ms,
               border 2000ms 500ms
             ;
-
-            /* a{
-              transform: translateX(0%);
-            } */
           }
 
         }
@@ -331,7 +313,6 @@
       .item:hover, .item:has(a:focus) {
         transition: 
           transform 0ms,
-          opacity 0ms,
           background 0ms,
           border 0ms
         ;
