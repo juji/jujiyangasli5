@@ -32,7 +32,7 @@ export const play:Play[] = [
     image: '/images/play/clifford-dejong-600.avif',
     width: 600,
     height: 276,
-    url: 'https://cdw.jujiplay.com/'
+    url: 'https://chaoscanvas.jujiplay.com/'
   },
   {
     title: 'Circular Orbit',
