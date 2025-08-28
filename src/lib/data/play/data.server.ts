@@ -27,8 +27,8 @@ export const play:Play[] = [
     url: 'https://boids.jujiplay.com/'
   },
   {
-    title: 'Clifford-Dejong',
-    id: 'CliffordDejong',
+    title: 'Chaos Canvas',
+    id: 'ChaosCanvas',
     image: '/images/play/clifford-dejong-600.avif',
     width: 600,
     height: 276,
